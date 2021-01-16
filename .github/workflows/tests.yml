@@ -13,7 +13,7 @@ jobs:
       - name: dotnet-tests-report
         uses: zyborg/dotnet-tests-report@v1.3.0
         with:          
-          project_path: Tests
+          project_path: Tests/Tests.csproj
           report_name: tests
           report_title: Tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
