@@ -17,3 +17,6 @@ jobs:
           report_name: tests
           report_title: Tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          gist_name: test_results.md
+          gist_badge_label: '%Counters_passed%/%Counters_total%'
+          gist_token: ${{ secrets.GIST_TOKEN }}
