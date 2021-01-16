@@ -23,3 +23,12 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: dotnet-tests-report
+      uses: zyborg/dotnet-tests-report@v1.3.0
+      with:          
+        report_name: tests
+        report_title: Tests
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        gist_name: test_results.md
+        gist_badge_label: '%Counters_passed%/%Counters_total%'
+        gist_token: ${{ secrets.GIST_TOKEN }}
