@@ -66,7 +66,7 @@ namespace RGBDS2CIL
 			return fileLines.Where(x => x is not null).ToArray();
 		}
 
-		internal static List<IAsmLine> GetLines(IEnumerable<string> fileLines, string fileName) => fileLines
+		public static List<IAsmLine> GetLines(IEnumerable<string> fileLines, string fileName) => fileLines
 			//.AsParallel().AsOrdered()
 			.SelectMany<string, IAsmLine>((x, y) => ParseLine(x, fileName, y)).ToList();
 
@@ -92,8 +92,8 @@ namespace RGBDS2CIL
 					var path = Path.Combine(RootFolder, includeFile.IncludeFile);
 					if (File.Exists(path))
 						includeFile.Lines.AddRange(GetLines(FlattenMultiLine(File.ReadAllLines(path)), includeFile.IncludeFile));
-					else
-						throw new FileNotFoundException("Could not include file", includeFile.IncludeFile);
+					//else
+					//	throw new FileNotFoundException("Could not include file", includeFile.IncludeFile);
 					parsedLines.Add(includeFile);
 				}
 				else if (MyExtensions.CommandName(code, "INCBIN"))
@@ -102,8 +102,8 @@ namespace RGBDS2CIL
 					var path = Path.Combine(RootFolder, binary.IncludeFile);
 					if (File.Exists(path))
 						binary.Binary = File.ReadAllBytes(path);
-					else
-						throw new FileNotFoundException("Could not include binary", binary.IncludeFile);
+					//else
+					//	throw new FileNotFoundException("Could not include binary", binary.IncludeFile);
 					parsedLines.Add(binary);
 				}
 				else if (MyExtensions.CommandName(code, "SECTION"))

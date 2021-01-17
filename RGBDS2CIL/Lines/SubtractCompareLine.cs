@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RGBDS2CIL
 {
@@ -13,7 +15,21 @@ namespace RGBDS2CIL
 			base.Raw = codeLine.Raw;
 
 			var values = codeLine.Code.Trim()["CP".Length..].Trim();
-			var split = values.Split(',');
+
+			//remove function params
+			const string regexString = "\\(.*?\\)|(,)";
+
+			var rx = new Regex(regexString, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+			var matches = rx.Matches(values);
+
+			var valueToTest = values;
+			foreach (Match match in matches)
+			{
+				valueToTest = valueToTest.Replace(match.Value, "");
+			}
+
+			var split = valueToTest.Split(',');
 
 			From = "A"; //default?
 			if (split.Length == 2)
@@ -22,7 +38,7 @@ namespace RGBDS2CIL
 				Value = split.Last().Trim();
 			}
 			else
-				Value = split.Single().Trim();
+				Value = values;
 		}
 	}
 }

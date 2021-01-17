@@ -66,5 +66,44 @@ namespace Tests
 			Debug.WriteLine("comment: " + comment);
 			Debug.WriteLine("code: " + code);
 		}
+
+		[Theory]
+		[InlineData("cp   STRSUB(\\1, 1 + I, 1) + $01")]
+		public void SubtractCompare(string fileLine)
+		{
+			var comment = Parser.GetComment(fileLine);
+
+			var code = Parser.RemoveCommentFromCode(fileLine);
+			var codeLine = new CodeLine(code, fileLine, comment, "", 0, Parser.GetStrings(code));
+			var subtractCompareLine = new SubtractCompareLine(codeLine);
+
+
+
+			
+		}
+
+		[Theory]
+		[InlineData(@"RawBitmap:
+	if BuildCPCv+BuildENTv
+		ifdef ScrColor16
+			nop
+		else
+		nop
+		endif
+			endif
+		if BuildZXSv+BuildTI8v
+			nop
+		
+		endif
+		if BuildMSXv+BuildSAMv
+			nop
+		
+		endif
+")]
+		public void NestedIfParse(string sampleLines)
+		{
+			var parsedLines = Parser.GetLines(sampleLines.Split("\n"), "unitTest.asm");
+			Program.RestructureLines(parsedLines);
+		}
 	}
 }
