@@ -16,7 +16,7 @@ namespace RGBDS2CIL
 
             var sb = new StringBuilder();
 
-            var thisName = Regex.Replace(ti.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(" ", ""), "[^A-Za-z0-9 -]", ""); ;
+            var thisName = Regex.Replace(ti.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(" ", ""), "[^A-Za-z0-9 -]", "");
 
             var tabCount = 1;
 

@@ -46,7 +46,7 @@ namespace RGBDS2CIL
 			// };
 
 //var files = Directory.GetFiles(@"C:\Users\pierc\source\pokered", "*.asm", SearchOption.AllDirectories);
-var files = Directory.GetFiles(@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\", "*.asm", SearchOption.AllDirectories);
+var files = Directory.GetFiles(@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\", "*.asm", SearchOption.AllDirectories);
 
 			foreach (var fileName in files)
 			{

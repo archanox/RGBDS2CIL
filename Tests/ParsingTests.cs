@@ -1,3 +1,4 @@
+using System;
 using RGBDS2CIL;
 using System.Diagnostics;
 using Xunit;
@@ -85,24 +86,14 @@ namespace Tests
 		[Theory]
 		[InlineData(@"RawBitmap:
 	if BuildCPCv+BuildENTv
-		ifdef ScrColor16
+		if ScrColor16
 			nop
-		else
-		nop
-		endif
-			endif
-		if BuildZXSv+BuildTI8v
-			nop
-		
-		endif
-		if BuildMSXv+BuildSAMv
-			nop
-		
-		endif
+		endc
+	endc
 ")]
 		public void NestedIfParse(string sampleLines)
 		{
-			var parsedLines = Parser.GetLines(sampleLines.Split("\n"), "unitTest.asm");
+			var parsedLines = Parser.GetLines(sampleLines.Split(new [] {Environment.NewLine, "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), "unitTest.asm");
 			Program.RestructureLines(parsedLines);
 		}
 	}
