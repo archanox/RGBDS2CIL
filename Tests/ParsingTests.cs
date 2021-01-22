@@ -83,18 +83,18 @@ namespace Tests
 			
 		}
 
-		[Theory]
-		[InlineData(@"RawBitmap:
-	if BuildCPCv+BuildENTv
-		if ScrColor16
-			nop
-		endc
-	endc
-")]
-		public void NestedIfParse(string sampleLines)
-		{
-			var parsedLines = Parser.GetLines(sampleLines.Split(new [] {Environment.NewLine, "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), "unitTest.asm");
-			Program.RestructureLines(parsedLines);
-		}
+// 		[Theory]
+// 		[InlineData(@"RawBitmap:
+// 	if BuildCPCv+BuildENTv
+// 		if ScrColor16
+// 			nop
+// 		endc
+// 	endc
+// ")]
+// 		public void NestedIfParse(string sampleLines)
+// 		{
+// 			var parsedLines = Parser.GetLines(sampleLines.Split(new [] {Environment.NewLine, "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), "unitTest.asm");
+// 			Program.RestructureLines(parsedLines);
+// 		}
 	}
 }
