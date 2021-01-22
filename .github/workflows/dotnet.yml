@@ -26,6 +26,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: CodeCov
+      uses: actions/checkout@master
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: dotnet-tests-report
@@ -37,3 +42,5 @@ jobs:
         gist_name: test_results.md
         gist_badge_label: '%Counters_passed%/%Counters_total%'
         gist_token: ${{ secrets.GIST_TOKEN }}
+        uses: actions/checkout@master
+    
