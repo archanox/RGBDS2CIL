@@ -21,18 +21,15 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: SonarScanner for .NET 5 with pull request decoration support
-      uses: highbyte/sonarscan-dotnet@2.0
-      with:
-        # The key of the SonarQube project
-        sonarProjectKey: archanox_RGBDS2CIL
-        # The name of the SonarQube project
-        sonarProjectName:  RGBDS2CIL
-        # The name of the SonarQube organization in SonarCloud. For hosted SonarQube, skip this setting.
-        sonarOrganization: archanox
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#    - name: SonarScanner for .NET 5 with pull request decoration support
+#      uses: highbyte/sonarscan-dotnet@2.0
+#      with:
+#        sonarProjectKey: archanox_RGBDS2CIL
+#        sonarProjectName:  RGBDS2CIL
+#        sonarOrganization: archanox
+#      env:
+#        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: CodeCov
       uses: codecov/codecov-action@v1
       with:
