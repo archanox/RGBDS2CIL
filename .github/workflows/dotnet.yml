@@ -30,15 +30,6 @@ jobs:
 #      env:
 #        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 #        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: SonarCloud
-      uses: NazmiAltun/dotnet-sonarscanner-action@1.0.6-beta
-      with:
-        project-key: archanox_RGBDS2CIL
-        project-name: RGBDS2CIL
-        organization: archanox
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: CodeCov
       uses: codecov/codecov-action@v1
       with:
