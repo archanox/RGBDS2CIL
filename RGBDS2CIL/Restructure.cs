@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace RGBDS2CIL
 {
-	public class Restructure
+	public static class Restructure
 	{
 		internal static void RestructureMacros(List<IAsmLine> parsedLines)
 		{

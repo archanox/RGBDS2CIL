@@ -3,7 +3,7 @@ using System.IO;
 
 namespace RGBDS2CIL
 {
-	public class Program
+	public static class Program
 	{
 		public static void Main()
 		{

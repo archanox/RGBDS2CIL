@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace RGBDS2CIL
 {
-    public class CSharp
+    public static class CSharp
     {
         internal static void GenerateCsharp(string fileName, IEnumerable<IAsmLine> parsedLines)
         {

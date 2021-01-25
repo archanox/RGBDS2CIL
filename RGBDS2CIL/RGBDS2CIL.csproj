@@ -3,7 +3,12 @@
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
+		<CodeAnalysisRuleSet>..\.sonarlint\archanox_rgbds2cilcsharp.ruleset</CodeAnalysisRuleSet>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <AdditionalFiles Include="..\.sonarlint\archanox_rgbds2cil\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+	</ItemGroup>
 
 	<ItemGroup>
 																	<PackageReference Include="CodeCracker.CSharp" Version="1.1.0">
