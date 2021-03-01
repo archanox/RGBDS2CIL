@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\Program.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Collections.Generic;
+using System.IO;
+
+namespace RGBDS2CIL
+{
+	public static class Program
+	{
+		public static void Main()
+		{
+			//https://docs.microsoft.com/en-us/dotnet/api/system.reflection.emit.assemblybuilder?view=netcore-3.1
+			//https://eldred.fr/gb-asm-tutorial/what_is_gb.html
+			//http://gameboy.mongenel.com/asmschool.html
+			//http://gameboy.mongenel.com/dmg/mbc3.txt //Pokemon Red
+
+			var files = new[]
+			{
+			 	@&quot;C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\tetris.asm&quot;,
+			 	//@&quot;C:\Users\hce_a\source\LADX-Disassembly\src\main.asm&quot;,
+
+			 	@&quot;C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\blankasm.asm&quot;,
+			 	@&quot;C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello.asm&quot;,
+			 	@&quot;C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello-world.asm&quot;,
+			 	@&quot;C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\mrdo.asm&quot;,
+
+			 	// @&quot;C:\source\pokered\macros/const.asm&quot;,
+
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello-world.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_bcd.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_hex.asm&quot;,
+
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\DMG_ROM.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg0_rom.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\fortune_rom.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\gamefighter_rom.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2) orig.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2).asm&quot;,
+
+			 	// @&quot;C:\source\pokered\main.asm&quot;,
+			 	// @&quot;C:\source\pokered\home.asm&quot;,
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\Pokemon Red (UE) [S][!].asm&quot;,
+
+			 	// @&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\sources\Multiplatform\Sources\SimpleHelloWorld\GB_HelloWorld.asm&quot;
+
+			 };
+
+			//var files = Directory.GetFiles(@&quot;C:\Users\pierc\source\pokered&quot;, &quot;*.asm&quot;, SearchOption.AllDirectories);
+			//var files = Directory.GetFiles(@&quot;C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\&quot;, &quot;*.asm&quot;, SearchOption.AllDirectories);
+
+			foreach (var fileName in files)
+			{
+				var fileLines1 = File.ReadAllLines(fileName);
+				Parser.RootFolder = Path.GetDirectoryName(fileName);
+				fileLines1 = Parser.FlattenMultiLine(fileLines1);
+				var parsedLines = Parser.GetLines(fileLines1, fileName);
+
+				//TODO compile checks: see if all the values exist
+
+
+				RestructureLines(parsedLines);
+
+
+				//var c = new Foo.C();
+				//c.M();
+
+				Parser.ExportJson(fileName, parsedLines);
+
+				//var deserialized = JsonConvert.DeserializeObject&lt;IAsmLine&gt;(serialized, settings);
+
+				//CIL.GenerateCIL();
+
+				CSharp.GenerateCsharp(fileName, parsedLines);
+			}
+		}
+
+		public static void RestructureLines(List&lt;IAsmLine&gt; parsedLines)
+		{
+			Restructure.RestructureMacros(parsedLines);
+			Restructure.RestructureIfs(parsedLines);
+		}
+	}
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[9,3,9,4,1],[15,4,46,7,1],[51,4,51,11,1],[51,13,51,25,1],[51,26,51,28,1],[51,29,51,34,1],[52,4,52,5,1],[53,5,53,50,1],[54,5,54,57,1],[55,5,55,54,1],[56,5,56,61,1],[61,5,61,35,1],[67,5,67,46,1],[73,5,73,50,1],[74,4,74,5,1],[75,3,75,4,0],[78,3,78,4,1],[79,4,79,47,1],[80,4,80,44,1],[81,3,81,4,1]]);
+    </script>
+  </body>
+</html>

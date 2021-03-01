@@ -14,13 +14,13 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
-			 	@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\tetris.asm",
-			 	//@"C:\Users\hce_a\source\LADX-Disassembly\src\main.asm",
+			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\tetris.asm",
+			 	//@"C:\Users\pierc\source\LADX-Disassembly\src\main.asm",
 
-			 	@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
-			 	@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello.asm",
-			 	@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
-			 	@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
+			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
+			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello.asm",
+			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
+			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
 
 			 	// @"C:\source\pokered\macros/const.asm",
 

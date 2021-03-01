@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\CSharp.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+
+namespace RGBDS2CIL
+{
+    public static class CSharp
+    {
+        internal static void GenerateCsharp(string fileName, List&lt;IAsmLine&gt; parsedLines)
+        {
+            var ti = CultureInfo.CurrentCulture.TextInfo;
+
+            var sb = new StringBuilder();
+
+            var thisName = Regex.Replace(ti.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(&quot; &quot;, &quot;&quot;), &quot;[^A-Za-z0-9 -]&quot;, &quot;&quot;);
+
+            var includes = parsedLines.OfType&lt;IncludeLine&gt;().ToList();
+            //todo get using names
+            //todo call GenerateCsharp on these files.
+
+            foreach (var include in includes)
+            {
+	            GenerateCsharp(include.FileName, include.Lines);
+            }
+
+            var tabCount = 1;
+
+            sb.Append(&quot;namespace &quot;)
+                .AppendLine(thisName)
+                .AppendLine(&quot;{&quot;)
+                .Append(new string(&#39;\t&#39;, tabCount))
+                .Append(&quot;public class &quot;)
+                .AppendLine(thisName)
+                .Append(new string(&#39;\t&#39;, tabCount++))
+                .AppendLine(&quot;{&quot;);
+
+            sb.Append(new string(&#39;\t&#39;, tabCount))
+                .AppendLine(&quot;public static void Main()&quot;)
+                .Append(new string(&#39;\t&#39;, tabCount++))
+                .AppendLine(&quot;{&quot;);
+
+
+            foreach (var parsedLine in parsedLines)
+            {
+                tabCount = OutputCSharp(parsedLine, sb, tabCount);
+            }
+
+            sb.Append(new string(&#39;\t&#39;, 2)).AppendLine(&quot;}&quot;);
+            sb.Append(new string(&#39;\t&#39;, 1)).AppendLine(&quot;}&quot;);
+            sb.AppendLine(&quot;}&quot;);
+
+            File.WriteAllText(fileName + &quot;.cs&quot;, sb.ToString());
+        }
+
+        internal static int OutputCSharp(IAsmLine parsedLine, StringBuilder sb, int tabCount)
+        {
+            switch (parsedLine)
+            {
+                case CommentLine commentLine:
+                    if (string.IsNullOrWhiteSpace(commentLine.Comment))
+                        sb.AppendLine();
+                    else
+                        sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;// &quot;).AppendLine(commentLine.Comment);
+                    break;
+                case IncludeLine includeLine:
+                    //	Console.WriteLine($&quot;{includeLine.}&quot;);
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(includeLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(includeLine.Comment);
+                    break;
+                case VariableLine variableLine:
+                    sb
+                        .Append(new string(&#39;\t&#39;, tabCount))
+                        .Append(&quot;var &quot;)
+                        .Append(variableLine.VariableName)
+                        .Append(&quot; = &quot;)
+                        .Append(variableLine.VariableValue)
+                        .Append(&#39;;&#39;)
+                        .AppendComment(variableLine.Comment);
+                    break;
+                case ConstantLine constantLine:
+                    var value = constantLine.ConstantValue;
+                    var valueType = &quot;int&quot;;
+
+                    switch (constantLine.ConstantValueType)
+                    {
+                        case ConstantType.Hexadecimal:
+                            value = value.TrimStart(&#39;$&#39;).Insert(0, &quot;0x&quot;);
+                            break;
+                        case ConstantType.Binary:
+                            value = value.TrimStart(&#39;%&#39;).Insert(0, &quot;0b&quot;);
+                            break;
+                        case ConstantType.Octal:
+                            value = $&quot;Convert.ToInt32(\&quot;{value.TrimStart(&#39;%&#39;)}\&quot;, 8)&quot;;
+                            break;
+                        case ConstantType.String:
+                            valueType = &quot;string&quot;;
+                            break;
+                        case ConstantType.Decimal:
+                            break;
+                        case ConstantType.FixedPoint: //todo: must be fixed point
+                            valueType = &quot;decimal&quot;;
+                            break;
+                        case ConstantType.Graphics:
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+
+                    sb
+                        .Append(new string(&#39;\t&#39;, tabCount))
+                        .Append(&quot;const &quot;)
+                        .Append(valueType)
+                        .Append(&#39; &#39;)
+                        .Append(constantLine.ConstantName)
+                        .Append(&quot; = &quot;)
+                        .Append(value)
+                        .Append(&#39;;&#39;)
+                        .AppendComment(constantLine.Comment);
+                    break;
+                case LabelLine labelLine:
+                    sb
+                        .Append(labelLine.LabelName)
+                        .Append(&quot;:&quot;)
+                        .AppendComment(labelLine.Comment);
+                    break;
+                case LoadLine loadLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(loadLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(loadLine.Comment);
+                    break;
+                case CallLine callLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(callLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(callLine.Comment);
+                    break;
+                case HaltLine haltLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(haltLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(haltLine.Comment);
+                    break;
+                case RelativeJumpLine relativeJumpLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(relativeJumpLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(relativeJumpLine.Comment);
+                    break;
+                case IncrementLine incrementLine:
+                    sb.AppendCode($&quot;{incrementLine.Increment}++;&quot;, tabCount, incrementLine.Comment);
+                    break;
+                case DecrementLine decrementLine:
+                    sb.AppendCode($&quot;{decrementLine.Decrement}--;&quot;, tabCount, decrementLine.Comment);
+                    break;
+                case ReturnLine returnLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(returnLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(returnLine.Comment);
+                    break;
+                case DefineLine defineLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(defineLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(defineLine.Comment);
+                    break;
+                case MacroLine macroLine:
+                    tabCount = Macro.ProcessMacro(sb, tabCount, macroLine);
+                    break;
+                case EndMacroLine endMacroLine:
+                    sb.Append(new string(&#39;\t&#39;, --tabCount)).Append(&quot;}&quot;).AppendComment(endMacroLine.Comment);
+                    break;
+                case EndConditionLine endConditionLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;}&quot;).AppendComment(endConditionLine.Comment);
+                    break;
+                case SectionLine sectionLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(sectionLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(sectionLine.Comment);
+                    break;
+                case NopLine nopLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/*&quot;).Append(nopLine.Code).Append(&quot;*/&quot;).AppendComment(nopLine.Comment);
+                    break;
+                case JumpLine jumpLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(jumpLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(jumpLine.Comment);
+                    break;
+                case DisableInterruptsLine disableInterruptsLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(disableInterruptsLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(disableInterruptsLine.Comment);
+                    break;
+                case SubtractCompareLine subtractCompareLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(subtractCompareLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(subtractCompareLine.Comment);
+                    break;
+                case ExclusiveOrLine exclusiveOrLine:
+                    sb.AppendCode($&quot;{exclusiveOrLine.From} ^= {exclusiveOrLine.Value};&quot;, tabCount, exclusiveOrLine.Comment);
+                    break;
+                case IfLine ifLine:
+                    tabCount = If.ProcessIf(sb, tabCount, ifLine);
+                    break;
+                case WarnLine warnLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;Trace.TraceWarning($\&quot;&quot;).Append(warnLine.Warning)
+                        .Append(&quot;\&quot;);&quot;).AppendComment(warnLine.Comment);
+                    break;
+                //-- hello-world.asm
+                case FailLine failLine:
+                    for (var i = 1; i &lt; 10; i++)
+                    {
+                        failLine.FailMessage = failLine.FailMessage.Replace($&quot;\\{i}&quot;, $&quot;{{args[{i}]}}&quot;);
+                    }
+
+
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;Trace.Fail($\&quot;&quot;).Append(failLine.FailMessage).Append(&quot;\&quot;);&quot;)
+                        .AppendComment(failLine.Comment);
+                    break;
+                case PushOptionLine pushOptionLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(pushOptionLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(pushOptionLine.Comment);
+                    break;
+                case OptionLine optionLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(optionLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(optionLine.Comment);
+                    break;
+                case PopOptionLine popOptionLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(popOptionLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(popOptionLine.Comment);
+                    break;
+                case LabelCallLine labelCallLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(labelCallLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(labelCallLine.Comment);
+                    break;
+                case LoadHighLine loadHighLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(loadHighLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(loadHighLine.Comment);
+                    break;
+                case AndLine andLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(andLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(andLine.Comment);
+                    break;
+                case PushLine pushLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(pushLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(pushLine.Comment);
+                    break;
+                case PopLine popLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(popLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(popLine.Comment);
+                    break;
+                case EnableInterruptsLine enableInterruptsLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(enableInterruptsLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(enableInterruptsLine.Comment);
+                    break;
+                case RotateRegisterALeftLine rotateRegisterALeftLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(rotateRegisterALeftLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(rotateRegisterALeftLine.Comment);
+                    break;
+                case ResetByteLine resetByteLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(resetByteLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(resetByteLine.Comment);
+                    break;
+                //-- dmg_boot (2) orig.asm
+                case BitLine bitLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(bitLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(bitLine.Comment);
+                    break;
+                case ShiftRightArithmeticLine shiftRightArithmeticLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(shiftRightArithmeticLine.Code).Append(&quot;*/&quot;)
+                        .AppendComment(shiftRightArithmeticLine.Comment);
+                    break;
+                case AddLine addLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(addLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(addLine.Comment);
+                    break;
+                case ShiftLeftArithmeticLine shiftLeftArithmeticLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(shiftLeftArithmeticLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(shiftLeftArithmeticLine.Comment);
+                    break;
+                case RotateLeftLine rotateLeftLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(rotateLeftLine.Code).Append(&quot; */&quot;)
+                        .AppendComment(rotateLeftLine.Comment);
+                    break;
+                //-- pokered: main.asm
+                case CharMapLine charMapLine:
+                    var normalised = charMapLine.From.TrimStart(&#39;$&#39;).Insert(0, &quot;0x&quot;);
+
+                    sb
+                        .Append(new string(&#39;\t&#39;, tabCount))
+                        .Append(&quot;CharMap[&quot;)
+                        .Append(normalised)
+                        .Append(&quot;] = &quot;)
+                        .Append(charMapLine.Into)
+                        .Append(&#39;;&#39;)
+                        .AppendComment(charMapLine.Comment);
+                    break;
+                case ElseLine elseLine:
+                    sb.Append(new string(&#39;\t&#39;, --tabCount)).AppendLine(&quot;}&quot;);
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;else&quot;).AppendComment(elseLine.Comment);
+                    sb.Append(new string(&#39;\t&#39;, tabCount++)).AppendLine(&quot;{&quot;);
+                    break;
+                case RepeatLine repeatLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(repeatLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(repeatLine.Comment);
+                    break;
+                case PurgeLine purgeLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(purgeLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(purgeLine.Comment);
+                    break;
+                case EndRepeatLine endRepeatLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(endRepeatLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(endRepeatLine.Comment);
+                    break;
+                case ShiftLine shiftLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(shiftLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(shiftLine.Comment);
+                    break;
+                case ConstantAssignLine constantAssignLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(constantAssignLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(constantAssignLine.Comment);
+                    break;
+                case RotateRegisterARightLine rotateRegisterARightLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(rotateRegisterARightLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(rotateRegisterARightLine.Comment);
+                    break;
+                case OrLine orLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(orLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(orLine.Comment);
+                    break;
+                case ComplementLine complementLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(complementLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(complementLine.Comment);
+                    break;
+                case AssertLine assertLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(assertLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(assertLine.Comment);
+                    break;
+                case SwapLine swapLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(swapLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(swapLine.Comment);
+                    break;
+                case Load2Line load2Line:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(load2Line.Code).Append(&quot; */&quot;)
+                            .AppendComment(load2Line.Comment);
+                    break;
+                case EndLoadLine endLoadLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(endLoadLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(endLoadLine.Comment);
+                    break;
+                case SubtractLine subtractLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(subtractLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(subtractLine.Comment);
+                    break;
+                case ComplementCarryFlagLine complementCarryFlagLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(complementCarryFlagLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(complementCarryFlagLine.Comment);
+                    break;
+                case SetCarryFlagLine setCarryFlagLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(setCarryFlagLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(setCarryFlagLine.Comment);
+                    break;
+                case ShiftRightLogicLine shiftRightLogicLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(shiftRightLogicLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(shiftRightLogicLine.Comment);
+                    break;
+                case DecimalAdjustAccumulatorLine decimalAdjustAccumulatorLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(decimalAdjustAccumulatorLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(decimalAdjustAccumulatorLine.Comment);
+                    break;
+                case RotateRegisterRightLine rotateRegisterRightLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(rotateRegisterRightLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(rotateRegisterRightLine.Comment);
+                    break;
+                case RotateALeftLine rotateALeftLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(rotateALeftLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(rotateALeftLine.Comment);
+                    break;
+                case RotateRegisterLeftLine rotateRegisterLeftLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(rotateRegisterLeftLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(rotateRegisterLeftLine.Comment);
+                    break;
+                case DeclareSpaceLine declareSpaceLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(declareSpaceLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(declareSpaceLine.Comment);
+                    break;
+                //-- pokered: home.asm
+                case RestartLine restartLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(restartLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(restartLine.Comment);
+                    break;
+                case MacroArgumentLine macroArgumentLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(macroArgumentLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(macroArgumentLine.Comment);
+                    break;
+                //-- Pokemon Red (UE) [S][!].asm
+                case StopLine stopLine:
+                    sb.Append(new string(&#39;\t&#39;, tabCount)).Append(&quot;/* &quot;).Append(stopLine.Code).Append(&quot; */&quot;)
+                            .AppendComment(stopLine.Comment);
+                    break;
+                default:
+                    Debug.WriteLine(parsedLine.GetType().FullName);
+                    throw new NotImplementedException(parsedLine.GetType().FullName);
+                    break;
+            }
+
+            return tabCount;
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,9,15,10,1],[16,13,16,58,1],[18,13,18,42,1],[20,13,20,141,1],[22,13,22,71,1],[26,13,26,20,1],[26,22,26,33,1],[26,34,26,36,1],[26,37,26,45,1],[27,13,27,14,1],[28,14,28,62,1],[29,13,29,14,1],[31,13,31,30,1],[33,13,40,34,1],[42,13,45,34,1],[48,13,48,20,1],[48,22,48,36,1],[48,37,48,39,1],[48,40,48,51,1],[49,13,49,14,1],[50,17,50,67,1],[51,13,51,14,1],[53,13,53,60,1],[54,13,54,60,1],[55,13,55,32,1],[57,13,57,64,1],[58,9,58,10,1],[61,9,61,10,1],[62,13,62,32,1],[65,21,65,72,1],[66,25,66,41,1],[68,25,68,109,1],[69,21,69,27,1],[72,21,73,61,1],[74,21,74,27,1],[76,21,83,62,1],[84,21,84,27,1],[86,21,86,60,1],[87,21,87,43,1],[89,21,89,60,1],[92,29,92,74,1],[93,29,93,35,1],[95,29,95,74,1],[96,29,96,35,1],[98,29,98,87,0],[99,29,99,35,0],[101,29,101,50,0],[102,29,102,35,0],[104,29,104,35,1],[106,29,106,51,0],[107,29,107,35,0],[109,29,109,35,0],[111,29,111,69,0],[114,21,123,62,1],[124,21,124,27,1],[126,21,129,59,1],[130,21,130,27,1],[132,21,133,58,1],[134,21,134,27,1],[136,21,137,58,1],[138,21,138,27,1],[140,21,141,58,1],[142,21,142,27,1],[144,21,145,66,1],[146,21,146,27,1],[148,21,148,101,1],[149,21,149,27,1],[151,21,151,101,1],[152,21,152,27,1],[154,21,155,60,1],[156,21,156,27,1],[158,21,159,60,1],[160,21,160,27,1],[162,21,162,76,1],[163,21,163,27,1],[165,21,165,109,1],[166,21,166,27,1],[168,21,168,111,1],[169,21,169,27,1],[171,21,172,61,1],[173,21,173,27,1],[175,21,175,137,1],[176,21,176,27,1],[178,21,179,58,1],[180,21,180,27,1],[182,21,183,71,1],[184,21,184,27,1],[186,21,187,69,1],[188,21,188,27,1],[190,21,190,125,1],[191,21,191,27,1],[193,21,193,67,1],[194,21,194,27,1],[196,21,197,73,1],[198,21,198,27,1],[201,26,201,35,1],[201,37,201,43,1],[201,45,201,48,1],[202,21,202,22,1],[203,25,203,105,1],[204,21,204,22,1],[207,21,208,58,1],[209,21,209,27,1],[211,21,212,64,1],[213,21,213,27,1],[215,21,216,60,1],[217,21,217,27,1],[219,21,220,63,1],[221,21,221,27,1],[223,21,224,63,0],[225,21,225,27,0],[227,21,228,62,1],[229,21,229,27,1],[231,21,232,57,1],[233,21,233,27,1],[235,21,236,58,1],[237,21,237,27,1],[239,21,240,57,1],[241,21,241,27,1],[243,21,244,70,1],[245,21,245,27,1],[247,21,248,73,1],[249,21,249,27,1],[251,21,252,63,1],[253,21,253,27,1],[256,21,257,57,1],[258,21,258,27,1],[260,21,261,74,0],[262,21,262,27,0],[264,21,265,57,1],[266,21,266,27,1],[268,21,269,73,1],[270,21,270,27,1],[272,21,273,64,0],[274,21,274,27,0],[277,21,277,86,0],[279,21,286,61,0],[287,21,287,27,0],[289,21,289,77,0],[290,21,290,106,0],[291,21,291,77,0],[292,21,292,27,0],[294,21,295,64,0],[296,21,296,27,0],[298,21,299,63,0],[300,21,300,27,0],[302,21,303,67,0],[304,21,304,27,0],[306,21,307,63,0],[308,21,308,27,0],[310,21,311,72,0],[312,21,312,27,0],[314,21,315,78,1],[316,21,316,27,1],[318,21,319,60,1],[320,21,320,27,1],[322,21,323,68,1],[324,21,324,27,1],[326,21,327,64,0],[328,21,328,27,0],[330,21,331,62,1],[332,21,332,27,1],[334,21,335,63,0],[336,21,336,27,0],[338,21,339,65,0],[340,21,340,27,0],[342,21,343,66,1],[344,21,344,27,1],[346,21,347,77,0],[348,21,348,27,0],[350,21,351,70,0],[352,21,352,27,0],[354,21,355,73,1],[356,21,356,27,1],[358,21,359,82,1],[360,21,360,27,1],[362,21,363,77,1],[364,21,364,27,1],[366,21,367,69,1],[368,21,368,27,1],[370,21,371,76,0],[372,21,372,27,0],[374,21,375,70,0],[376,21,376,27,0],[379,21,380,65,1],[381,21,381,27,1],[383,21,384,71,0],[385,21,385,27,0],[388,21,389,62,0],[390,21,390,27,0],[392,21,392,68,0],[393,21,393,86,0],[397,13,397,29,1],[398,9,398,10,1]]);
+    </script>
+  </body>
+</html>

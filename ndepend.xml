@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root CoveredStatements="951" TotalStatements="1406" CoveragePercent="68" ReportType="NDependXML" DotCoverVersion="2020.3.3">
+  <Assembly Name="RGBDS2CIL" CoveredStatements="951" TotalStatements="1406" CoveragePercent="68">
+    <Namespace Name="RGBDS2CIL" CoveredStatements="951" TotalStatements="1406" CoveragePercent="68">
+      <Type Name="AddLine" CoveredStatements="15" TotalStatements="16" CoveragePercent="94">
+        <Method Name=".ctor(CodeLine,Boolean)" CoveredStatements="13" TotalStatements="14" CoveragePercent="93" FirstStatementLine="11" />
+        <Method Name="get_CarryFlag()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="set_CarryFlag(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="AndLine" CoveredStatements="10" TotalStatements="14" CoveragePercent="71">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="10" TotalStatements="14" CoveragePercent="71" FirstStatementLine="10" />
+      </Type>
+      <Type Name="AssertLine" CoveredStatements="0" TotalStatements="11" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="11" CoveragePercent="0" FirstStatementLine="11" />
+      </Type>
+      <Type Name="BitLine" CoveredStatements="13" TotalStatements="14" CoveragePercent="93">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="13" TotalStatements="14" CoveragePercent="93" FirstStatementLine="10" />
+      </Type>
+      <Type Name="CallLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="CharMapLine" CoveredStatements="0" TotalStatements="8" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="8" CoveragePercent="0" FirstStatementLine="10" />
+      </Type>
+      <Type Name="Cil" CoveredStatements="0" TotalStatements="75" CoveragePercent="0">
+        <Method Name="GenerateCil()" CoveredStatements="0" TotalStatements="59" CoveragePercent="0" FirstStatementLine="15" />
+        <Method Name="GetCil(String)" CoveredStatements="0" TotalStatements="16" CoveragePercent="0" FirstStatementLine="200" />
+      </Type>
+      <Type Name="CodeLine" CoveredStatements="26" TotalStatements="30" CoveragePercent="87">
+        <Method Name=".ctor(String,CodeLine,List&lt;String&gt;)" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" FirstStatementLine="22" />
+        <Method Name=".ctor(String,String,String,String,Int32,List&lt;String&gt;)" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" FirstStatementLine="33" />
+        <Method Name="get_Comment()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="11" />
+        <Method Name="get_FileName()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="12" />
+        <Method Name="get_Line()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="13" />
+        <Method Name="get_Raw()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="Reparse()" CoveredStatements="0" TotalStatements="4" CoveragePercent="0" FirstStatementLine="16" />
+        <Method Name="set_Comment(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="11" />
+        <Method Name="set_FileName(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="12" />
+        <Method Name="set_Line(Int32)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="13" />
+        <Method Name="set_Raw(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="CommentLine" CoveredStatements="15" TotalStatements="18" CoveragePercent="83">
+        <Method Name=".ctor(String,String,String,Int32)" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" FirstStatementLine="5" />
+        <Method Name="get_Comment()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="14" />
+        <Method Name="get_FileName()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="15" />
+        <Method Name="get_Line()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="16" />
+        <Method Name="get_Raw()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="13" />
+        <Method Name="Reparse()" CoveredStatements="0" TotalStatements="3" CoveragePercent="0" FirstStatementLine="18" />
+        <Method Name="set_Comment(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="14" />
+        <Method Name="set_FileName(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="15" />
+        <Method Name="set_Line(Int32)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="16" />
+        <Method Name="set_Raw(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="13" />
+      </Type>
+      <Type Name="ComplementCarryFlagLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ComplementLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ConstantAssignLine" CoveredStatements="0" TotalStatements="8" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine,ConstantLine)" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" FirstStatementLine="7" />
+        <Method Name="get_ConstantLine()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="5" />
+        <Method Name="set_ConstantLine(ConstantLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ConstantLine" CoveredStatements="21" TotalStatements="36" CoveragePercent="58">
+        <Method Name=".ctor(CodeLine,String)" CoveredStatements="19" TotalStatements="24" CoveragePercent="79" FirstStatementLine="12" />
+        <Method Name="get_ConstantValueType()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="Reparse()" CoveredStatements="0" TotalStatements="10" CoveragePercent="0" FirstStatementLine="43" />
+        <Method Name="set_ConstantValueType(ConstantType)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="CSharp" CoveredStatements="143" TotalStatements="194" CoveragePercent="74">
+        <Method Name="GenerateCsharp(String,List&lt;IAsmLine&gt;)" CoveredStatements="27" TotalStatements="27" CoveragePercent="100" FirstStatementLine="15" />
+        <Method Name="OutputCSharp(IAsmLine,StringBuilder,Int32)" CoveredStatements="116" TotalStatements="167" CoveragePercent="69" FirstStatementLine="61" />
+      </Type>
+      <Type Name="DecimalAdjustAccumulatorLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="DeclareSpaceLine" CoveredStatements="0" TotalStatements="14" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="14" CoveragePercent="0" FirstStatementLine="10" />
+      </Type>
+      <Type Name="DecrementLine" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="get_Decrement()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+        <Method Name="set_Decrement(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+      </Type>
+      <Type Name="DefineLine" CoveredStatements="12" TotalStatements="12" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine,Type)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" FirstStatementLine="11" />
+        <Method Name="get_DefineType()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="get_Parameters()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="set_DefineType(Type)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="set_Parameters(List&lt;String&gt;)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+      </Type>
+      <Type Name="DisableInterruptsLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ElseLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="EnableInterruptsLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="EndConditionLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="EndLoadLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="EndMacroLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="EndRepeatLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ExclusiveOrLine" CoveredStatements="10" TotalStatements="14" CoveragePercent="71">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="10" TotalStatements="14" CoveragePercent="71" FirstStatementLine="10" />
+      </Type>
+      <Type Name="FailLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="HaltLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="If" CoveredStatements="13" TotalStatements="19" CoveragePercent="68">
+        <Method Name="ProcessIf(StringBuilder,Int32,IfLine)" CoveredStatements="13" TotalStatements="19" CoveragePercent="68" FirstStatementLine="8" />
+      </Type>
+      <Type Name="IfLine" CoveredStatements="23" TotalStatements="25" CoveragePercent="92">
+        <Method Name=".ctor(CodeLine,Boolean)" CoveredStatements="9" TotalStatements="10" CoveragePercent="90" FirstStatementLine="9" />
+        <Method Name="get_IsElseIf()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="get_Lines()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="Reparse()" CoveredStatements="11" TotalStatements="11" CoveragePercent="100" FirstStatementLine="23" />
+        <Method Name="set_IsElseIf(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="set_Lines(List&lt;IAsmLine&gt;)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="9" />
+      </Type>
+      <Type Name="IncludeLine" CoveredStatements="13" TotalStatements="14" CoveragePercent="93">
+        <Method Name=".ctor(CodeLine,Boolean)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" FirstStatementLine="11" />
+        <Method Name="get_Binary()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="get_IsBinary()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="get_Lines()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="11" />
+        <Method Name="set_Binary(Byte[])" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="set_IsBinary(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="set_Lines(List&lt;IAsmLine&gt;)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="11" />
+      </Type>
+      <Type Name="IncrementLine" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+        <Method Name="get_Increment()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+        <Method Name="set_Increment(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+      </Type>
+      <Type Name="JumpLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="LabelCallLine" CoveredStatements="7" TotalStatements="8" CoveragePercent="88">
+        <Method Name=".ctor(CodeLine,LabelLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="7" />
+        <Method Name="get_LabelLine()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="5" />
+        <Method Name="set_LabelLine(LabelLine)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="LabelLine" CoveredStatements="13" TotalStatements="14" CoveragePercent="93">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="9" TotalStatements="10" CoveragePercent="90" FirstStatementLine="11" />
+        <Method Name="get_HasExport()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="get_IsGlobal()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+        <Method Name="set_HasExport(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="set_IsGlobal(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+      </Type>
+      <Type Name="Load2Line" CoveredStatements="0" TotalStatements="11" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="7" CoveragePercent="0" FirstStatementLine="10" />
+        <Method Name="get_Label()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="7" />
+        <Method Name="get_Location()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="8" />
+        <Method Name="set_Label(String)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="7" />
+        <Method Name="set_Location(String)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="8" />
+      </Type>
+      <Type Name="LoadHighLine" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="LoadLine" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine,String)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="Macro" CoveredStatements="20" TotalStatements="69" CoveragePercent="29">
+        <Method Name="ProcessMacro(StringBuilder,Int32,MacroLine)" CoveredStatements="20" TotalStatements="49" CoveragePercent="41" FirstStatementLine="11" />
+        <Method Name="ReplaceArgs(IAsmLine,Int32,List&lt;IAsmLine&gt;)" CoveredStatements="0" TotalStatements="20" CoveragePercent="0" FirstStatementLine="59" />
+      </Type>
+      <Type Name="MacroArgumentLine" CoveredStatements="0" TotalStatements="8" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" FirstStatementLine="7" />
+        <Method Name="get_Argument()" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="5" />
+        <Method Name="set_Argument(Byte)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="MacroLine" CoveredStatements="14" TotalStatements="15" CoveragePercent="93">
+        <Method Name=".ctor(CodeLine,String)" CoveredStatements="9" TotalStatements="9" CoveragePercent="100" FirstStatementLine="22" />
+        <Method Name="get_IsLocal()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="19" />
+        <Method Name="get_Lines()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="22" />
+        <Method Name="get_Name()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="21" />
+        <Method Name="set_IsLocal(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="19" />
+        <Method Name="set_Lines(List&lt;IAsmLine&gt;)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="22" />
+        <Method Name="set_Name(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="21" />
+      </Type>
+      <Type Name="MyExtensions" CoveredStatements="9" TotalStatements="9" CoveragePercent="100">
+        <Method Name="AppendCode(StringBuilder,String,Int32,String)" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" FirstStatementLine="21" />
+        <Method Name="AppendComment(StringBuilder,String)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="13" />
+        <Method Name="CommandName(String,String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="NopLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="OptionLine" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+        <Type Name="&lt;&gt;c" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <Method Name="&lt;.ctor&gt;b__4_0(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="17" />
+          <Method Name="&lt;.ctor&gt;b__4_1(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="17" />
+        </Type>
+        <Method Name=".ctor(CodeLine)" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="get_Options()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="set_Options(Dictionary&lt;String,String&gt;)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+      </Type>
+      <Type Name="OrLine" CoveredStatements="10" TotalStatements="14" CoveragePercent="71">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="10" TotalStatements="14" CoveragePercent="71" FirstStatementLine="10" />
+      </Type>
+      <Type Name="Parser" CoveredStatements="266" TotalStatements="324" CoveragePercent="82">
+        <Type Name="&lt;&gt;c" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+          <Method Name="&lt;FlattenMultiLine&gt;b__13_0(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="66" />
+          <Method Name="&lt;GetComment&gt;b__17_0(Match)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="383" />
+          <Method Name="&lt;GetStrings&gt;b__18_0(Match)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="398" />
+          <Method Name="&lt;ParseLine&gt;b__15_0(LabelLine)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="320" />
+          <Method Name="&lt;ParseLine&gt;b__15_2(ConstantLine)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="339" />
+          <Method Name="&lt;RemoveCommentFromCode&gt;b__16_0(Match)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="372" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass14_0" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Method Name="&lt;GetLines&gt;b__0(String,Int32)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="71" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass15_0" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Method Name="&lt;ParseLine&gt;b__1(LabelLine)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="324" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass15_1" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <Method Name="&lt;ParseLine&gt;b__3(ConstantLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="345" />
+        </Type>
+        <Method Name=".cctor()" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" FirstStatementLine="13" />
+        <Method Name="ExportJson(String,List&lt;IAsmLine&gt;)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="23" />
+        <Method Name="FlattenMultiLine(IList&lt;String&gt;)" CoveredStatements="12" TotalStatements="27" CoveragePercent="44" FirstStatementLine="34" />
+        <Method Name="get_Constants()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="20" />
+        <Method Name="get_Labels()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="19" />
+        <Method Name="get_RootFolder()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="18" />
+        <Method Name="GetComment(String)" CoveredStatements="8" TotalStatements="9" CoveragePercent="89" FirstStatementLine="380" />
+        <Method Name="GetLines(IEnumerable&lt;String&gt;,String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="69" />
+        <Method Name="GetParameter(String)" CoveredStatements="14" TotalStatements="14" CoveragePercent="100" FirstStatementLine="420" />
+        <Method Name="GetParameters(String)" CoveredStatements="11" TotalStatements="12" CoveragePercent="92" FirstStatementLine="404" />
+        <Method Name="GetStrings(String)" CoveredStatements="6" TotalStatements="7" CoveragePercent="86" FirstStatementLine="393" />
+        <Method Name="ParseLine(String,String,Int32)" CoveredStatements="187" TotalStatements="226" CoveragePercent="83" FirstStatementLine="74" />
+        <Method Name="RemoveCommentFromCode(String)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="371" />
+        <Method Name="set_RootFolder(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="18" />
+      </Type>
+      <Type Name="PopLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="PopOptionLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="Program" CoveredStatements="19" TotalStatements="20" CoveragePercent="95">
+        <Method Name="Main()" CoveredStatements="15" TotalStatements="16" CoveragePercent="94" FirstStatementLine="9" />
+        <Method Name="RestructureLines(List&lt;IAsmLine&gt;)" CoveredStatements="4" TotalStatements="4" CoveragePercent="100" FirstStatementLine="78" />
+      </Type>
+      <Type Name="PurgeLine" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" FirstStatementLine="9" />
+      </Type>
+      <Type Name="PushLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="PushOptionLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="RelativeJumpLine" CoveredStatements="14" TotalStatements="14" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="14" TotalStatements="14" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="RepeatLine" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" FirstStatementLine="7" />
+      </Type>
+      <Type Name="ResetByteLine" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" FirstStatementLine="14" />
+      </Type>
+      <Type Name="RestartLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="Restructure" CoveredStatements="24" TotalStatements="68" CoveragePercent="35">
+        <Type Name="&lt;&gt;c" CoveredStatements="0" TotalStatements="8" CoveragePercent="0">
+          <Method Name="&lt;RestructureIfs&gt;b__1_1(IfLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="49" />
+          <Method Name="&lt;RestructureIfs&gt;b__1_3(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="54" />
+          <Method Name="&lt;RestructureIfs&gt;b__1_4(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="69" />
+          <Method Name="&lt;RestructureIfs&gt;b__1_5(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="70" />
+          <Method Name="&lt;RestructureMacros&gt;b__0_1(MacroLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="13" />
+          <Method Name="&lt;RestructureMacros&gt;b__0_3(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="18" />
+          <Method Name="&lt;RestructureMacros&gt;b__0_4(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="33" />
+          <Method Name="&lt;RestructureMacros&gt;b__0_5(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="34" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass0_0" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Method Name="&lt;RestructureMacros&gt;b__0(IAsmLine)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="33" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass0_1" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <Method Name="&lt;RestructureMacros&gt;b__2(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="16" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass0_2" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <Method Name="&lt;RestructureMacros&gt;b__6(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="38" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass1_0" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Method Name="&lt;RestructureIfs&gt;b__0(IAsmLine)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="69" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass1_1" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <Method Name="&lt;RestructureIfs&gt;b__2(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="52" />
+        </Type>
+        <Type Name="&lt;&gt;c__DisplayClass1_2" CoveredStatements="0" TotalStatements="1" CoveragePercent="0">
+          <Method Name="&lt;RestructureIfs&gt;b__6(IAsmLine)" CoveredStatements="0" TotalStatements="1" CoveragePercent="0" FirstStatementLine="74" />
+        </Type>
+        <Method Name="RestructureIfs(List&lt;IAsmLine&gt;)" CoveredStatements="11" TotalStatements="27" CoveragePercent="41" FirstStatementLine="45" />
+        <Method Name="RestructureMacros(List&lt;IAsmLine&gt;)" CoveredStatements="11" TotalStatements="27" CoveragePercent="41" FirstStatementLine="9" />
+      </Type>
+      <Type Name="ReturnLine" CoveredStatements="11" TotalStatements="11" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine,Boolean)" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="get_EnableInterrupts()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+        <Method Name="get_Return()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+        <Method Name="set_EnableInterrupts(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="7" />
+        <Method Name="set_Return(String)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="8" />
+      </Type>
+      <Type Name="RotateALeftLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="RotateLeftLine" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" FirstStatementLine="9" />
+      </Type>
+      <Type Name="RotateRegisterALeftLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="RotateRegisterARightLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="RotateRegisterLeftLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="RotateRegisterRightLine" CoveredStatements="5" TotalStatements="5" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="5" TotalStatements="5" CoveragePercent="100" FirstStatementLine="5" />
+      </Type>
+      <Type Name="SectionLine" CoveredStatements="8" TotalStatements="8" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="8" TotalStatements="8" CoveragePercent="100" FirstStatementLine="11" />
+      </Type>
+      <Type Name="SetCarryFlagLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ShiftLeftArithmeticLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="7" />
+      </Type>
+      <Type Name="ShiftLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="ShiftRightArithmeticLine" CoveredStatements="0" TotalStatements="6" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="6" CoveragePercent="0" FirstStatementLine="7" />
+      </Type>
+      <Type Name="ShiftRightLogicLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="7" />
+      </Type>
+      <Type Name="StopLine" CoveredStatements="0" TotalStatements="5" CoveragePercent="0">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="0" TotalStatements="5" CoveragePercent="0" FirstStatementLine="5" />
+      </Type>
+      <Type Name="SubtractCompareLine" CoveredStatements="20" TotalStatements="24" CoveragePercent="83">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="20" TotalStatements="24" CoveragePercent="83" FirstStatementLine="12" />
+      </Type>
+      <Type Name="SubtractLine" CoveredStatements="17" TotalStatements="18" CoveragePercent="94">
+        <Method Name=".ctor(CodeLine,Boolean)" CoveredStatements="15" TotalStatements="16" CoveragePercent="94" FirstStatementLine="12" />
+        <Method Name="get_CarryFlag()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+        <Method Name="set_CarryFlag(Boolean)" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="SwapLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+      <Type Name="VariableLine" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="7" TotalStatements="7" CoveragePercent="100" FirstStatementLine="10" />
+      </Type>
+      <Type Name="WarnLine" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor(CodeLine)" CoveredStatements="6" TotalStatements="6" CoveragePercent="100" FirstStatementLine="9" />
+      </Type>
+    </Namespace>
+  </Assembly>
+</Root>

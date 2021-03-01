@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\Lines\CommentLine.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+namespace RGBDS2CIL
+{
+	public class CommentLine : IAsmLine
+	{
+		public CommentLine(string raw, string comment, string fileName, int line)
+		{
+			Comment = comment;
+			Raw = raw;
+			FileName = fileName;
+			Line = line;
+		}
+
+		public string Raw { get; set; }
+		public string Comment { get; set; }
+		public string FileName { get; set; }
+		public int Line { get; set; }
+		public IAsmLine Reparse()
+		{
+			return this;
+		}
+	}
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[5,3,5,76,1],[6,3,6,4,1],[7,4,7,22,1],[8,4,8,14,1],[9,4,9,24,1],[10,4,10,16,1],[11,3,11,4,1],[13,23,13,27,1],[13,28,13,32,1],[14,27,14,31,1],[14,32,14,36,1],[15,28,15,32,1],[15,33,15,37,1],[16,21,16,25,1],[16,26,16,30,1],[18,3,18,4,0],[19,4,19,16,0],[20,3,20,4,0]]);
+    </script>
+  </body>
+</html>

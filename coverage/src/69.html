@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\Lines\SubtractLine.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Linq;
+
+namespace RGBDS2CIL
+{
+	public class SubtractLine : CodeLine
+	{
+		public string From;
+		public string Value;
+		public bool CarryFlag { get; set; }
+
+		public SubtractLine(CodeLine codeLine, bool carryFlag) : base(codeLine.Code, codeLine, codeLine.Strings)
+		{
+			base.Comment = codeLine.Comment;
+			base.Raw = codeLine.Raw;
+			CarryFlag = carryFlag;
+			var split = codeLine.Code[&quot;SUB&quot;.Length..].Trim().Split(&#39;,&#39;); //SUB or SBC
+
+			From = &quot;A&quot;; //default?
+			if (split.Length == 2)
+			{
+				From = split[0].Trim();
+				Value = split.Last().Trim();
+			}
+			else if (split.Length == 1)
+				Value = split.Single().Trim();
+			else
+				Console.Error.WriteLine(codeLine.Code[&quot;SUB&quot;.Length..].Trim());
+		}
+	}
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,27,10,31,1],[10,32,10,36,1],[12,60,12,107,1],[13,3,13,4,1],[14,4,14,36,1],[15,4,15,28,1],[16,4,16,26,1],[17,4,17,64,1],[19,4,19,15,1],[20,4,20,26,1],[21,4,21,5,1],[22,5,22,28,1],[23,5,23,33,1],[24,4,24,5,1],[25,9,25,31,1],[26,5,26,35,1],[28,5,28,67,0],[29,3,29,4,1]]);
+    </script>
+  </body>
+</html>

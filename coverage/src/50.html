@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\Lines\RelativeJumpLine.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Linq;
+
+namespace RGBDS2CIL
+{
+	public class RelativeJumpLine : CodeLine
+	{
+		public string Condition;
+		public string Offset;
+
+		public RelativeJumpLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
+		{
+			base.Comment = codeLine.Comment;
+			base.Raw = codeLine.Raw;
+
+			var parameters = codeLine.Code[&quot;JR&quot;.Length..].Split(&#39;,&#39;);
+
+			if (parameters.Length == 1)
+			{
+				Offset = parameters.Single().Trim();
+			}
+			else
+			{
+				Condition = parameters[0].Trim();
+				Offset = parameters.Last().Trim();
+			}
+		}
+	}
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,48,10,95,1],[11,3,11,4,1],[12,4,12,36,1],[13,4,13,28,1],[15,4,15,61,1],[17,4,17,31,1],[18,4,18,5,1],[19,5,19,41,1],[20,4,20,5,1],[22,4,22,5,1],[23,5,23,38,1],[24,5,24,39,1],[25,4,25,5,1],[26,3,26,4,1]]);
+    </script>
+  </body>
+</html>

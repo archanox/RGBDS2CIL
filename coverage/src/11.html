@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\Lines\CodeLine.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+
+namespace RGBDS2CIL
+{
+	public class CodeLine : IAsmLine
+	{
+		public string Code;
+		public List&lt;string&gt; Strings;
+		public string Raw { get; set; }
+		public string Comment { get; set; }
+		public string FileName { get; set; }
+		public int Line { get; set; }
+
+		public virtual IAsmLine Reparse()
+		{
+			//throw new NotImplementedException();
+			Console.Error.WriteLine(this.GetType().FullName + &quot; not re-parsed!&quot;);
+			return this;
+		}
+
+		public CodeLine(string code, CodeLine codeLine, List&lt;string&gt; strings)
+		{
+			Code = code;
+			//Strings = codeLine.Strings;
+			Comment = codeLine.Comment;
+			Raw = codeLine.Raw;
+			FileName = codeLine.FileName;
+			Strings = strings;
+			Line = codeLine.Line;
+		}
+
+		public CodeLine(string code, string raw, string comment, string fileName, int line, List&lt;string&gt; strings)
+		{
+			Code = code;
+			Strings = strings;
+			Comment = comment;
+			Raw = raw;
+			FileName = fileName;
+			Line = line;
+		}
+	}
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,23,10,27,1],[10,28,10,32,1],[11,27,11,31,1],[11,32,11,36,1],[12,28,12,32,1],[12,33,12,37,1],[13,21,13,25,1],[13,26,13,30,1],[16,3,16,4,0],[18,4,18,73,0],[19,4,19,16,0],[20,3,20,4,0],[22,3,22,72,1],[23,3,23,4,1],[24,4,24,16,1],[26,4,26,31,1],[27,4,27,23,1],[28,4,28,33,1],[29,4,29,22,1],[30,4,30,25,1],[31,3,31,4,1],[33,3,33,108,1],[34,3,34,4,1],[35,4,35,16,1],[36,4,36,22,1],[37,4,37,22,1],[38,4,38,14,1],[39,4,39,24,1],[40,4,40,16,1],[41,3,41,4,1]]);
+    </script>
+  </body>
+</html>

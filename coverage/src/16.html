@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\pierc\source\repos\RGBDS2CIL\RGBDS2CIL\Lines\ConstantLine.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System.Linq;
+
+namespace RGBDS2CIL
+{
+	public class ConstantLine : CodeLine
+	{
+		public string ConstantName;
+		public string ConstantValue;
+		public string ConstType;
+		public ConstantType ConstantValueType { get; set; }
+
+		public ConstantLine(CodeLine codeLine, string constType) : base(codeLine.Code, codeLine, codeLine.Strings)
+		{
+			base.Comment = codeLine.Comment;
+			base.Raw = codeLine.Raw;
+			this.ConstType = constType;
+			ConstantName = codeLine.Code.Trim().Split()[0];
+
+			var constString = codeLine.Strings?.SingleOrDefault()?.TrimStart(&#39;&quot;&#39;).TrimEnd(&#39;&quot;&#39;);
+
+			if (!string.IsNullOrWhiteSpace(constString) &amp;&amp; constType == &quot;EQUS&quot;)
+				ConstantValue = $&quot;\&quot;{constString}\&quot;&quot;;
+			else
+				ConstantValue = codeLine.Code[(codeLine.Code.IndexOf(constType) + constType.Length)..].Trim();
+
+			if (ConstantValue.StartsWith(&#39;$&#39;))
+				ConstantValueType = ConstantType.Hexadecimal;
+			else if (ConstantValue.StartsWith(&#39;&amp;&#39;))
+				ConstantValueType = ConstantType.Octal;
+			else if (ConstantValue.StartsWith(&#39;%&#39;))
+				ConstantValueType = ConstantType.Binary;
+			else if (ConstantValue.StartsWith(&#39;&quot;&#39;))
+				ConstantValueType = ConstantType.String;
+			else if (ConstantValue.StartsWith(&#39;`&#39;))
+				ConstantValueType = ConstantType.Graphics;
+			else if (ConstantValue.Contains(&#39;.&#39;))
+				ConstantValueType = ConstantType.FixedPoint;
+			else
+				ConstantValueType = ConstantType.Decimal;
+		}
+
+		public override IAsmLine Reparse()
+		{
+			for (var i = 1; i &lt; 10; i++)
+			{
+				this.ConstantName = this.ConstantName.Replace($&quot;\\{i}&quot;, $&quot;args[{i - 1}]&quot;);
+				this.ConstantValue = this.ConstantValue.Replace($&quot;\\{i}&quot;, $&quot;args[{i - 1}]&quot;);
+			}
+
+			return this;
+		}
+	}
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,43,10,47,1],[10,48,10,52,1],[12,62,12,109,1],[13,3,13,4,1],[14,4,14,36,1],[15,4,15,28,1],[16,4,16,31,1],[17,4,17,51,1],[19,4,19,87,1],[21,4,21,71,1],[22,5,22,42,0],[24,5,24,99,1],[26,4,26,38,1],[27,5,27,50,1],[28,9,28,43,1],[29,5,29,44,0],[30,9,30,43,1],[31,5,31,45,1],[32,9,32,43,1],[33,5,33,45,0],[34,9,34,43,1],[35,5,35,47,0],[36,9,36,41,1],[37,5,37,49,0],[39,5,39,46,1],[40,3,40,4,1],[43,3,43,4,0],[44,9,44,18,0],[44,20,44,26,0],[44,28,44,31,0],[45,4,45,5,0],[46,5,46,79,0],[47,5,47,81,0],[48,4,48,5,0],[50,4,50,16,0],[51,3,51,4,0]]);
+    </script>
+  </body>
+</html>
