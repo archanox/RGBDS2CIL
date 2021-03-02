@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace RGBDS2CIL
@@ -14,13 +15,13 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
-			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\tetris.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\tetris.asm",
 			 	//@"C:\Users\pierc\source\LADX-Disassembly\src\main.asm",
 
-			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
-			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello.asm",
-			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
-			 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\hello.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
 
 			 	// @"C:\source\pokered\macros/const.asm",
 
@@ -48,8 +49,9 @@ namespace RGBDS2CIL
 			//var files = Directory.GetFiles(@"C:\Users\pierc\source\pokered", "*.asm", SearchOption.AllDirectories);
 			//var files = Directory.GetFiles(@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\", "*.asm", SearchOption.AllDirectories);
 
-			foreach (var fileName in files)
+			foreach (var file in files)
 			{
+				var fileName = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + file;
 				var fileLines1 = File.ReadAllLines(fileName);
 				Parser.RootFolder = Path.GetDirectoryName(fileName);
 				fileLines1 = Parser.FlattenMultiLine(fileLines1);
