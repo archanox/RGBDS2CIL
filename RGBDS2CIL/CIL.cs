@@ -5,13 +5,13 @@ using System.Reflection.Emit;
 
 namespace RGBDS2CIL
 {
-	static class CIL
+	static class Cil
 	{
 		//use this instead
 		//https://github.com/ltrzesniewski/InlineIL.Fody
 
 
-		public static void GenerateCIL()
+		public static void GenerateCil()
 		{
 			var aName = new AssemblyName("DynamicAssemblyExample");
 			var ab =
@@ -165,7 +165,7 @@ namespace RGBDS2CIL
 			var generator = new Lokad.ILPack.AssemblyGenerator();
 			generator.GenerateAssembly(assembly, aName.Name + "_1.dll");
 
-			GetCIL(aName.Name + "_1.dll");
+			GetCil(aName.Name + "_1.dll");
 
 			var mi = t.GetMethod("MyMethod");
 			var pi = t.GetProperty("Number");
@@ -196,7 +196,7 @@ namespace RGBDS2CIL
 			Console.WriteLine("o2.Number: {0}", pi.GetValue(o2, null));
 		}
 
-		public static void GetCIL(string path)
+		public static void GetCil(string path)
 		{
 			// Save the Assembly and generate the MSIL code with ILDASM.EXE
 			using (var p = new Process())

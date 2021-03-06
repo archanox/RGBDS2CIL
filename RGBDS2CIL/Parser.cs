@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace RGBDS2CIL
 {
-	public class Parser
+	public static class Parser
 	{
 		private static readonly Regex CommentRegex = new Regex(@"(;.*?(\r?\n|$))|(""(?:\\[^\n]|[^""\n])*"")|(@(?:""[^""]*"")+)", RegexOptions.Compiled);
 
@@ -36,7 +36,7 @@ namespace RGBDS2CIL
 			{
 				if (string.IsNullOrWhiteSpace(fileLines[i])) continue;
 
-				var comment = GetComment(fileLines[i]);
+				//var comment = GetComment(fileLines[i]);
 				var code = RemoveCommentFromCode(fileLines[i]);
 
 				if (code?.EndsWith('\\') != true) continue;
@@ -45,7 +45,7 @@ namespace RGBDS2CIL
 
 				while (hasMore)
 				{
-					comment = GetComment(fileLines[i]);
+					var comment = GetComment(fileLines[i]);
 					code = RemoveCommentFromCode(fileLines[i]);
 
 					var fileLine2 = fileLines[rowSkip];
@@ -119,7 +119,7 @@ namespace RGBDS2CIL
 				{
 					var split = code.Split();
 
-					if (split.Last().ToUpper() == "MACRO")
+					if (string.Equals(split.Last(), "MACRO", StringComparison.OrdinalIgnoreCase))
 					{
 						parsedLines.Add(new MacroLine(codeLine, split[0]));
 					}
@@ -369,7 +369,7 @@ namespace RGBDS2CIL
 
 		public static string RemoveCommentFromCode(string fileLine)
 		{
-			string code = CommentRegex.Replace(fileLine, me => me.Value.StartsWith(";") ? me.Groups[2].Value : me.Value).Trim();
+			var code = CommentRegex.Replace(fileLine, me => me.Value.StartsWith(";") ? me.Groups[2].Value : me.Value).Trim();
 
 			if (string.IsNullOrWhiteSpace(code))
 				code = null;

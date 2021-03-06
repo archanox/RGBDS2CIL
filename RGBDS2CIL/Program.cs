@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace RGBDS2CIL
 {
-	public class Program
+	public static class Program
 	{
 		public static void Main()
 		{
@@ -12,44 +13,45 @@ namespace RGBDS2CIL
 			//http://gameboy.mongenel.com/asmschool.html
 			//http://gameboy.mongenel.com/dmg/mbc3.txt //Pokemon Red
 
-			// var files = new[]
-			// {
-			// 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\tetris.asm",
-			// 	@"C:\Users\pierc\source\LADX-Disassembly\src\main.asm",
-
-			// 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
-			// 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello.asm",
-			// 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
-			// 	@"C:\Users\pierc\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
-
-			// 	// @"C:\source\pokered\macros/const.asm",
-
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_bcd.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_hex.asm",
-
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\DMG_ROM.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg0_rom.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\fortune_rom.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\gamefighter_rom.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2) orig.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2).asm",
-
-			// 	// @"C:\source\pokered\main.asm",
-			// 	// @"C:\source\pokered\home.asm",
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\Pokemon Red (UE) [S][!].asm",
-
-			// 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\sources\Multiplatform\Sources\SimpleHelloWorld\GB_HelloWorld.asm"
-
-			// };
-
-//var files = Directory.GetFiles(@"C:\Users\pierc\source\pokered", "*.asm", SearchOption.AllDirectories);
-var files = Directory.GetFiles(@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\", "*.asm", SearchOption.AllDirectories);
-
-			foreach (var fileName in files)
+			var files = new[]
 			{
+			 	@"\OneDrive\Documents\Gameboy Hello World\tetris.asm",
+			 	//@"C:\Users\pierc\source\LADX-Disassembly\src\main.asm",
+
+			 	@"\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\hello.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
+			 	@"\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
+
+			 	// @"C:\source\pokered\macros/const.asm",
+
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_bcd.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_hex.asm",
+
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\DMG_ROM.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg0_rom.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\fortune_rom.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\gamefighter_rom.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2) orig.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2).asm",
+
+			 	// @"C:\source\pokered\main.asm",
+			 	// @"C:\source\pokered\home.asm",
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\Pokemon Red (UE) [S][!].asm",
+
+			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\sources\Multiplatform\Sources\SimpleHelloWorld\GB_HelloWorld.asm"
+
+			 };
+
+			//var files = Directory.GetFiles(@"C:\Users\pierc\source\pokered", "*.asm", SearchOption.AllDirectories);
+			//var files = Directory.GetFiles(@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\", "*.asm", SearchOption.AllDirectories);
+
+			foreach (var file in files)
+			{
+				var fileName = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + file;
 				var fileLines1 = File.ReadAllLines(fileName);
 				Parser.RootFolder = Path.GetDirectoryName(fileName);
 				fileLines1 = Parser.FlattenMultiLine(fileLines1);

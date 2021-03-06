@@ -2,7 +2,7 @@
 
 namespace RGBDS2CIL
 {
-	public class If
+	public static class If
 	{
 		internal static int ProcessIf(StringBuilder sb, int tabCount, IfLine ifLine)
 		{

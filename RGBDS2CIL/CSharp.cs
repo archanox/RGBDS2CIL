@@ -1,22 +1,32 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace RGBDS2CIL
 {
-    public class CSharp
+    public static class CSharp
     {
-        internal static void GenerateCsharp(string fileName, IEnumerable<IAsmLine> parsedLines)
+        internal static void GenerateCsharp(string fileName, List<IAsmLine> parsedLines)
         {
             var ti = CultureInfo.CurrentCulture.TextInfo;
 
             var sb = new StringBuilder();
 
             var thisName = Regex.Replace(ti.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(" ", ""), "[^A-Za-z0-9 -]", "");
+
+            var includes = parsedLines.OfType<IncludeLine>().ToList();
+            //todo get using names
+            //todo call GenerateCsharp on these files.
+
+            foreach (var include in includes)
+            {
+	            GenerateCsharp(include.FileName, include.Lines);
+            }
 
             var tabCount = 1;
 
@@ -40,8 +50,8 @@ namespace RGBDS2CIL
                 tabCount = OutputCSharp(parsedLine, sb, tabCount);
             }
 
-            sb.Append(new string('\t', --tabCount)).AppendLine("}");
-            sb.Append(new string('\t', --tabCount)).AppendLine("}");
+            sb.Append(new string('\t', 2)).AppendLine("}");
+            sb.Append(new string('\t', 1)).AppendLine("}");
             sb.AppendLine("}");
 
             File.WriteAllText(fileName + ".cs", sb.ToString());
@@ -155,7 +165,7 @@ namespace RGBDS2CIL
                     sb.Append(new string('\t', --tabCount)).Append("}").AppendComment(endMacroLine.Comment);
                     break;
                 case EndConditionLine endConditionLine:
-                    sb.Append(new string('\t', --tabCount)).Append("}").AppendComment(endConditionLine.Comment);
+                    sb.Append(new string('\t', tabCount)).Append("}").AppendComment(endConditionLine.Comment);
                     break;
                 case SectionLine sectionLine:
                     sb.Append(new string('\t', tabCount)).Append("/* ").Append(sectionLine.Code).Append(" */")

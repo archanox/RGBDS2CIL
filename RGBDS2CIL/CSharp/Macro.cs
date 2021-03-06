@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RGBDS2CIL
 {
-	public class Macro
+	public static class Macro
 	{
 		internal static int ProcessMacro(StringBuilder sb, int tabCount, MacroLine macroLine)
 		{
