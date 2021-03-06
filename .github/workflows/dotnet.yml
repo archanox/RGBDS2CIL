@@ -55,11 +55,9 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       shell: powershell
       run: |
-        .\.sonar\scanner\dotnet-sonarscanner begin /k:"archanox_RGBDS2CIL" /o:"archanox" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+        .\.sonar\scanner\dotnet-sonarscanner begin /k:"archanox_RGBDS2CIL" /o:"archanox" /d:sonar.login=${{ secrets.SONAR_TOKEN }} /d:sonar.host.url="https://sonarcloud.io"
         dotnet build --no-restore
-        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-    - name: Build
-      run: dotnet build --no-restore
+        .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 #    - name: SonarScanner for .NET 5 with pull request decoration support
 #      uses: highbyte/sonarscan-dotnet@2.0
 #      with:
