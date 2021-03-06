@@ -22,8 +22,8 @@ jobs:
     - name: Clean
       shell: powershell
       run: |
-      dotnet clean --configuration Release
-      dotnet nuget locals all --clear
+        dotnet clean --configuration Release
+        dotnet nuget locals all --clear
     - name: Restore dependencies
       run: dotnet restore
     - name: Set up JDK 11
