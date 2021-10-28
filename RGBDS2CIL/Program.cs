@@ -69,7 +69,7 @@ namespace RGBDS2CIL
 				Parser.ExportJson(fileName, parsedLines);
 
 				//var deserialized = JsonConvert.DeserializeObject<IAsmLine>(serialized, settings);
-
+				//TODO: base the CIL off of the decompiled c#
 				//CIL.GenerateCIL();
 
 				CSharp.GenerateCsharp(fileName, parsedLines);
