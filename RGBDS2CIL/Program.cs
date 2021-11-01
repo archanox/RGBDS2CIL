@@ -12,6 +12,7 @@ namespace RGBDS2CIL
 			//https://eldred.fr/gb-asm-tutorial/what_is_gb.html
 			//http://gameboy.mongenel.com/asmschool.html
 			//http://gameboy.mongenel.com/dmg/mbc3.txt //Pokemon Red
+			//https://binji.github.io/posts/pokegb/ //emulating just pokemon red
 
 
 			var files = new[]
