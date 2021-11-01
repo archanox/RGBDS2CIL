@@ -1,4 +1,3 @@
-using System;
 using RGBDS2CIL;
 using System.Diagnostics;
 using Xunit;
@@ -80,21 +79,37 @@ namespace Tests
 
 
 
-			
+
 		}
 
-// 		[Theory]
-// 		[InlineData(@"RawBitmap:
-// 	if BuildCPCv+BuildENTv
-// 		if ScrColor16
-// 			nop
-// 		endc
-// 	endc
-// ")]
-// 		public void NestedIfParse(string sampleLines)
-// 		{
-// 			var parsedLines = Parser.GetLines(sampleLines.Split(new [] {Environment.NewLine, "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), "unitTest.asm");
-// 			Program.RestructureLines(parsedLines);
-// 		}
+		// 		[Theory]
+		// 		[InlineData(@"RawBitmap:
+		// 	if BuildCPCv+BuildENTv
+		// 		if ScrColor16
+		// 			nop
+		// 		endc
+		// 	endc
+		// ")]
+		// 		public void NestedIfParse(string sampleLines)
+		// 		{
+		// 			var parsedLines = Parser.GetLines(sampleLines.Split(new [] {Environment.NewLine, "\n", "\r"}, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries), "unitTest.asm");
+		// 			Program.RestructureLines(parsedLines);
+		// 		}
+
+
+		[Theory]
+		[InlineData("	ASSERT !STRIN(\\1, \"@\"), STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)")]
+		public void GetAssert(string fileLine)
+		{
+			var comment = Parser.GetComment(fileLine);
+
+			var code = Parser.RemoveCommentFromCode(fileLine);
+			var codeLine = new CodeLine(code, fileLine, comment, "", 0, Parser.GetStrings(code));
+			var assertLine = new AssertLine(codeLine);
+
+			Debug.WriteLine("fileLine: " + fileLine);
+			Debug.WriteLine("comment: " + comment);
+			Debug.WriteLine("code: " + code);
+		}
 	}
 }

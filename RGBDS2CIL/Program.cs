@@ -13,15 +13,16 @@ namespace RGBDS2CIL
 			//http://gameboy.mongenel.com/asmschool.html
 			//http://gameboy.mongenel.com/dmg/mbc3.txt //Pokemon Red
 
+
 			var files = new[]
 			{
-			 	@"\OneDrive\Documents\Gameboy Hello World\tetris.asm",
+			 	@"tetris.asm",
 			 	//@"C:\Users\pierc\source\LADX-Disassembly\src\main.asm",
 
-			 	@"\OneDrive\Documents\Gameboy Hello World\blankasm.asm",
-			 	@"\OneDrive\Documents\Gameboy Hello World\hello.asm",
-			 	@"\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
-			 	@"\OneDrive\Documents\Gameboy Hello World\mrdo.asm",
+			 	@"blankasm.asm",
+			 	@"hello.asm",
+			 	@"hello-world.asm",
+			 	@"mrdo.asm",
 
 			 	// @"C:\source\pokered\macros/const.asm",
 
@@ -38,8 +39,8 @@ namespace RGBDS2CIL
 			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2) orig.asm",
 			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2).asm",
 
-			 	// @"C:\source\pokered\main.asm",
-			 	// @"C:\source\pokered\home.asm",
+			 	//@"pokered\main.asm",
+			 	//@"pokered\home.asm",
 			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\Pokemon Red (UE) [S][!].asm",
 
 			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\sources\Multiplatform\Sources\SimpleHelloWorld\GB_HelloWorld.asm"
@@ -51,7 +52,7 @@ namespace RGBDS2CIL
 
 			foreach (var file in files)
 			{
-				var fileName = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + file;
+				var fileName = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "Assembly", file);
 				var fileLines1 = File.ReadAllLines(fileName);
 				Parser.RootFolder = Path.GetDirectoryName(fileName);
 				fileLines1 = Parser.FlattenMultiLine(fileLines1);
