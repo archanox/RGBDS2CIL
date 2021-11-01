@@ -1,0 +1,6 @@
+[submodule "Assembly/pokered"]
+	path = Assembly/pokered
+	url = https://github.com/pret/pokered.git
+[submodule "Assembly/rgbds-template"]
+	path = Assembly/rgbds-template
+	url = git@github.com:nezticle/rgbds-template.git
