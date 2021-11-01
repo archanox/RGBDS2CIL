@@ -4,3 +4,6 @@
 [submodule "Assembly/rgbds-template"]
 	path = Assembly/rgbds-template
 	url = git@github.com:nezticle/rgbds-template.git
+[submodule "Assembly/LADX-Disassembly"]
+	path = Assembly/LADX-Disassembly
+	url = https://github.com/zladx/LADX-Disassembly.git
