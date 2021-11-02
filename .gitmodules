@@ -3,7 +3,7 @@
 	url = https://github.com/pret/pokered.git
 [submodule "Assembly/rgbds-template"]
 	path = Assembly/rgbds-template
-	url = git@github.com:nezticle/rgbds-template.git
+	url = https://github.com/nezticle/rgbds-template.git
 [submodule "Assembly/DKGBDisasm"]
 	path = Assembly/DKGBDisasm
 	url = https://github.com/CelestialAmber/DKGBDisasm.git
