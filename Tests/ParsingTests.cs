@@ -99,7 +99,7 @@ namespace Tests
 
 		[Theory]
 		[InlineData("	ASSERT !STRIN(\\1, \"@\"), STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)")]
-		public void GetAssert(string fileLine)
+ 		public void GetAssert(string fileLine)
 		{
 			var comment = Parser.GetComment(fileLine);
 
@@ -110,6 +110,9 @@ namespace Tests
 			Debug.WriteLine("fileLine: " + fileLine);
 			Debug.WriteLine("comment: " + comment);
 			Debug.WriteLine("code: " + code);
+
+			Assert.Equal("!STRIN(\\1, \"@\")", assertLine.Condition);
+			Assert.Equal("STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)", assertLine.Message);
 		}
 	}
 }
