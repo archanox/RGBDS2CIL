@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 
 namespace RGBDS2CIL
@@ -13,15 +14,15 @@ namespace RGBDS2CIL
 			base.Comment = codeLine.Comment;
 			base.Raw = codeLine.Raw;
 
-			Condition = base.Code.Substring(base.Code.IndexOf("ASSERT", StringComparison.OrdinalIgnoreCase) + "ASSERT".Length).Trim();
+			var parameters = base.Code.Substring(base.Code.IndexOf("ASSERT", StringComparison.OrdinalIgnoreCase) + "ASSERT".Length).Trim();
+			
+			var splitParameters = Parser.GetParameters(parameters);
 
-			//todo: check for ,
-			Message = base.Strings?.SingleOrDefault();
-
-			if (Message is not null)
-			{
-				Condition = Condition.Remove(Condition.IndexOf(Message, StringComparison.Ordinal)).TrimEnd(',');
-			}
+			Condition = splitParameters?.First();
+			if(splitParameters?.Count == 2)
+				Message = splitParameters?.LastOrDefault();
+			
+			Debug.Assert(splitParameters?.Count <= 2, "More than 2 parameters for an ASSERT are unsupported.");
 		}
 	}
 }

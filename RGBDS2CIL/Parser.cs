@@ -387,10 +387,8 @@ namespace RGBDS2CIL
 		public static List<string> GetStrings(string code)
 		{
 			if (string.IsNullOrWhiteSpace(code)) return new List<string>();
-
-			var matches = GetStringsRegex.Matches(code);
-
-			var returned = matches.Select(x => x.Value?.TrimStart('"').TrimEnd('"')).ToList();
+			
+			var returned = GetStringsRegex.Matches(code).Select(x => x.Value?.TrimStart('"').TrimEnd('"')).ToList();
 
 			return returned.Count > 0 ? returned : null;
 		}
@@ -413,12 +411,23 @@ namespace RGBDS2CIL
 
 		private static string GetParameter(string code)
 		{
+			//NOTE: Does not currently support nested parameters
+			//NOTE: Does not support exiting a string
 			var i = 0;
-			var isString = code[0] == '\"';
+			var insideString = code[0] == '\"';
+			var insideFunction = false;
 			for (; i < code.Length; i++)
 			{
-				if (!isString && code[i] == ',') break;
-				if (!isString || i <= 0 || code[i] != '\"' || code[i - 1] == '\\') continue;
+				if (!insideString)
+				{
+					if (code[i] == '(') insideFunction = true;
+					if (code[i] == ')') insideFunction = false;
+					if (code[i] == ',' && !insideFunction) break;
+					continue;
+				}
+
+				if (i <= 0 || code[i] != '\"' || code[i - 1] == '\\') continue;
+
 				i++;
 				break;
 			}
