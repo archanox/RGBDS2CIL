@@ -3,7 +3,22 @@
 	url = https://github.com/pret/pokered.git
 [submodule "Assembly/rgbds-template"]
 	path = Assembly/rgbds-template
-	url = git@github.com:nezticle/rgbds-template.git
+	url = https://github.com/nezticle/rgbds-template.git
+[submodule "Assembly/DKGBDisasm"]
+	path = Assembly/DKGBDisasm
+	url = https://github.com/CelestialAmber/DKGBDisasm.git
+[submodule "Assembly/kirbydreamland"]
+	path = Assembly/kirbydreamland
+	url = https://github.com/huderlem/kirbydreamland.git
+[submodule "Assembly/mmania"]
+	path = Assembly/mmania
+	url = https://github.com/froggestspirit/mmania.git
+[submodule "Assembly/supermarioland"]
+	path = Assembly/supermarioland
+	url = https://github.com/kaspermeerts/supermarioland.git
+[submodule "Assembly/marioland2"]
+	path = Assembly/marioland2
+	url = https://github.com/froggestspirit/marioland2.git
 [submodule "Assembly/LADX-Disassembly"]
 	path = Assembly/LADX-Disassembly
 	url = https://github.com/zladx/LADX-Disassembly.git

@@ -392,7 +392,6 @@ namespace RGBDS2CIL
 				default:
 					Debug.WriteLine(parsedLine.GetType().FullName);
 					throw new NotImplementedException(parsedLine.GetType().FullName);
-					break;
 			}
 
 			return tabCount;

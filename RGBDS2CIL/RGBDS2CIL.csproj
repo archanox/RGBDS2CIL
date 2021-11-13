@@ -4,22 +4,33 @@
 		<OutputType>Exe</OutputType>
 		<TargetFramework>net5.0</TargetFramework>
 		<CodeAnalysisRuleSet>..\.sonarlint\archanox_rgbds2cilcsharp.ruleset</CodeAnalysisRuleSet>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/archanox/RGBDS2CIL</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<NeutralLanguage>en-AU</NeutralLanguage>
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <AdditionalFiles Include="..\.sonarlint\archanox_rgbds2cil\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+		<AdditionalFiles Include="..\.sonarlint\archanox_rgbds2cil\CSharp\SonarLint.xml" Link="SonarLint.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
-																	<PackageReference Include="CodeCracker.CSharp" Version="1.1.0">
-																	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-																	  <PrivateAssets>all</PrivateAssets>
-																	</PackageReference>
-																	<PackageReference Include="Lokad.ILPack" Version="0.1.7" />
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CodeCracker.CSharp" Version="1.1.0">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Lokad.ILPack" Version="0.1.7" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-														<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+		<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
 	</ItemGroup>
 </Project>

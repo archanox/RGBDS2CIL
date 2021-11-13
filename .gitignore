@@ -339,3 +339,6 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /.sonarqube
+
+Assembly/*.json
+Assembly/*.cs
