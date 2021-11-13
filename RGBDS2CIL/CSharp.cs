@@ -109,7 +109,7 @@ namespace RGBDS2CIL
 						case ConstantType.Graphics:
 							break;
 						default:
-							throw new ArgumentOutOfRangeException();
+							throw new ArgumentOutOfRangeException(nameof(ConstantType), "Unknown ConstantValueType");
 					}
 
 					sb

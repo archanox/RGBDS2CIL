@@ -8,7 +8,7 @@ namespace Tests
 {
     public class ParsingTests
     {
-        private string FileName = "unittest.asm";
+        private readonly string FileName = "unittest.asm";
 
         [Theory]
 		[InlineData("charmap \":\",         $9c")]

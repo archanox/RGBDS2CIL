@@ -90,7 +90,7 @@ namespace RGBDS2CIL
 
 			// The property "set" and property "get" methods require a special
 			// set of attributes.
-			var getSetAttr = MethodAttributes.Public |
+			const System.Reflection.MethodAttributes getSetAttr = MethodAttributes.Public |
 							 MethodAttributes.SpecialName | MethodAttributes.HideBySig;
 
 			// Define the "get" accessor method for Number. The method returns
