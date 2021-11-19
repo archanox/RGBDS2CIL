@@ -6,7 +6,7 @@ namespace RGBDS2CIL
 	public class CodeLine : IAsmLine
 	{
 		public string Code;
-		public List<string> Strings;
+		public readonly List<string> Strings;
 		public string Raw { get; set; }
 		public string Comment { get; set; }
 		public string FileName { get; set; }
@@ -19,17 +19,6 @@ namespace RGBDS2CIL
 			return this;
 		}
 
-		public CodeLine(string code, CodeLine codeLine, List<string> strings)
-		{
-			Code = code;
-			//Strings = codeLine.Strings;
-			Comment = codeLine.Comment;
-			Raw = codeLine.Raw;
-			FileName = codeLine.FileName;
-			Strings = strings;
-			Line = codeLine.Line;
-		}
-
 		public CodeLine(string code, string raw, string comment, string fileName, int line, List<string> strings)
 		{
 			Code = code;
@@ -38,6 +27,17 @@ namespace RGBDS2CIL
 			Raw = raw;
 			FileName = fileName;
 			Line = line;
+		}
+
+		protected CodeLine(string code, IAsmLine codeLine, List<string> strings)
+		{
+			Code = code;
+			//Strings = codeLine.Strings;
+			Comment = codeLine.Comment;
+			Raw = codeLine.Raw;
+			FileName = codeLine.FileName;
+			Strings = strings;
+			Line = codeLine.Line;
 		}
 	}
 }

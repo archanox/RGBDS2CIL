@@ -11,7 +11,7 @@ namespace RGBDS2CIL
 			var ifElse = ifLine.IsElseIf ? "else if" : "if";
 
 			if (ifLine.IsElseIf)
-				sb.Append(new string('\t', --tabCount)).AppendLine("}");
+				sb.Append(new string('\t', tabCount)).AppendLine("}");
 
 			sb.Append(new string('\t', tabCount)).Append(ifElse).Append(" (").Append(ifLine.Condition).Append(')')
 				.AppendComment(ifLine.Comment);

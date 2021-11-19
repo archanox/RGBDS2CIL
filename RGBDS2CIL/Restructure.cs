@@ -5,7 +5,7 @@ namespace RGBDS2CIL
 {
 	public static class Restructure
 	{
-		internal static void RestructureMacros(List<IAsmLine> parsedLines)
+		public static void RestructureMacros(List<IAsmLine> parsedLines)
 		{
 			var macrosToUpdate = new List<MacroLine>();
 			var linesToRemove = new List<IAsmLine>();
@@ -41,7 +41,7 @@ namespace RGBDS2CIL
 			}
 		}
 
-		internal static void RestructureIfs(List<IAsmLine> parsedLines)
+		public static void RestructureIfs(List<IAsmLine> parsedLines)
 		{
 			var ifsToUpdate = new List<IfLine>();
 			var linesToRemove = new List<IAsmLine>();
@@ -66,8 +66,9 @@ namespace RGBDS2CIL
 			}
 
 			parsedLines.RemoveAll(x =>
-				linesToRemove.Select(x => x.Line).Contains(x.Line) &&
-				linesToRemove.Select(x => x.FileName).Contains(x.FileName));
+				linesToRemove.Select(y => y.Line).Contains(x.Line) &&
+				linesToRemove.Select(y => y.FileName).Contains(x.FileName)
+			);
 
 			foreach (var ifToUpdate in ifsToUpdate)
 			{

@@ -1,3 +1,4 @@
+using System;
 using RGBDS2CIL;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -120,5 +121,26 @@ namespace Tests
             Debug.WriteLine("code: " + code);
             return assertLine;
         }
+
+		[Theory]
+		[InlineData(@"ld_long: MACRO
+    IF STRLWR(""\1"") == ""a"" 
+        ; ld a, [$ff40]
+        db $FA
+        dw \2
+    ELSE 
+        IF STRLWR(""\2"") == ""a"" 
+            ; ld [$ff40], a
+            db $EA
+            dw \1
+        ENDC
+    ENDC
+ENDM")]
+        public void NestedIf(string ifBlock)
+        {
+            var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
+            Restructure.RestructureMacros(parsedLines);
+            Restructure.RestructureIfs(parsedLines);
+		}
     }
 }

@@ -11,13 +11,11 @@ namespace RGBDS2CIL
 {
 	public static class CSharp
 	{
-		internal static void GenerateCsharp(string fileName, List<IAsmLine> parsedLines)
+		internal static void GenerateCsharp(string fileName, List<IAsmLine> parsedLines, string root)
 		{
-			var ti = CultureInfo.CurrentCulture.TextInfo;
-
 			var sb = new StringBuilder();
 
-			var thisName = Regex.Replace(ti.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(" ", ""), "[^A-Za-z0-9 -]", "");
+			var thisName = Regex.Replace(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(" ", "").Replace('-', '_'), "[^A-Za-z0-9]", "");
 
 			var includes = parsedLines.OfType<IncludeLine>().ToList();
 			//todo get using names
@@ -25,7 +23,8 @@ namespace RGBDS2CIL
 
 			foreach (var include in includes)
 			{
-				GenerateCsharp(include.FileName, include.Lines);
+				var includeFileName = Path.Combine(root, include.FileName);
+				GenerateCsharp(includeFileName, include.Lines, root);
 			}
 
 			var tabCount = 1;
@@ -109,7 +108,7 @@ namespace RGBDS2CIL
 						case ConstantType.Graphics:
 							break;
 						default:
-							throw new ArgumentOutOfRangeException(nameof(ConstantType), "Unknown ConstantValueType");
+							throw new ArgumentOutOfRangeException(constantLine.ConstantValueType.ToString(), "Unknown ConstantValueType");
 					}
 
 					sb
@@ -126,7 +125,7 @@ namespace RGBDS2CIL
 				case LabelLine labelLine:
 					sb
 						.Append(labelLine.LabelName)
-						.Append(":")
+						.Append(':')
 						.AppendComment(labelLine.Comment);
 					break;
 				case LoadLine loadLine:
@@ -163,7 +162,7 @@ namespace RGBDS2CIL
 					tabCount = Macro.ProcessMacro(sb, tabCount, macroLine);
 					break;
 				case EndMacroLine endMacroLine:
-					sb.Append(new string('\t', --tabCount)).Append('}').AppendComment(endMacroLine.Comment);
+					sb.Append(new string('\t', tabCount)).Append('}').AppendComment(endMacroLine.Comment);
 					break;
 				case EndConditionLine endConditionLine:
 					sb.Append(new string('\t', tabCount)).Append('}').AppendComment(endConditionLine.Comment);

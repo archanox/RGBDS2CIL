@@ -17,42 +17,57 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
-			 	@"tetris.asm",
-			 	//@"C:\Users\pierc\source\LADX-Disassembly\src\main.asm",
+				@"tetris.asm",
+				@"LADX-Disassembly\src\main.asm",
 
-			 	@"blankasm.asm",
-			 	@"hello.asm",
-			 	@"hello-world.asm",
-			 	@"mrdo.asm",
+				@"DKGBDisasm\home.asm",
+				@"DKGBDisasm\main.asm",
 
-			 	// @"C:\source\pokered\macros/const.asm",
+				//@"kirbydreamland\main.asm", //nested if issue
 
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\hello-world.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_bcd.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\score_hex.asm",
+				@"marioland2\home.asm",
+				@"marioland2\main.asm",
 
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\DMG_ROM.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg0_rom.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\fortune_rom.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\gamefighter_rom.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2) orig.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\dmg_boot (2).asm",
+				@"mmania\main.asm",
 
-			 	//@"pokered\main.asm",
-			 	//@"pokered\home.asm",
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\Pokemon Red (UE) [S][!].asm",
+				@"rgbds-template\src\hello-world.asm",
 
-			 	// @"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\sources\Multiplatform\Sources\SimpleHelloWorld\GB_HelloWorld.asm"
+				@"supermarioland\bank0.asm",
 
-			 };
+				@"blankasm.asm",
+				@"hello.asm",
+				@"hello-world.asm",
+				@"mrdo.asm",
 
-			//var files = Directory.GetFiles(@"C:\Users\pierc\source\pokered", "*.asm", SearchOption.AllDirectories);
-			//var files = Directory.GetFiles(@"C:\Users\hce_a\OneDrive\Documents\Gameboy Hello World\", "*.asm", SearchOption.AllDirectories);
+				@"pokered\macros/const.asm",
+
+				@"hello.asm",
+				@"hello-world.asm",
+				@"score_bcd.asm",
+				@"score_hex.asm",
+
+				@"DMG_ROM.asm",
+				@"dmg_boot.asm",
+				@"dmg0_rom.asm",
+				@"fortune_rom.asm",
+				@"gamefighter_rom.asm",
+				@"dmg_boot (2) orig.asm",
+				@"dmg_boot (2).asm",
+
+			 	@"pokered\main.asm",
+			 	@"pokered\home.asm",
+			 	@"Pokemon Red (UE) [S][!].asm",
+
+			};
+
 
 			foreach (var file in files)
 			{
+				//Console.WriteLine();
+				//Console.WriteLine(file);
+				//Console.WriteLine(new string('=', file.Length));
+				//Console.WriteLine();
+
 				var fileName = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "Assembly", file);
 				var fileLines1 = File.ReadAllLines(fileName);
 				Parser.RootFolder = Path.GetDirectoryName(fileName);
@@ -74,7 +89,9 @@ namespace RGBDS2CIL
 				//TODO: base the CIL off of the decompiled c#
 				//CIL.GenerateCIL();
 
-				CSharp.GenerateCsharp(fileName, parsedLines);
+				var root = Path.GetDirectoryName(fileName);
+
+				CSharp.GenerateCsharp(fileName, parsedLines, root);
 			}
 		}
 

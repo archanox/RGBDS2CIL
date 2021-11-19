@@ -7,8 +7,6 @@ namespace RGBDS2CIL
 	{
 		public MacroLine(CodeLine codeLine, string name) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			Console.WriteLine(name);
-
 			IsLocal = name.StartsWith('.');
 
 			Name = name;
