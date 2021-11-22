@@ -30,8 +30,9 @@ namespace RGBDS2CIL
 			}
 
 			parsedLines.RemoveAll(x =>
-				linesToRemove.Select(x => x.Line).Contains(x.Line) &&
-				linesToRemove.Select(x => x.FileName).Contains(x.FileName));
+				linesToRemove.Select(y => y.Line).Contains(x.Line) &&
+				linesToRemove.Select(y => y.FileName).Contains(x.FileName)
+			);
 
 			foreach (var macroLine in macrosToUpdate)
 			{
@@ -48,16 +49,15 @@ namespace RGBDS2CIL
 
 			foreach (var ifLine in parsedLines.OfType<IfLine>().Where(x => x.Lines.Count == 0 && !x.IsElseIf).ToArray())
 			{
-				var macroContents = parsedLines
+				var ifContents = parsedLines
 					.SkipWhile(x => x.Line < ifLine.Line)
-					//.SkipWhile(x => x is not MacroLine)
 					.TakeWhile(x => x is not EndConditionLine)
 					.ToList();
 
-				var endline = parsedLines[parsedLines.IndexOf(macroContents.Last()) + 1];
+				var endline = parsedLines[parsedLines.IndexOf(ifContents.Last()) + 1];
 
-				var macro = macroContents.OfType<IfLine>().First();
-				macro.Lines = macroContents.Skip(1).ToList();
+				var macro = ifContents.OfType<IfLine>().First();
+				macro.Lines = ifContents.Skip(1).ToList();
 				macro.Lines.Add(endline);
 
 				linesToRemove.AddRange(macro.Lines);
@@ -72,9 +72,9 @@ namespace RGBDS2CIL
 
 			foreach (var ifToUpdate in ifsToUpdate)
 			{
-				var thisMacroLineIndex = parsedLines.FindIndex(x => x.Line == ifToUpdate.Line && x.FileName == ifToUpdate.FileName);
+				var thisIfLineIndex = parsedLines.FindIndex(x => x.Line == ifToUpdate.Line && x.FileName == ifToUpdate.FileName);
 				Program.RestructureLines(ifToUpdate.Lines);
-				parsedLines[thisMacroLineIndex] = ifToUpdate;
+				parsedLines[thisIfLineIndex] = ifToUpdate;
 			}
 		}
 	}

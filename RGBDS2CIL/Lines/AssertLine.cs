@@ -15,13 +15,13 @@ namespace RGBDS2CIL
 			base.Raw = codeLine.Raw;
 
 			var parameters = base.Code.Substring(base.Code.IndexOf("ASSERT", StringComparison.OrdinalIgnoreCase) + "ASSERT".Length).Trim();
-			
+
 			var splitParameters = Parser.GetParameters(parameters);
 
 			Condition = splitParameters?.First();
 			if(splitParameters?.Count == 2)
-				Message = splitParameters?.LastOrDefault();
-			
+				Message = splitParameters.LastOrDefault();
+
 			Debug.Assert(splitParameters?.Count <= 2, "More than 2 parameters for an ASSERT are unsupported.");
 		}
 	}

@@ -7,11 +7,11 @@ using Xunit;
 
 namespace Tests
 {
-    public class ParsingTests
-    {
-        private readonly string FileName = "unittest.asm";
+	public class ParsingTests
+	{
+		private readonly string FileName = "unittest.asm";
 
-        [Theory]
+		[Theory]
 		[InlineData("charmap \":\",         $9c")]
 		[InlineData("charmap \";\",         $9d ; actual comment")]
 		[InlineData("charmap \",\",         $f4")]
@@ -58,38 +58,37 @@ namespace Tests
 
 		}
 
-        [Theory]
-        [InlineData("ASSERT LOW(Variable) == 0")]
-        [InlineData("assert Variable + 1 == OtherVariable")]
-        [InlineData("	assert BaseStatsEnd - BaseStats == (wMonHeaderEnd - wMonHeader) * (NUM_POKEMON - 1) ; discount Mew")]
-        [InlineData("assert NUM_TMS == const_value - TM01, \"NUM_TMS({d: NUM_TMS}) does not match the number of add_tm definitions\"")]
-        public void AssertLine(string fileLine)
-        {
-            var comment = Parser.GetComment(fileLine);
+		[Theory]
+		[InlineData("ASSERT LOW(Variable) == 0")]
+		[InlineData("assert Variable + 1 == OtherVariable")]
+		[InlineData("assert BaseStatsEnd - BaseStats == (wMonHeaderEnd - wMonHeader) * (NUM_POKEMON - 1) ; discount Mew")]
+		[InlineData("assert NUM_TMS == const_value - TM01, \"NUM_TMS({d: NUM_TMS}) does not match the number of add_tm definitions\"")]
+		public void AssertLine(string fileLine)
+		{
+			var comment = Parser.GetComment(fileLine);
 
-            var code = Parser.RemoveCommentFromCode(fileLine);
-            var codeLine = new CodeLine(code, fileLine, comment, FileName, 0, Parser.GetStrings(code));
-            var assertLine = new AssertLine(codeLine);
-			
+			var code = Parser.RemoveCommentFromCode(fileLine);
+			var codeLine = new CodeLine(code, fileLine, comment, FileName, 0, Parser.GetStrings(code));
+			var assertLine = new AssertLine(codeLine);
 
-            Assert.DoesNotContain(assertLine.Condition, assertLine.Message);
-            Assert.False(assertLine.Condition.StartsWith("ASSERT", System.StringComparison.OrdinalIgnoreCase));
-        }
+			Assert.DoesNotContain(assertLine.Condition, assertLine.Message);
+			Assert.False(assertLine.Condition.StartsWith("ASSERT", System.StringComparison.OrdinalIgnoreCase));
+		}
 
 		[Fact]
- 		public void GetAssert()
-        {
+		public void GetAssert()
+		{
 			var fileLines = new List<(string Line, string Condition, string Message)>();
 
-            fileLines.AddRange(new[] {
+			fileLines.AddRange(new[] {
 				(
-				    "	ASSERT !STRIN(\\1, \"@\"), STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)",
-				    "!STRIN(\\1, \"@\")",
-				    "STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)"
-				), 
-                (
-				    "assert 0 <= (\\1) && (\\1) <= 31, \"RGB channel must be 0-31\"", 
-				    "0 <= (\\1) && (\\1) <= 31",
+					"ASSERT !STRIN(\\1, \"@\"), STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)",
+					"!STRIN(\\1, \"@\")",
+					"STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)"
+				),
+				(
+					"assert 0 <= (\\1) && (\\1) <= 31, \"RGB channel must be 0-31\"",
+					"0 <= (\\1) && (\\1) <= 31",
 					"\"RGB channel must be 0-31\""
 				),
 				(
@@ -108,39 +107,39 @@ namespace Tests
 			}
 		}
 
-        private AssertLine BuildAssertLine(string fileLine)
-        {
-            var comment = Parser.GetComment(fileLine);
+		private AssertLine BuildAssertLine(string fileLine)
+		{
+			var comment = Parser.GetComment(fileLine);
 
-            var code = Parser.RemoveCommentFromCode(fileLine);
-            var codeLine = new CodeLine(code, fileLine, comment, FileName, 0, Parser.GetStrings(code));
-            var assertLine = new AssertLine(codeLine);
+			var code = Parser.RemoveCommentFromCode(fileLine);
+			var codeLine = new CodeLine(code, fileLine, comment, FileName, 0, Parser.GetStrings(code));
+			var assertLine = new AssertLine(codeLine);
 
-            Debug.WriteLine("fileLine: " + fileLine);
-            Debug.WriteLine("comment: " + comment);
-            Debug.WriteLine("code: " + code);
-            return assertLine;
-        }
+			Debug.WriteLine("fileLine: " + fileLine);
+			Debug.WriteLine("comment: " + comment);
+			Debug.WriteLine("code: " + code);
+			return assertLine;
+		}
 
 		[Theory]
 		[InlineData(@"ld_long: MACRO
-    IF STRLWR(""\1"") == ""a"" 
-        ; ld a, [$ff40]
-        db $FA
-        dw \2
-    ELSE 
-        IF STRLWR(""\2"") == ""a"" 
-            ; ld [$ff40], a
-            db $EA
-            dw \1
-        ENDC
-    ENDC
+	IF STRLWR(""\1"") == ""a"" 
+		; ld a, [$ff40]
+		db $FA
+		dw \2
+	ELSE 
+		IF STRLWR(""\2"") == ""a"" 
+			; ld [$ff40], a
+			db $EA
+			dw \1
+		ENDC
+	ENDC
 ENDM")]
-        public void NestedIf(string ifBlock)
-        {
-            var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
-            Restructure.RestructureMacros(parsedLines);
-            Restructure.RestructureIfs(parsedLines);
+		public void NestedIf(string ifBlock)
+		{
+			var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
+			Restructure.RestructureMacros(parsedLines);
+			Restructure.RestructureIfs(parsedLines);
 		}
-    }
+	}
 }

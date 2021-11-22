@@ -387,7 +387,7 @@ namespace RGBDS2CIL
 		public static List<string> GetStrings(string code)
 		{
 			if (string.IsNullOrWhiteSpace(code)) return new List<string>();
-			
+
 			var returned = GetStringsRegex.Matches(code).Select(x => x.Value?.TrimStart('"').TrimEnd('"')).ToList();
 
 			return returned.Count > 0 ? returned : null;
