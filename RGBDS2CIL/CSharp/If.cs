@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 
 namespace RGBDS2CIL
 {
@@ -7,20 +8,21 @@ namespace RGBDS2CIL
 		internal static int ProcessIf(StringBuilder sb, int tabCount, IfLine ifLine)
 		{
 			ifLine = ifLine.Reparse() as IfLine;
-
+			if (ifLine is null)
+			{
+				return tabCount;
+			}
 			var ifElse = ifLine.IsElseIf ? "else if" : "if";
 
 			if (ifLine.IsElseIf)
 				sb.Append(new string('\t', tabCount)).AppendLine("}");
 
-			sb.Append(new string('\t', tabCount)).Append(ifElse).Append(" (").Append(ifLine.Condition).Append(')')
-				.AppendComment(ifLine.Comment);
+			sb.Append(new string('\t', tabCount)).Append(ifElse).Append(" (").Append(ifLine.Condition).Append(')').AppendComment(ifLine.Comment);
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
 			tabCount++;
 
-			foreach (var macroLineLine in ifLine.Lines)
+			foreach (var lineLine in ifLine.Lines.Select(macroLineLine => macroLineLine.Reparse()))
 			{
-				var lineLine = macroLineLine.Reparse();
 				CSharp.OutputCSharp(lineLine, sb, tabCount);
 			}
 

@@ -9,22 +9,17 @@ namespace RGBDS2CIL
 	{
 		internal static int ProcessMacro(StringBuilder sb, int tabCount, MacroLine macroLine)
 		{
-			var ti = CultureInfo.CurrentCulture.TextInfo;
+			//NOTE: Nested macros are prohibited
 			var privatePublic = "";//macroLine.IsLocal ? "private " : "public ";
-			var methodName = ti.ToTitleCase(macroLine.Name.Trim(':'));
+			var methodName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(macroLine.Name.Trim(':'));
 
 			var argCount = 0;
 			var linesToUpdate = new List<IAsmLine>();
 			foreach (var macroLineLine in macroLine.Lines.OfType<CodeLine>())
 			{
 				argCount = ReplaceArgs(macroLineLine, argCount, linesToUpdate);
-				if (macroLineLine is IfLine ifLine)
-					foreach (var ifLineLine in ifLine.Lines)
-					{
-						argCount = ReplaceArgs(ifLineLine, argCount, linesToUpdate);
-					}
-
-
+				if (macroLineLine is not IfLine ifLine) continue;
+				argCount = ifLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
 			}
 
 			if (!string.IsNullOrWhiteSpace(macroLine.Comment))
@@ -45,9 +40,8 @@ namespace RGBDS2CIL
 
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
 			tabCount++;
-			foreach (var macroLineLine in macroLine.Lines)
+			foreach (var lineLine in macroLine.Lines.Select(macroLineLine => macroLineLine.Reparse()))
 			{
-				var lineLine = macroLineLine.Reparse();
 				CSharp.OutputCSharp(lineLine, sb, tabCount);
 			}
 
@@ -55,9 +49,10 @@ namespace RGBDS2CIL
 			return tabCount;
 		}
 
-		private static int ReplaceArgs(IAsmLine macroLineLine, int argCount, List<IAsmLine> linesToUpdate)
+		private static int ReplaceArgs(IAsmLine macroLineLine, int argCount, ICollection<IAsmLine> linesToUpdate)
 		{
-			var lineLine = macroLineLine.Reparse() as CodeLine;
+			if (macroLineLine.Reparse() is not CodeLine lineLine) return 0;
+
 			for (var i = 1; i < 10; i++)
 			{
 				if (!lineLine.Code.Contains($"\\{i}")) continue;

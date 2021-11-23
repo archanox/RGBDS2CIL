@@ -3,12 +3,20 @@ using RGBDS2CIL;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Xunit;
+using Xunit.Abstractions;
+
 // ReSharper disable ExceptionNotDocumented
 
 namespace Tests
 {
 	public class ParsingTests
 	{
+		private readonly ITestOutputHelper _testOutputHelper;
+		public ParsingTests(ITestOutputHelper testOutputHelper)
+		{
+			_testOutputHelper = testOutputHelper;
+		}
+
 		private readonly string FileName = "unittest.asm";
 
 		[Theory]
@@ -40,9 +48,9 @@ namespace Tests
 
 			var code = Parser.RemoveCommentFromCode(fileLine);
 
-			Debug.WriteLine("fileLine: " + fileLine);
-			Debug.WriteLine("comment: " + comment);
-			Debug.WriteLine("code: " + code);
+			_testOutputHelper.WriteLine("fileLine: " + fileLine);
+			_testOutputHelper.WriteLine("comment: " + comment);
+			_testOutputHelper.WriteLine("code: " + code);
 		}
 
 		[Theory]
@@ -55,7 +63,7 @@ namespace Tests
 			var codeLine = new CodeLine(code, fileLine, comment, FileName, 0, Parser.GetStrings(code));
 			var subtractCompareLine = new SubtractCompareLine(codeLine);
 
-
+			Assert.NotNull(subtractCompareLine.Value);
 		}
 
 		[Theory]
@@ -115,9 +123,9 @@ namespace Tests
 			var codeLine = new CodeLine(code, fileLine, comment, FileName, 0, Parser.GetStrings(code));
 			var assertLine = new AssertLine(codeLine);
 
-			Debug.WriteLine("fileLine: " + fileLine);
-			Debug.WriteLine("comment: " + comment);
-			Debug.WriteLine("code: " + code);
+			_testOutputHelper.WriteLine("fileLine: " + fileLine);
+			_testOutputHelper.WriteLine("comment: " + comment);
+			_testOutputHelper.WriteLine("code: " + code);
 			return assertLine;
 		}
 

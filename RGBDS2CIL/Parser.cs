@@ -323,8 +323,6 @@ namespace RGBDS2CIL
 						//TODO: need to remove already declared shit, unless it's scoped differently?
 						//Debugger.Break();
 						//TODO: get proper name spaced label
-						//codeLine.Dump();
-						//labels.Dump();
 					}
 
 					var label = labels.FirstOrDefault();
@@ -342,8 +340,6 @@ namespace RGBDS2CIL
 					if (constants.Length > 1)
 					{
 						//Debugger.Break();
-						//codeLine.Dump();
-						//constants.Dump();
 					}
 
 					var constant = constants.FirstOrDefault();
@@ -377,11 +373,15 @@ namespace RGBDS2CIL
 				throw new ArgumentNullException(nameof(fileLine));
 			var clean = CommentRegex.Replace(fileLine, me => me.Value.StartsWith(";") ? me.Groups[2].Value : me.Value).Trim();
 
-			var comment = fileLine.Remove(fileLine.IndexOf(clean, StringComparison.Ordinal), clean.Length).Trim().TrimStart(';').Trim();
-
+			var comment = fileLine.Remove(fileLine.IndexOf(clean, StringComparison.Ordinal), clean.Length).Trim();
+			
 			if (string.IsNullOrWhiteSpace(comment))
-				comment = null;
-			return comment?.Trim();
+				return null;
+
+			if (comment.StartsWith(';'))
+				comment = comment[1..];
+
+			return comment.Trim();
 		}
 
 		public static List<string> GetStrings(string code)
