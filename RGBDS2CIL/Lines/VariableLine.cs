@@ -14,7 +14,7 @@ namespace RGBDS2CIL
 			VariableValue = codeLine.Code.Trim().Split().Last();
 		}
 
-		public void OutputLine(StringBuilder sb, int tabCount)
+		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb
 				.Append(new string('\t', tabCount))

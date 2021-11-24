@@ -50,7 +50,7 @@ namespace RGBDS2CIL
 			return this;
 		}
 
-		public void OutputLine(StringBuilder sb, int tabCount)
+		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			var value = ConstantValue;
 			var valueType = "int";

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RGBDS2CIL
@@ -30,7 +31,23 @@ namespace RGBDS2CIL
 
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
-			tabCount = If.ProcessIf(sb, tabCount, this);
+			_ = this.Reparse();
+
+			var ifElse = IsElseIf ? "else if" : "if";
+
+			if (IsElseIf)
+				sb.Append(new string('\t', tabCount)).AppendLine("}");
+
+			sb.Append(new string('\t', tabCount)).Append(ifElse).Append(" (").Append(Condition).Append(')').AppendComment(Comment);
+			sb.Append(new string('\t', tabCount)).AppendLine("{");
+			tabCount++;
+
+			foreach (var lineLine in Lines.Select(macroLineLine => macroLineLine.Reparse()))
+			{
+				lineLine.OutputLine(sb, tabCount);
+			}
+
+			tabCount--;
 		}
 	}
 }

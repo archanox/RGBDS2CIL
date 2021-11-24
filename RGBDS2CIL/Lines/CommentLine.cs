@@ -21,7 +21,7 @@ namespace RGBDS2CIL
 			return this;
 		}
 
-		public void OutputLine(StringBuilder sb, int tabCount)
+		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			if (string.IsNullOrWhiteSpace(Comment))
 				sb.AppendLine();
