@@ -9,12 +9,9 @@ namespace RGBDS2CIL
 
 		public ReturnLine(CodeLine codeLine, bool enableInterrupts) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			EnableInterrupts = enableInterrupts;
 
-			this.Return = codeLine.Code.Split().Last();
+			Return = codeLine.Code.Split().Last();
 		}
 	}
 }

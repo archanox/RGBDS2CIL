@@ -8,10 +8,7 @@ namespace RGBDS2CIL
 
 		public PurgeLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
-			this.Purge = codeLine.Code.Split().Last();
+			Purge = codeLine.Code.Split().Last();
 		}
 	}
 }

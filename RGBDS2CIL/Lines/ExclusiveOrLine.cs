@@ -1,17 +1,15 @@
 ﻿using System.Linq;
+using System.Text;
 
 namespace RGBDS2CIL
 {
-	public class ExclusiveOrLine : CodeLine
+	public class ExclusiveOrLine : CodeLine, IAsmLine
 	{
 		public string From;
 		public string Value;
 
 		public ExclusiveOrLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			var values = codeLine.Code.Trim()["XOR".Length..].Trim();
 			var split = values.Split(',');
 
@@ -23,6 +21,11 @@ namespace RGBDS2CIL
 			}
 			else
 				Value = split.Single().Trim();
+		}
+
+		public new void OutputLine(StringBuilder sb, int tabCount)
+		{
+			sb.AppendCode($"{From} ^= {Value};", tabCount, Comment);
 		}
 	}
 }

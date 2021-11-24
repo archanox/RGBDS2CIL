@@ -1,4 +1,6 @@
-﻿namespace RGBDS2CIL
+﻿using System.Text;
+
+namespace RGBDS2CIL
 {
 	public interface IAsmLine
 	{
@@ -7,5 +9,6 @@
 		public string FileName { get; set; }
 		public int Line { get; set; }
 		IAsmLine Reparse();
+		void OutputLine(StringBuilder sb, int tabCount);
 	}
 }

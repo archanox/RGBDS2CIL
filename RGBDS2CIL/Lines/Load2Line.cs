@@ -9,9 +9,6 @@ namespace RGBDS2CIL
 
 		public Load2Line(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			Label = codeLine.Strings.Single().TrimStart('"').TrimEnd('"');
 			Location = codeLine.Code.Split(',').Last().Trim();
 		}

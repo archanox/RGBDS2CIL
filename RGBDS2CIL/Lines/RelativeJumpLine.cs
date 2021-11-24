@@ -9,9 +9,6 @@ namespace RGBDS2CIL
 
 		public RelativeJumpLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			var parameters = codeLine.Code["JR".Length..].Split(',');
 
 			if (parameters.Length == 1)

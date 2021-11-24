@@ -1,11 +1,16 @@
-﻿namespace RGBDS2CIL
+﻿using System.Text;
+
+namespace RGBDS2CIL
 {
-	public class EndMacroLine : CodeLine
+	public class EndMacroLine : CodeLine, IAsmLine
 	{
 		public EndMacroLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
+		}
+
+		public new void OutputLine(StringBuilder sb, int tabCount)
+		{
+			sb.Append(new string('\t', tabCount)).Append('}').AppendComment(Comment);
 		}
 	}
 }

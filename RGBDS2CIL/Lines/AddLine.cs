@@ -10,8 +10,6 @@ namespace RGBDS2CIL
 
 		public AddLine(CodeLine codeLine, bool carryFlag) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
 			CarryFlag = carryFlag;
 			var split = codeLine.Code["ADD".Length..].Trim().Split(','); //ADD or ADC
 

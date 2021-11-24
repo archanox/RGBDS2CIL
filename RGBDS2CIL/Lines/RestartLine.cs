@@ -8,10 +8,7 @@ namespace RGBDS2CIL
 
 		public RestartLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
-			this.Restart = codeLine.Code.Split().Last();
+			Restart = codeLine.Code.Split().Last();
 		}
 	}
 }

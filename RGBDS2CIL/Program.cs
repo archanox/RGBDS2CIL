@@ -18,7 +18,7 @@ namespace RGBDS2CIL
 			var files = new[]
 			{
 				@"tetris.asm",
-				@"LADX-Disassembly\src\main.asm",
+				//@"LADX-Disassembly\src\main.asm", //weird includes
 
 				@"DKGBDisasm\home.asm",
 				@"DKGBDisasm\main.asm",

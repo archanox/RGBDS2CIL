@@ -23,7 +23,7 @@ namespace RGBDS2CIL
 
 			foreach (var lineLine in ifLine.Lines.Select(macroLineLine => macroLineLine.Reparse()))
 			{
-				CSharp.OutputCSharp(lineLine, sb, tabCount);
+				lineLine.OutputLine(sb, tabCount);
 			}
 
 			tabCount--;

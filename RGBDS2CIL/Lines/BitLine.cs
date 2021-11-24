@@ -9,9 +9,6 @@ namespace RGBDS2CIL
 
 		public BitLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			var values = codeLine.Code.Trim()["BIT".Length..].Trim();
 			var split = values.Split(',');
 

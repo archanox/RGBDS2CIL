@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Text;
 
 namespace RGBDS2CIL
 {
-	public class ConstantLine : CodeLine
+	public class ConstantLine : CodeLine, IAsmLine
 	{
 		public string ConstantName;
 		public string ConstantValue;
@@ -11,9 +13,7 @@ namespace RGBDS2CIL
 
 		public ConstantLine(CodeLine codeLine, string constType) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-			this.ConstType = constType;
+			ConstType = constType;
 			ConstantName = codeLine.Code.Trim().Split()[0];
 
 			var constString = codeLine.Strings?.SingleOrDefault()?.TrimStart('"').TrimEnd('"');
@@ -43,11 +43,55 @@ namespace RGBDS2CIL
 		{
 			for (var i = 1; i < 10; i++)
 			{
-				this.ConstantName = this.ConstantName.Replace($"\\{i}", $"args[{i - 1}]");
-				this.ConstantValue = this.ConstantValue.Replace($"\\{i}", $"args[{i - 1}]");
+				ConstantName = ConstantName.Replace($"\\{i}", $"args[{i - 1}]");
+				ConstantValue = ConstantValue.Replace($"\\{i}", $"args[{i - 1}]");
 			}
 
 			return this;
+		}
+
+		public void OutputLine(StringBuilder sb, int tabCount)
+		{
+			var value = ConstantValue;
+			var valueType = "int";
+
+			switch (ConstantValueType)
+			{
+				case ConstantType.Hexadecimal:
+					value = value.TrimStart('$').Insert(0, "0x");
+					break;
+				case ConstantType.Binary:
+					value = value.TrimStart('%').Insert(0, "0b");
+					break;
+				case ConstantType.Octal:
+					value = $"Convert.ToInt32(\"{value.TrimStart('%')}\", 8)";
+					break;
+				case ConstantType.String:
+					valueType = "string";
+					break;
+				case ConstantType.Decimal:
+					valueType = "double";
+					break;
+				case ConstantType.FixedPoint: //todo: must be fixed point
+					valueType = "decimal";
+					break;
+				case ConstantType.Graphics:
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(ConstantValueType.ToString(),
+						"Unknown ConstantValueType");
+			}
+
+			sb
+				.Append(new string('\t', tabCount))
+				.Append("const ")
+				.Append(valueType)
+				.Append(' ')
+				.Append(ConstantName)
+				.Append(" = ")
+				.Append(value)
+				.Append(';')
+				.AppendComment(Comment);
 		}
 	}
 }

@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using System.Text;
 
 namespace RGBDS2CIL
 {
-	public class LabelLine : CodeLine
+	public class LabelLine : CodeLine, IAsmLine
 	{
 		public bool IsGlobal { get; set; }
 		public bool HasExport { get; set; }
@@ -10,9 +11,6 @@ namespace RGBDS2CIL
 
 		public LabelLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			IsGlobal = base.Code.Split(':').Last() == string.Empty;
 
 			HasExport = base.Code.EndsWith("::");
@@ -20,6 +18,11 @@ namespace RGBDS2CIL
 			LabelName = base.Code.Trim().Split('.').Last().Trim(':');
 			if (string.IsNullOrWhiteSpace(LabelName))
 				LabelName = base.Code.Trim().Split(':')[0];
+		}
+
+		public new void OutputLine(StringBuilder sb, int tabCount)
+		{
+			sb.Append(LabelName).Append(':').AppendComment(Comment);
 		}
 	}
 }

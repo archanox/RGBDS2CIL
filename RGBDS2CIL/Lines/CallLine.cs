@@ -8,10 +8,7 @@ namespace RGBDS2CIL
 
 		public CallLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
-			this.Call = codeLine.Code.Split().Last();
+			Call = codeLine.Code.Split().Last();
 		}
 	}
 }

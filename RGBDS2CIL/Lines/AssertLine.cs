@@ -11,9 +11,6 @@ namespace RGBDS2CIL
 
 		public AssertLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			var parameters = base.Code.Substring(base.Code.IndexOf("ASSERT", StringComparison.OrdinalIgnoreCase) + "ASSERT".Length).Trim();
 
 			var splitParameters = Parser.GetParameters(parameters);

@@ -52,9 +52,7 @@ namespace RGBDS2CIL
 					var code2 = RemoveCommentFromCode(fileLine2);
 					hasMore = code2.EndsWith('\\');
 
-					fileLines[i] =
-						$"{code.TrimEnd('\\')} {code2} {((!string.IsNullOrWhiteSpace(comment) || !string.IsNullOrWhiteSpace(comment2)) ? "; " : " ")}{(comment + " " + comment2).Trim()}"
-							.Trim();
+					fileLines[i] = $"{code.TrimEnd('\\')} {code2} {((!string.IsNullOrWhiteSpace(comment) || !string.IsNullOrWhiteSpace(comment2)) ? "; " : " ")}{(comment + " " + comment2).Trim()}".Trim();
 
 					fileLines[rowSkip] = null;
 
@@ -67,7 +65,7 @@ namespace RGBDS2CIL
 
 		public static List<IAsmLine> GetLines(IEnumerable<string> fileLines, string fileName) => fileLines
 			//.AsParallel().AsOrdered()
-			.SelectMany<string, IAsmLine>((x, y) => ParseLine(x, fileName, y)).ToList();
+			.SelectMany((x, y) => ParseLine(x, fileName, y)).ToList();
 
 		private static IEnumerable<IAsmLine> ParseLine(string fileLine, string fileName, int line)
 		{

@@ -1,4 +1,6 @@
-﻿namespace RGBDS2CIL
+﻿using System.Text;
+
+namespace RGBDS2CIL
 {
 	public class CommentLine : IAsmLine
 	{
@@ -17,6 +19,14 @@
 		public IAsmLine Reparse()
 		{
 			return this;
+		}
+
+		public void OutputLine(StringBuilder sb, int tabCount)
+		{
+			if (string.IsNullOrWhiteSpace(Comment))
+				sb.AppendLine();
+			else
+				sb.Append(new string('\t', tabCount)).Append("// ").AppendLine(Comment);
 		}
 	}
 }

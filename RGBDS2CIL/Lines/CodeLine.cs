@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 
 namespace RGBDS2CIL
 {
@@ -19,6 +21,14 @@ namespace RGBDS2CIL
 			return this;
 		}
 
+		public void OutputLine(StringBuilder sb, int tabCount)
+		{
+			sb.Append(new string('\t', tabCount)).Append("/* ").Append(Code).Append(" */").AppendComment(Comment);
+			//throw new NotImplementedException($"Cannot output unimplemented {this.GetType().FullName}.");
+			//Debug.WriteLine(this.GetType().FullName);
+			//throw new NotSupportedException($"{this.GetType().FullName} is currently unsupported.");
+		}
+
 		public CodeLine(string code, string raw, string comment, string fileName, int line, List<string> strings)
 		{
 			Code = code;
@@ -29,15 +39,8 @@ namespace RGBDS2CIL
 			Line = line;
 		}
 
-		protected CodeLine(string code, IAsmLine codeLine, List<string> strings)
+		protected CodeLine(string code, IAsmLine codeLine, List<string> strings) : this(code, codeLine.Raw, codeLine.Comment, codeLine.FileName, codeLine.Line, strings)
 		{
-			Code = code;
-			//Strings = codeLine.Strings;
-			Comment = codeLine.Comment;
-			Raw = codeLine.Raw;
-			FileName = codeLine.FileName;
-			Strings = strings;
-			Line = codeLine.Line;
 		}
 	}
 }

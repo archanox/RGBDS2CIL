@@ -9,9 +9,6 @@ namespace RGBDS2CIL
 
 		public AndLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			var values = codeLine.Code.Trim()["AND".Length..].Trim();
 			var split = values.Split(',');
 

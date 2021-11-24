@@ -13,9 +13,6 @@ namespace RGBDS2CIL
 
 		public ResetByteLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			SetBit = codeLine.Code["RES".Length..].Split(',')[0].Trim();
 			Value = codeLine.Code.Split(',').Last().Trim();
 		}

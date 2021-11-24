@@ -10,12 +10,10 @@ namespace RGBDS2CIL
 
 		public DefineLine(CodeLine codeLine, Type type) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
 			DefineType = type;
 
 			var parameters = codeLine.Code[codeLine.Code.Split()[0].Length..].Trim();
-			this.Parameters = Parser.GetParameters(parameters);
+			Parameters = Parser.GetParameters(parameters);
 		}
 	}
 }

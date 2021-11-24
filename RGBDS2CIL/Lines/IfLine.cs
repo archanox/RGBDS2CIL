@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace RGBDS2CIL
 {
@@ -10,26 +11,26 @@ namespace RGBDS2CIL
 
 		public IfLine(CodeLine codeLine, bool isElseIf) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
 			IsElseIf = isElseIf;
-			if (isElseIf)
-				this.Condition = codeLine.Code["ELIF".Length..].Trim();
-			else
-				this.Condition = codeLine.Code["IF".Length..].Trim();
+			Condition = codeLine.Code[(isElseIf ? "ELIF" : "IF").Length..].Trim();
 		}
 
 		public override IAsmLine Reparse()
 		{
 			for (var i = 1; i < 10; i++)
 			{
-				this.Condition = this.Condition.Replace($"\\{i}", $"args[{i}]");
+				Condition = Condition.Replace($"\\{i}", $"args[{i}]");
 			}
 
-			this.Code = this.Code.Replace("_NARG", "args.Length");
-			this.Condition = this.Condition.Replace("_NARG", "args.Length");
+			Code = Code.Replace("_NARG", "args.Length");
+			Condition = Condition.Replace("_NARG", "args.Length");
 
 			return this;
+		}
+
+		public new void OutputLine(StringBuilder sb, int tabCount)
+		{
+			tabCount = If.ProcessIf(sb, tabCount, this);
 		}
 	}
 }

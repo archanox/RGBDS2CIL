@@ -8,9 +8,6 @@ namespace RGBDS2CIL
 
 		public RotateLeftLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			base.Comment = codeLine.Comment;
-			base.Raw = codeLine.Raw;
-
 			Rotate = base.Code[(base.Code.IndexOf("RL", StringComparison.OrdinalIgnoreCase) + "RL".Length)..].Trim();
 		}
 	}
