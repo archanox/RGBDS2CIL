@@ -2,6 +2,7 @@
 
 ![.NET](https://github.com/archanox/RGBDS2CIL/workflows/.NET/badge.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8f09df7eff4a4c2fa6398596c7621347)](https://app.codacy.com/gh/archanox/RGBDS2CIL?utm_source=github.com&utm_medium=referral&utm_content=archanox/RGBDS2CIL&utm_campaign=Badge_Grade_Settings)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/0727a59999f846388a16ee2a21652327)](https://www.codacy.com/gh/archanox/RGBDS2CIL/dashboard?utm_source=github.com&utm_medium=referral&utm_content=archanox/RGBDS2CIL&utm_campaign=Badge_Coverage)
 [![codecov](https://codecov.io/gh/archanox/RGBDS2CIL/branch/master/graph/badge.svg?token=3A2O2AWWMD)](https://codecov.io/gh/archanox/RGBDS2CIL)
 [![Build status](https://ci.appveyor.com/api/projects/status/jw87a3xpvde6h65h?svg=true)](https://ci.appveyor.com/project/archanox/rgbds2cil)
 [![Join the chat at https://gitter.im/RGBDS2CIL/community](https://badges.gitter.im/RGBDS2CIL/community.svg)](https://gitter.im/RGBDS2CIL/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
