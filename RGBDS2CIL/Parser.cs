@@ -89,8 +89,12 @@ namespace RGBDS2CIL
 					var path = Path.Combine(RootFolder, includeFile.IncludeFile);
 					if (File.Exists(path))
 						includeFile.Lines.AddRange(GetLines(FlattenMultiLine(File.ReadAllLines(path)), includeFile.IncludeFile));
-					//else
-					//	throw new FileNotFoundException("Could not include file", includeFile.IncludeFile);
+					else
+					{
+						Console.WriteLine($"Could not include file, {includeFile.IncludeFile}");
+						//throw new FileNotFoundException("Could not include file", includeFile.IncludeFile);
+					}
+
 					parsedLines.Add(includeFile);
 				}
 				else if (code.CommandName("INCBIN"))
@@ -99,8 +103,12 @@ namespace RGBDS2CIL
 					var path = Path.Combine(RootFolder, binary.IncludeFile);
 					if (File.Exists(path))
 						binary.Binary = File.ReadAllBytes(path);
-					//else
-					//	throw new FileNotFoundException("Could not include binary", binary.IncludeFile);
+					else
+					{
+						Console.WriteLine($"Could not include binary, {binary.IncludeFile}");
+						//throw new FileNotFoundException("Could not include binary", binary.IncludeFile);
+					}
+
 					parsedLines.Add(binary);
 				}
 				else if (code.CommandName("SECTION"))

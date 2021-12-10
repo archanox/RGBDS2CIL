@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace RGBDS2CIL
 {
@@ -11,7 +12,7 @@ namespace RGBDS2CIL
 			FileName = fileName;
 			Line = line;
 		}
-
+		public Guid LineId { get; set; } = Guid.NewGuid();
 		public string Raw { get; set; }
 		public string Comment { get; set; }
 		public string FileName { get; set; }

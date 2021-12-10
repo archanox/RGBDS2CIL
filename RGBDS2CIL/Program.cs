@@ -17,46 +17,46 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
-				@"tetris.asm",
-				//@"LADX-Disassembly\src\main.asm", //weird includes
+				//@"tetris.asm",
+				////@"LADX-Disassembly\src\main.asm", //weird includes
 
-				@"DKGBDisasm\home.asm",
-				@"DKGBDisasm\main.asm",
+				//@"DKGBDisasm\home.asm",
+				//@"DKGBDisasm\main.asm",
 
-				//@"kirbydreamland\main.asm", //nested if issue
+				@"kirbydreamland\main.asm", //nested if issue
 
-				@"marioland2\home.asm",
-				@"marioland2\main.asm",
+				//@"marioland2\home.asm",
+				//@"marioland2\main.asm",
 
-				@"mmania\main.asm",
+				//@"mmania\main.asm",
 
-				@"rgbds-template\src\hello-world.asm",
+				//@"rgbds-template\src\hello-world.asm",
 
-				@"supermarioland\bank0.asm",
+				//@"supermarioland\bank0.asm",
 
-				@"blankasm.asm",
-				@"hello.asm",
-				@"hello-world.asm",
-				@"mrdo.asm",
+				//@"blankasm.asm",
+				//@"hello.asm",
+				//@"hello-world.asm",
+				//@"mrdo.asm",
 
-				@"pokered\macros/const.asm",
+				//@"pokered\macros/const.asm",
 
-				@"hello.asm",
-				@"hello-world.asm",
-				@"score_bcd.asm",
-				@"score_hex.asm",
+				//@"hello.asm",
+				//@"hello-world.asm",
+				//@"score_bcd.asm",
+				//@"score_hex.asm",
 
-				@"DMG_ROM.asm",
-				@"dmg_boot.asm",
-				@"dmg0_rom.asm",
-				@"fortune_rom.asm",
-				@"gamefighter_rom.asm",
-				@"dmg_boot (2) orig.asm",
-				@"dmg_boot (2).asm",
+				//@"DMG_ROM.asm",
+				//@"dmg_boot.asm",
+				//@"dmg0_rom.asm",
+				//@"fortune_rom.asm",
+				//@"gamefighter_rom.asm",
+				//@"dmg_boot (2) orig.asm",
+				//@"dmg_boot (2).asm",
 
-			 	@"pokered\main.asm",
-			 	@"pokered\home.asm",
-			 	@"Pokemon Red (UE) [S][!].asm",
+			 //	@"pokered\main.asm",
+			 //	@"pokered\home.asm",
+			 //	@"Pokemon Red (UE) [S][!].asm",
 
 			};
 

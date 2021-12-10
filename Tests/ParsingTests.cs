@@ -146,14 +146,10 @@ ENDM")]
 		public void NestedIf(string ifBlock)
 		{
 			var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
-			
 
-			var ex = Assert.ThrowsAny<Exception>(() => {
-				Restructure.RestructureMacros(parsedLines);
-				Restructure.RestructureIfs(parsedLines);
-			});
 
-			_testOutputHelper.WriteLine(ex.ToString());
+			Restructure.RestructureMacros(parsedLines);
+			Restructure.RestructureIfs(parsedLines);
 		}
 	}
 }

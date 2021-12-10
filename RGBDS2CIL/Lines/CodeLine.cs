@@ -7,6 +7,7 @@ namespace RGBDS2CIL
 {
 	public class CodeLine : IAsmLine
 	{
+		public Guid LineId { get; set; } = Guid.NewGuid();
 		public string Code;
 		public readonly List<string> Strings;
 		public string Raw { get; set; }
