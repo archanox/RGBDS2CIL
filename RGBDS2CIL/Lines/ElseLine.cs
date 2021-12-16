@@ -12,7 +12,7 @@ namespace RGBDS2CIL
 		{
 			sb.Append(new string('\t', --tabCount)).AppendLine("}");
 			sb.Append(new string('\t', tabCount)).Append("else").AppendComment(Comment);
-			sb.Append(new string('\t', ++tabCount)).AppendLine("{");
+			sb.Append(new string('\t', tabCount)).AppendLine("{");
 		}
 	}
 }

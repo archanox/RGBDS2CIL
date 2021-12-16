@@ -102,7 +102,9 @@ namespace RGBDS2CIL
 					var binary = new IncludeLine(codeLine, true);
 					var path = Path.Combine(RootFolder, binary.IncludeFile);
 					if (File.Exists(path))
-						binary.Binary = File.ReadAllBytes(path);
+					{
+						binary.ReadBinaryFile(path);
+					}
 					else
 					{
 						Console.WriteLine($"Could not include binary, {binary.IncludeFile}");

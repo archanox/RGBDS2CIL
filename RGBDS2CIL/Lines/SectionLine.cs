@@ -3,6 +3,18 @@ using System.Linq;
 
 namespace RGBDS2CIL
 {
+	/// <summary>
+	/// Format:
+	/// <list type="table">
+	/// <item> SECTION name, type[addr], options </item>
+	/// </list>
+	/// Examples:
+	/// <example>
+	/// <code>SECTION "OAM Data",WRAM0,ALIGN[8] ; align to 256 bytes</code>
+	/// <code>SECTION "VRAM Data",ROMX,BANK[2],ALIGN[4] ; align to 16 bytes</code>
+	/// </example>
+	/// </summary>
+	/// <see href="https://rgbds.gbdev.io/docs/master/rgbasm.5#SECTIONS"/>
 	public class SectionLine : CodeLine
 	{
 		public string SectionName;
