@@ -11,15 +11,13 @@ namespace RGBDS2CIL
 {
 	public static class CSharp
 	{
-		internal static void GenerateCsharp(string fileName, List<IAsmLine> parsedLines, string root)
+		public static string GenerateCsharp(string fileName, List<IAsmLine> parsedLines, string root)
 		{
 			var sb = new StringBuilder();
 
 			var thisName = Regex.Replace(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Path.GetFileNameWithoutExtension(fileName)).Replace(" ", "").Replace('-', '_'), "[^A-Za-z0-9]", "");
 
 			var includes = parsedLines.OfType<IncludeLine>().ToList();
-			//todo get using names
-			//todo call GenerateCsharp on these files.
 
 			foreach (var include in includes.Where(x=>!x.IsBinary).Select(x=>x.IncludeFile).Distinct().OrderByDescending(x=>x.Length).ThenBy(x=>x))
 			{
@@ -31,7 +29,8 @@ namespace RGBDS2CIL
 			foreach (var include in includes.Where(x => !x.IsBinary))
 			{
 				var includeFileName = Path.Combine(root, include.IncludeFile);
-				GenerateCsharp(includeFileName, include.Lines, root);
+				var includedCSharp = GenerateCsharp(includeFileName, include.Lines, root);
+				File.WriteAllText(includeFileName + ".cs", includedCSharp);
 			}
 
 			//TODO include binary
@@ -62,7 +61,7 @@ namespace RGBDS2CIL
 			sb.Append(new string('\t', 1)).AppendLine("}");
 			sb.AppendLine("}");
 
-			File.WriteAllText(fileName + ".cs", sb.ToString());
+			return sb.ToString();
 		}
 	}
 }

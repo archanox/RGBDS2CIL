@@ -7,7 +7,7 @@ namespace RGBDS2CIL
 	{
 		public static bool CommandName(this string code, string command) =>
 			code.StartsWith(command, StringComparison.OrdinalIgnoreCase) &&
-			(code.Length == command.Length || char.IsWhiteSpace(code[command.Length]));
+			(code.Length == command.Length || char.IsWhiteSpace(code[command.Length]) || code[command.Length] == '(');
 
 		public static void AppendComment(this StringBuilder sb, string comment)
 		{

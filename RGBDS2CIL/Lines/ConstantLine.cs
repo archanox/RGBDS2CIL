@@ -13,7 +13,7 @@ namespace RGBDS2CIL
 
 		public ConstantLine(CodeLine codeLine, string constType) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			ConstType = constType;
+			ConstType = constType.ToUpper();
 			ConstantName = codeLine.Code.Trim().Split()[0];
 
 			var constString = codeLine.Strings?.SingleOrDefault()?.TrimStart('"').TrimEnd('"');
@@ -21,7 +21,7 @@ namespace RGBDS2CIL
 			if (!string.IsNullOrWhiteSpace(constString) && constType == "EQUS")
 				ConstantValue = $"\"{constString}\"";
 			else
-				ConstantValue = codeLine.Code[(codeLine.Code.IndexOf(constType) + constType.Length)..].Trim();
+				ConstantValue = codeLine.Code[(codeLine.Code.ToUpper().IndexOf($" {constType} ") + constType.Length + 1)..].Trim();
 
 			if (ConstantValue.StartsWith('$'))
 				ConstantValueType = ConstantType.Hexadecimal;

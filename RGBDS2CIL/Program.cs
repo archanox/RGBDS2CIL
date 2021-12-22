@@ -18,12 +18,12 @@ namespace RGBDS2CIL
 			var files = new[]
 			{
 				@"tetris.asm",
-				//@"LADX-Disassembly\src\main.asm", //weird includes
+				@"LADX-Disassembly\src\main.asm",
 
 				@"DKGBDisasm\home.asm",
 				@"DKGBDisasm\main.asm",
 
-				@"kirbydreamland\main.asm", //nested if issue
+				@"kirbydreamland\main.asm",
 
 				@"marioland2\home.asm",
 				@"marioland2\main.asm",
@@ -33,6 +33,10 @@ namespace RGBDS2CIL
 				@"rgbds-template\src\hello-world.asm",
 
 				@"supermarioland\bank0.asm",
+				@"supermarioland\bank1.asm",
+				@"supermarioland\bank2.asm",
+				@"supermarioland\bank3.asm",
+				@"supermarioland\music.asm",
 
 				@"blankasm.asm",
 				@"hello.asm",
@@ -63,10 +67,10 @@ namespace RGBDS2CIL
 
 			foreach (var file in files)
 			{
-				//Console.WriteLine();
-				//Console.WriteLine(file);
-				//Console.WriteLine(new string('=', file.Length));
-				//Console.WriteLine();
+				Console.WriteLine();
+				Console.WriteLine(file);
+				Console.WriteLine(new string('=', file.Length));
+				Console.WriteLine();
 
 				var fileName = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "Assembly", file);
 				var fileLines1 = File.ReadAllLines(fileName);
@@ -83,7 +87,8 @@ namespace RGBDS2CIL
 				//var c = new Foo.C();
 				//c.M();
 
-				Parser.ExportJson(fileName, parsedLines);
+				var serializedJson = Parser.ExportJson(parsedLines);
+				File.WriteAllText(fileName + ".json", serializedJson);
 
 				//var deserialized = JsonConvert.DeserializeObject<IAsmLine>(serialized, settings);
 				//TODO: base the CIL off of the decompiled c#
@@ -91,7 +96,9 @@ namespace RGBDS2CIL
 
 				var root = Path.GetDirectoryName(fileName);
 
-				CSharp.GenerateCsharp(fileName, parsedLines, root);
+				var sb = CSharp.GenerateCsharp(fileName, parsedLines, root);
+
+				File.WriteAllText(fileName + ".cs", sb);
 			}
 		}
 

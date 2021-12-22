@@ -16,7 +16,7 @@ namespace RGBDS2CIL
 		{
 			for (var i = 1; i < 10; i++)
 			{
-				FailMessage = FailMessage.Replace($"\\{i}", $"{{args[{i}]}}");
+				FailMessage = FailMessage.Replace($"\\{i}", $"{{args[{i - 1}]}}");
 			}
 
 			sb.Append(new string('\t', tabCount)).Append("Trace.Fail($\"").Append(FailMessage).Append("\");").AppendComment(Comment);
