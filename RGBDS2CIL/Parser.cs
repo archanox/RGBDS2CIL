@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -18,15 +19,15 @@ namespace RGBDS2CIL
 		private static List<LabelLine> Labels { get; } = new();
 		private static List<ConstantLine> Constants { get; } = new();
 
-		internal static void ExportJson(string fileName, List<IAsmLine> parsedLines)
+		public static string ExportJson(List<IAsmLine> parsedLines)
 		{
 			var settings = new JsonSerializerSettings
 			{
 				TypeNameHandling = TypeNameHandling.Auto,
 				Formatting = Formatting.Indented
 			};
-			var serialized = JsonConvert.SerializeObject(parsedLines, settings);
-			File.WriteAllText(fileName + ".json", serialized);
+			return JsonConvert.SerializeObject(parsedLines, settings);
+			
 		}
 
 		internal static string[] FlattenMultiLine(IList<string> fileLines)
@@ -128,7 +129,6 @@ namespace RGBDS2CIL
 					}
 					else
 					{
-
 						codeLine.Code = split[0];
 						var label = new LabelLine(codeLine);
 						Labels.Add(label);
@@ -136,7 +136,7 @@ namespace RGBDS2CIL
 						parsedLines.Add(label);
 						if (split.Length > 1)
 						{
-							//Console.Error.WriteLine(code[codeLine.Code.Length..].Trim() + " [" + code + "]");
+							Console.WriteLine(code[codeLine.Code.Length..].Trim() + " [" + code + "]");
 							//parsedLines.AddRange(ParseLine(code[codeLine.Code.Length..], fileName, line));
 						}
 					}
@@ -329,6 +329,7 @@ namespace RGBDS2CIL
 					if (labels.Length > 1)
 					{
 						//TODO: need to remove already declared shit, unless it's scoped differently?
+						//override methods?
 						//Debugger.Break();
 						//TODO: get proper name spaced label
 					}
@@ -336,9 +337,7 @@ namespace RGBDS2CIL
 					var label = labels.FirstOrDefault();
 					parsedLines.Add(new LabelCallLine(codeLine, label));
 				}
-
-				else if (Constants.Select(x => x.ConstantName.ToUpper())
-					.Contains(codeLine.Code.Split()[0].Trim().ToUpper()))
+				else if (Constants.Select(x => x.ConstantName.ToUpper()).Contains(codeLine.Code.Split()[0].Trim().ToUpper()))
 				{
 					var constantName = codeLine.Code.Split()[0].Trim().ToUpper();
 
@@ -347,7 +346,7 @@ namespace RGBDS2CIL
 						.ToImmutableArray();
 					if (constants.Length > 1)
 					{
-						//Debugger.Break();
+						Debugger.Break();
 					}
 
 					var constant = constants.FirstOrDefault();

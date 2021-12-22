@@ -20,7 +20,7 @@ namespace RGBDS2CIL
 		{
 			for (var i = 1; i < 10; i++)
 			{
-				Condition = Condition.Replace($"\\{i}", $"args[{i}]");
+				Condition = Condition.Replace($"\\{i}", $"args[{i - 1}]");
 			}
 
 			Code = Code.Replace("_NARG", "args.Length");
@@ -40,14 +40,11 @@ namespace RGBDS2CIL
 
 			sb.Append(new string('\t', tabCount)).Append(ifElse).Append(" (").Append(Condition).Append(')').AppendComment(Comment);
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
-			tabCount++;
-
+			
 			foreach (var lineLine in Lines.Select(macroLineLine => macroLineLine.Reparse()))
 			{
-				lineLine.OutputLine(sb, tabCount);
+				lineLine.OutputLine(sb, tabCount + 1);
 			}
-
-			tabCount--;
 		}
 	}
 }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Xunit;
 using Xunit.Abstractions;
+using System.IO;
+using System.Text;
 
 // ReSharper disable ExceptionNotDocumented
 
@@ -143,13 +145,43 @@ namespace Tests
 		ENDC
 	ENDC
 ENDM")]
+		[InlineData(@"IF(!DEF(VERSION))
+VERSION equs ""0""
+ENDC")]
 		public void NestedIf(string ifBlock)
 		{
+			_testOutputHelper.WriteLine(ifBlock);
+
 			var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
 
 
 			Restructure.RestructureMacros(parsedLines);
 			Restructure.RestructureIfs(parsedLines);
+
+			var sb = CSharp.GenerateCsharp(FileName, parsedLines, Path.GetTempPath());
+
+			_testOutputHelper.WriteLine(sb);
+
+			var serializedJson = Parser.ExportJson(parsedLines);
+			_testOutputHelper.WriteLine(serializedJson);
+		}
+
+		[Theory]
+		[InlineData("FALSE equ 0")]
+		public void Equ(string line)
+		{
+			var comment = Parser.GetComment(line);
+
+			var code = Parser.RemoveCommentFromCode(line);
+			var codeLine = new CodeLine(code, line, comment, FileName, 0, Parser.GetStrings(code));
+			var constant = new ConstantLine(codeLine, "EQU");
+
+			var sb = new StringBuilder();
+			constant.OutputLine(sb, 0);
+			_testOutputHelper.WriteLine(sb.ToString());
+
+			if (sb.ToString().EndsWith('"'))
+				Assert.DoesNotContain("equ", sb.ToString());
 		}
 	}
 }
