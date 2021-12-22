@@ -168,6 +168,7 @@ ENDC")]
 
 		[Theory]
 		[InlineData("FALSE equ 0")]
+		[InlineData("BGSET		EQU	OBJSET+$1000	;$800")]
 		public void Equ(string line)
 		{
 			var comment = Parser.GetComment(line);

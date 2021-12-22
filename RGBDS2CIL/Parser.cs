@@ -27,7 +27,7 @@ namespace RGBDS2CIL
 				Formatting = Formatting.Indented
 			};
 			return JsonConvert.SerializeObject(parsedLines, settings);
-			
+
 		}
 
 		internal static string[] FlattenMultiLine(IList<string> fileLines)
@@ -136,7 +136,7 @@ namespace RGBDS2CIL
 						parsedLines.Add(label);
 						if (split.Length > 1)
 						{
-							Console.WriteLine(code[codeLine.Code.Length..].Trim() + " [" + code + "]");
+							//Console.WriteLine(code[codeLine.Code.Length..].Trim() + " [" + code + "]");
 							//parsedLines.AddRange(ParseLine(code[codeLine.Code.Length..], fileName, line));
 						}
 					}
@@ -346,7 +346,7 @@ namespace RGBDS2CIL
 						.ToImmutableArray();
 					if (constants.Length > 1)
 					{
-						Debugger.Break();
+						//Debugger.Break();
 					}
 
 					var constant = constants.FirstOrDefault();
@@ -381,7 +381,7 @@ namespace RGBDS2CIL
 			var clean = CommentRegex.Replace(fileLine, me => me.Value.StartsWith(";") ? me.Groups[2].Value : me.Value).Trim();
 
 			var comment = fileLine.Remove(fileLine.IndexOf(clean, StringComparison.Ordinal), clean.Length).Trim();
-			
+
 			if (string.IsNullOrWhiteSpace(comment))
 				return null;
 

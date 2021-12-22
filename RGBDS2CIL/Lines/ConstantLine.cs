@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -16,12 +17,13 @@ namespace RGBDS2CIL
 			ConstType = constType.ToUpper();
 			ConstantName = codeLine.Code.Trim().Split()[0];
 
+			//NOTE: will fail on nested strings
 			var constString = codeLine.Strings?.SingleOrDefault()?.TrimStart('"').TrimEnd('"');
 
 			if (!string.IsNullOrWhiteSpace(constString) && constType == "EQUS")
 				ConstantValue = $"\"{constString}\"";
 			else
-				ConstantValue = codeLine.Code[(codeLine.Code.ToUpper().IndexOf($" {constType} ") + constType.Length + 1)..].Trim();
+				ConstantValue = codeLine.Code[(codeLine.Code.ToUpper().IndexOf($"{constType}") + constType.Length)..].Trim();
 
 			if (ConstantValue.StartsWith('$'))
 				ConstantValueType = ConstantType.Hexadecimal;
@@ -55,17 +57,35 @@ namespace RGBDS2CIL
 			var value = ConstantValue;
 			var valueType = "int";
 
+			//if it's a number
+			if (ConstType == "EQU")
+			{
+				//https://rgbds.gbdev.io/docs/v0.5.2/rgbasm.5#Operators
+				//pad out the +-*/%~
+				value = value
+					.Replace("+", " + ")
+					.Replace("*", " * ")
+					.Replace("-", " - ")
+					.Replace("/", " / ");
+
+				var newValues = new List<string>();
+				foreach (var splitValue in value.Split(' '))
+				{
+					if (splitValue.StartsWith('$'))
+						newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
+					else if (splitValue.StartsWith('%'))
+						newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
+					else if (splitValue.StartsWith('&'))
+						newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
+					else
+						newValues.Add(splitValue);
+				}
+
+				value = string.Join(' ', newValues);
+			}
+
 			switch (ConstantValueType)
 			{
-				case ConstantType.Hexadecimal:
-					value = value.TrimStart('$').Insert(0, "0x");
-					break;
-				case ConstantType.Binary:
-					value = value.TrimStart('%').Insert(0, "0b");
-					break;
-				case ConstantType.Octal:
-					value = $"Convert.ToInt32(\"{value.TrimStart('%')}\", 8)";
-					break;
 				case ConstantType.String:
 					valueType = "string";
 					break;
@@ -76,10 +96,11 @@ namespace RGBDS2CIL
 					valueType = "decimal";
 					break;
 				case ConstantType.Graphics:
+					//how to do?
+					System.Diagnostics.Debugger.Break();
 					break;
 				default:
-					throw new ArgumentOutOfRangeException(ConstantValueType.ToString(),
-						"Unknown ConstantValueType");
+					throw new ArgumentOutOfRangeException(ConstantValueType.ToString(), "Unknown ConstantValueType");
 			}
 
 			sb

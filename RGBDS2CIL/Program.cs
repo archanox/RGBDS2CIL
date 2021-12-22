@@ -87,8 +87,8 @@ namespace RGBDS2CIL
 				//var c = new Foo.C();
 				//c.M();
 
-				var serializedJson = Parser.ExportJson(parsedLines);
-				File.WriteAllText(fileName + ".json", serializedJson);
+				//var serializedJson = Parser.ExportJson(parsedLines);
+				//File.WriteAllText(fileName + ".json", serializedJson);
 
 				//var deserialized = JsonConvert.DeserializeObject<IAsmLine>(serialized, settings);
 				//TODO: base the CIL off of the decompiled c#

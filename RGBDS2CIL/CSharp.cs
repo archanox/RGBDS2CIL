@@ -19,12 +19,14 @@ namespace RGBDS2CIL
 
 			var includes = parsedLines.OfType<IncludeLine>().ToList();
 
-			foreach (var include in includes.Where(x=>!x.IsBinary).Select(x=>x.IncludeFile).Distinct().OrderByDescending(x=>x.Length).ThenBy(x=>x))
+			var usings = includes.Where(x => !x.IsBinary).Select(x => x.IncludeFile).Distinct().OrderByDescending(x => x.Length).ThenBy(x => x);
+			foreach (var include in usings)
 			{
 				sb.Append("using ").Append(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Path.GetFileNameWithoutExtension(include.Replace('\\', '.').Replace('/', '.')))).AppendLine(";");
 			}
 
-			sb.AppendLine();
+			if(usings.Any())
+				sb.AppendLine();
 
 			foreach (var include in includes.Where(x => !x.IsBinary))
 			{
@@ -38,7 +40,7 @@ namespace RGBDS2CIL
 			var tabCount = 1;
 
 			sb.Append("namespace ")
-				.AppendLine(thisName)
+				.AppendLine(new DirectoryInfo(root).Name)
 				.AppendLine("{")
 				.Append(new string('\t', tabCount))
 				.Append("public class ")
@@ -46,18 +48,11 @@ namespace RGBDS2CIL
 				.Append(new string('\t', tabCount++))
 				.AppendLine("{");
 
-			sb.Append(new string('\t', tabCount))
-				.AppendLine("public static void Main()")
-				.Append(new string('\t', tabCount++))
-				.AppendLine("{");
-
-
 			foreach (var parsedLine in parsedLines)
 			{
 				parsedLine.OutputLine(sb, tabCount);
 			}
 
-			sb.Append(new string('\t', 2)).AppendLine("}");
 			sb.Append(new string('\t', 1)).AppendLine("}");
 			sb.AppendLine("}");
 
