@@ -17,12 +17,9 @@ namespace RGBDS2CIL
 		public string Comment { get; set; }
 		public string FileName { get; set; }
 		public int Line { get; set; }
-		public IAsmLine Reparse()
-		{
-			return this;
-		}
+		public IAsmLine Reparse() => this;
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public void OutputLine(StringBuilder sb, int tabCount)
 		{
 			if (string.IsNullOrWhiteSpace(Comment))
 				sb.AppendLine();

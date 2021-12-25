@@ -162,7 +162,7 @@ namespace RGBDS2CIL
 					Constants.Add(constant);
 					parsedLines.Add(constant);
 				}
-				else if (code.Trim().ToUpper().Split().Contains("SET"))
+				else if (code.CommandName("SET"))
 					parsedLines.Add(new VariableLine(codeLine));
 				else if (code.ToUpper().Trim() == "NOP")
 					parsedLines.Add(new NopLine(codeLine));
@@ -281,25 +281,20 @@ namespace RGBDS2CIL
 					parsedLines.Add(new DecimalAdjustAccumulatorLine(codeLine));
 				else if (code.CommandName("RRA"))
 					parsedLines.Add(new RotateRegisterRightLine(codeLine));
-				else if (code.CommandName("STOP")) //do <--
+				else if (code.CommandName("STOP"))
 					parsedLines.Add(new StopLine(codeLine));
 				else if (code.CommandName("ASSERT"))
 					parsedLines.Add(new AssertLine(codeLine));
-				else if (code.CommandName("RRC")) //do <--
+				else if (code.CommandName("RRC"))
 					parsedLines.Add(new RotateRegisterRightLine(codeLine));
-				else if (code.CommandName("RLC")) //do <--
+				else if (code.CommandName("RLC"))
 					parsedLines.Add(new RotateRegisterLeftLine(codeLine));
-				else if (code.CommandName("SRA")) //do <--
+				else if (code.CommandName("SRA"))
 					parsedLines.Add(new ShiftRightArithmeticLine(codeLine));
-				else if (code.CommandName("LOAD")) //do <--
+				else if (code.CommandName("LOAD"))
 					parsedLines.Add(new Load2Line(codeLine));
-				else if (code.CommandName("ENDL")) //do <--
+				else if (code.CommandName("ENDL"))
 					parsedLines.Add(new EndLoadLine(codeLine));
-
-				//else if (code.CommandName("LB")) //do
-				//else if (code.CommandName("LDI")) //do <--
-				//else if (code.CommandName("LDD")) //do <--
-				//else if (code.CommandName("DN")) //do <--
 
 				//else if (code.CommandName("UNION"))
 				//	parsedLines.Add(new UnionLine(codeLine));
@@ -409,7 +404,12 @@ namespace RGBDS2CIL
 			while (code.Length > 0)
 			{
 				var parameter = GetParameter(code);
-				matches.Add(parameter);
+				var newParam = parameter;
+				for (var i = 1; i < 10; i++)
+				{
+					newParam = newParam.Replace($"\\{i}", $"args[{i - 1}]");
+				}
+				matches.Add(newParam);
 				code = code[parameter.Length..].TrimStart(',').Trim();
 			}
 

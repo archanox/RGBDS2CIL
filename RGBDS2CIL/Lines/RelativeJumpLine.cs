@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using System.Text;
 
 namespace RGBDS2CIL
 {
-	public class RelativeJumpLine : CodeLine
+	public class RelativeJumpLine : CodeLine, IAsmLine
 	{
 		public string Condition;
 		public string Offset;

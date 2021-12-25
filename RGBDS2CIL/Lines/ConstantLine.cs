@@ -84,24 +84,14 @@ namespace RGBDS2CIL
 				value = string.Join(' ', newValues);
 			}
 
-			switch (ConstantValueType)
-			{
-				case ConstantType.String:
-					valueType = "string";
-					break;
-				case ConstantType.Decimal:
-					valueType = "double";
-					break;
-				case ConstantType.FixedPoint: //todo: must be fixed point
-					valueType = "decimal";
-					break;
-				case ConstantType.Graphics:
-					//how to do?
-					System.Diagnostics.Debugger.Break();
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(ConstantValueType.ToString(), "Unknown ConstantValueType");
-			}
+			if(ConstantValueType == ConstantType.String)
+				valueType = "string";
+			else if (ConstantValueType == ConstantType.Decimal)
+				valueType = "double";
+			else if (ConstantValueType == ConstantType.FixedPoint) //todo: must be fixed point
+				valueType = "decimal";
+			else if (ConstantValueType == ConstantType.Graphics)
+				System.Diagnostics.Debugger.Break();
 
 			sb
 				.Append(new string('\t', tabCount))

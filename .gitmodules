@@ -22,3 +22,6 @@
 [submodule "Assembly/LADX-Disassembly"]
 	path = Assembly/LADX-Disassembly
 	url = https://github.com/zladx/LADX-Disassembly.git
+[submodule "Assembly/tetris_disassembly"]
+	path = Assembly/tetris_disassembly
+	url = https://github.com/alexsteb/tetris_disassembly.git

@@ -30,15 +30,12 @@ namespace RGBDS2CIL
 				macrosToUpdate.Add(macro);
 			}
 
-			parsedLines.RemoveAll(x =>
-				linesToRemove.Select(y => y.Line).Contains(x.Line) &&
-				linesToRemove.Select(y => y.FileName).Contains(x.FileName)
-			);
+			parsedLines.RemoveAll(x => linesToRemove.Select(y => y.LineId).Contains(x.LineId));
 
 			foreach (var macroLine in macrosToUpdate)
 			{
 				var thisMacroLineIndex = parsedLines.FindIndex(x => x.LineId == macroLine.LineId);
-				Program.RestructureLines(macroLine.Lines);
+				RestructureIfs(macroLine.Lines);
 				parsedLines[thisMacroLineIndex] = macroLine;
 			}
 		}
@@ -73,11 +70,12 @@ namespace RGBDS2CIL
 			foreach (var ifToUpdate in ifsToUpdate)
 			{
 				var thisIfLineIndex = parsedLines.FindIndex(x => x.LineId == ifToUpdate.LineId);
-				Program.RestructureLines(ifToUpdate.Lines);
+				RestructureIfs(ifToUpdate.Lines);
 				if (thisIfLineIndex == -1)
 				{
 					Console.WriteLine("can't find");
 					//check for more ifs?
+
 				}
 				else
 				{

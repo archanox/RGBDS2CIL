@@ -53,23 +53,23 @@ namespace RGBDS2CIL
 					}
 				}
 			}
-
 		}
 
 		public void ReadBinaryFile(string path)
 		{
 			if (Start is not null)
 			{
-				using var reader = new BinaryReader(File.Open(path, FileMode.Open));
-
-				var length = reader.BaseStream.Length;
-				if (End.HasValue)
-					length = End.Value + Start.Value;
-
-				if (length > Start.Value)
+				using (var reader = new BinaryReader(File.Open(path, FileMode.Open)))
 				{
-					reader.BaseStream.Seek(Start.Value, SeekOrigin.Begin);
-					Binary = reader.ReadBytes((int)(length - Start.Value));
+					var length = reader.BaseStream.Length;
+					if (End.HasValue)
+						length = End.Value + Start.Value;
+
+					if (length > Start.Value)
+					{
+						reader.BaseStream.Seek(Start.Value, SeekOrigin.Begin);
+						Binary = reader.ReadBytes((int)(length - Start.Value));
+					}
 				}
 			}
 			else
@@ -79,7 +79,7 @@ namespace RGBDS2CIL
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			//BUG: shouldn't need to check for null Binary here, should always be available before it gets here
-			if (IsBinary && Binary is not null) 
+			if (IsBinary && Binary is not null)
 			{
 				sb.Append(new string('\t', tabCount)).Append("var sevenItems = new byte[] {");
 				for (var i = 0; i < Binary.Length; i++)
@@ -89,7 +89,7 @@ namespace RGBDS2CIL
 						sb.Append(',');
 				}
 				sb.Append(" };");
-				
+
 				sb.AppendComment(Comment);
 			}
 			else if(IsBinary)

@@ -17,6 +17,7 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
+				@"tetris_disassembly\main.asm",
 				@"tetris.asm",
 				@"LADX-Disassembly\src\main.asm",
 
@@ -81,7 +82,8 @@ namespace RGBDS2CIL
 				//TODO compile checks: see if all the values exist
 
 
-				RestructureLines(parsedLines);
+				Restructure.RestructureMacros(parsedLines);
+				Restructure.RestructureIfs(parsedLines);
 
 
 				//var c = new Foo.C();
@@ -100,12 +102,6 @@ namespace RGBDS2CIL
 
 				File.WriteAllText(fileName + ".cs", sb);
 			}
-		}
-
-		public static void RestructureLines(List<IAsmLine> parsedLines)
-		{
-			Restructure.RestructureMacros(parsedLines);
-			Restructure.RestructureIfs(parsedLines);
 		}
 	}
 }
