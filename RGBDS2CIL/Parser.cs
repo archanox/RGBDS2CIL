@@ -212,7 +212,6 @@ namespace RGBDS2CIL
 					parsedLines.Add(new EndRepeatLine(codeLine));
 				else if (code.CommandName("ENDC"))
 					parsedLines.Add(new EndConditionLine(codeLine));
-
 				else if (code.CommandName("WARN"))
 					parsedLines.Add(new WarnLine(codeLine));
 				else if (code.CommandName("FAIL"))
@@ -409,11 +408,38 @@ namespace RGBDS2CIL
 				{
 					newParam = newParam.Replace($"\\{i}", $"args[{i - 1}]");
 				}
-				matches.Add(newParam);
+				matches.Add(ReplaceDataTypesInString(newParam));
 				code = code[parameter.Length..].TrimStart(',').Trim();
 			}
 
 			return matches.Count > 0 ? matches : null;
+		}
+
+		public static string ReplaceDataTypesInString(string value)
+		{
+			//https://rgbds.gbdev.io/docs/v0.5.2/rgbasm.5#Operators
+			//pad out the +-*/%~
+			value = value
+				.Replace("+", " + ")
+				.Replace("*", " * ")
+				.Replace("-", " - ")
+				.Replace("/", " / ");
+
+			var newValues = new List<string>();
+			foreach (var splitValue in value.Split(' '))
+			{
+				if (splitValue.StartsWith('$'))
+					newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
+				else if (splitValue.StartsWith('%'))
+					newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
+				else if (splitValue.StartsWith('&'))
+					newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
+				else
+					newValues.Add(splitValue);
+			}
+
+			value = string.Join(' ', newValues);
+			return value;
 		}
 
 		private static string GetParameter(string code)

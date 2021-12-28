@@ -42,45 +42,22 @@ namespace RGBDS2CIL
 
 		public static void RestructureIfs(List<IAsmLine> parsedLines)
 		{
-			var ifsToUpdate = new List<IfLine>();
-			var linesToRemove = new List<IAsmLine>();
-
-			foreach (var ifLine in parsedLines.OfType<IfLine>().Where(x => x.Lines.Count == 0 && !x.IsElseIf).ToArray())
+			var lastIfLine = parsedLines.OfType<IfLine>().LastOrDefault(x => !x.IsElseIf && !x.Lines.Any());
+			if (lastIfLine != null)
 			{
 				var ifContents = parsedLines
-					.SkipWhile(x => x.Line < ifLine.Line)
-					.TakeWhile(x => x is not EndConditionLine)
+					.SkipWhile(x => x.LineId != lastIfLine.LineId)
+					.Skip(1)
+					.TakeUntilIncluding(x => x is EndConditionLine)
 					.ToList();
 
-				var endline = parsedLines[parsedLines.IndexOf(ifContents.Last()) + 1];
-
-				var macro = ifContents.OfType<IfLine>().First();
-				macro.Lines = ifContents.Skip(1).ToList();
-				macro.Lines.Add(endline);
-
-				linesToRemove.AddRange(macro.Lines);
-
-				ifsToUpdate.Add(macro);
-			}
-
-
-			//this and below is broken!!
-			parsedLines.RemoveAll(x => linesToRemove.Select(y => y.LineId).Contains(x.LineId));
-
-			foreach (var ifToUpdate in ifsToUpdate)
-			{
-				var thisIfLineIndex = parsedLines.FindIndex(x => x.LineId == ifToUpdate.LineId);
-				RestructureIfs(ifToUpdate.Lines);
-				if (thisIfLineIndex == -1)
+				if (ifContents.Any())
 				{
-					Console.WriteLine("can't find");
-					//check for more ifs?
+					lastIfLine.Lines = ifContents;
+					parsedLines.RemoveAll(x => ifContents.Any(y => y.LineId == x.LineId) && x.LineId != lastIfLine.LineId);
+				}
 
-				}
-				else
-				{
-					parsedLines[thisIfLineIndex] = ifToUpdate;
-				}
+				RestructureIfs(parsedLines);
 			}
 		}
 	}

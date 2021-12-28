@@ -60,31 +60,10 @@ namespace RGBDS2CIL
 			//if it's a number
 			if (ConstType == "EQU")
 			{
-				//https://rgbds.gbdev.io/docs/v0.5.2/rgbasm.5#Operators
-				//pad out the +-*/%~
-				value = value
-					.Replace("+", " + ")
-					.Replace("*", " * ")
-					.Replace("-", " - ")
-					.Replace("/", " / ");
-
-				var newValues = new List<string>();
-				foreach (var splitValue in value.Split(' '))
-				{
-					if (splitValue.StartsWith('$'))
-						newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
-					else if (splitValue.StartsWith('%'))
-						newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
-					else if (splitValue.StartsWith('&'))
-						newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
-					else
-						newValues.Add(splitValue);
-				}
-
-				value = string.Join(' ', newValues);
+				value = Parser.ReplaceDataTypesInString(value);
 			}
 
-			if(ConstantValueType == ConstantType.String)
+			if (ConstantValueType == ConstantType.String)
 				valueType = "string";
 			else if (ConstantValueType == ConstantType.Decimal)
 				valueType = "double";

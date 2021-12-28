@@ -10,7 +10,7 @@ namespace RGBDS2CIL
 
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
-			sb.Append(new string('\t', tabCount)).Append('}').AppendComment(Comment);
+			sb.Append(new string('\t', tabCount - 1)).Append('}').AppendComment(Comment);
 		}
 	}
 }

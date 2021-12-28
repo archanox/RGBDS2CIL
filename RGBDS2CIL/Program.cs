@@ -18,7 +18,6 @@ namespace RGBDS2CIL
 			var files = new[]
 			{
 				@"tetris_disassembly\main.asm",
-				@"tetris.asm",
 				@"LADX-Disassembly\src\main.asm",
 
 				@"DKGBDisasm\home.asm",
@@ -29,7 +28,7 @@ namespace RGBDS2CIL
 				@"marioland2\home.asm",
 				@"marioland2\main.asm",
 
-				@"mmania\main.asm",
+				//@"mmania\main.asm", //INCBIN too slow...
 
 				@"rgbds-template\src\hello-world.asm",
 
@@ -59,9 +58,9 @@ namespace RGBDS2CIL
 				@"dmg_boot (2) orig.asm",
 				@"dmg_boot (2).asm",
 
-			 	@"pokered\main.asm",
-			 	@"pokered\home.asm",
-			 	@"Pokemon Red (UE) [S][!].asm",
+				@"pokered\main.asm",
+				@"pokered\home.asm",
+				@"Pokemon Red (UE) [S][!].asm",
 
 			};
 

@@ -21,35 +21,37 @@ namespace RGBDS2CIL
 			IncludeFile = Parser.GetStrings(codeLine.Code).Single().TrimStart('"').TrimEnd('"');
 			IsBinary = isBinary;
 
-			var parameters = Parser.GetParameters(codeLine.Code).Skip(1).ToArray();
-			//INCBIN "file",<start>[,<stop>]
-			//INCBIN "baserom.gb", $0, $40 - $0
-			if (isBinary && parameters.Any())
+			
+			if (isBinary)
 			{
-				var isHex = parameters[0].StartsWith('$');
-				var startHexString = parameters[0].Replace("$", "0x");
-				try
+				var parameters = Parser.GetParameters(codeLine.Code).Skip(1).ToArray();
+				//INCBIN "file",<start>[,<stop>]
+				//INCBIN "baserom.gb", $0, $40 - $0
+				if (parameters.Any())
 				{
-					Start = Convert.ToUInt32(startHexString, isHex ? 16 : 10);
-				}
-				catch (OverflowException)
-				{
-					Console.WriteLine($"Unable to convert offset '{startHexString}' to an unsigned integer.");
-					throw;
-				}
-				if (parameters.Length == 2)
-				{
-					//TODO: move this over into the outputted c#
-					var endHexString = parameters[1].Replace("$", "0x");
+					var isHex = parameters[0].StartsWith("0x");
 					try
 					{
-						var result2 = CSharpScript.EvaluateAsync(endHexString).Result;
-						End = Convert.ToUInt32(result2);
+						Start = Convert.ToUInt32(parameters[0], isHex ? 16 : 10);
 					}
 					catch (OverflowException)
 					{
-						Console.WriteLine($"Unable to convert length '{endHexString}' to an unsigned integer.");
+						Console.WriteLine($"Unable to convert offset '{parameters[0]}' to an unsigned integer.");
 						throw;
+					}
+					if (parameters.Length == 2)
+					{
+						//TODO: move this over into the outputted c#
+						try
+						{
+							var result2 = CSharpScript.EvaluateAsync(parameters[1]).Result;
+							End = Convert.ToUInt32(result2);
+						}
+						catch (OverflowException)
+						{
+							Console.WriteLine($"Unable to convert length '{parameters[1]}' to an unsigned integer.");
+							throw;
+						}
 					}
 				}
 			}

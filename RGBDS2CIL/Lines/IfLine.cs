@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -41,7 +41,7 @@ namespace RGBDS2CIL
 			sb.Append(new string('\t', tabCount)).Append(ifElse).Append(" (").Append(Condition).Append(')').AppendComment(Comment);
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
 			
-			foreach (var lineLine in Lines.Select(macroLineLine => macroLineLine.Reparse()))
+			foreach (var lineLine in Lines.Select(x => x.Reparse()))
 			{
 				lineLine.OutputLine(sb, tabCount + 1);
 			}

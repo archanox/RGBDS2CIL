@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace RGBDS2CIL
@@ -22,6 +23,16 @@ namespace RGBDS2CIL
 			sb.Append(new string('\t', tabCount))
 				.Append(code)
 				.AppendComment(comment);
+		}
+
+		public static IEnumerable<T> TakeUntilIncluding<T>(this IEnumerable<T> list, Func<T, bool> predicate)
+		{
+			foreach (T el in list)
+			{
+				yield return el;
+				if (predicate(el))
+					yield break;
+			}
 		}
 	}
 }
