@@ -126,7 +126,7 @@ namespace Tests
 			var assertLine = new AssertLine(codeLine);
 
 			_testOutputHelper.WriteLine("fileLine: " + fileLine);
-			_testOutputHelper.WriteLine("comment: " + comment);
+			//_testOutputHelper.WriteLine("comment: " + comment);
 			_testOutputHelper.WriteLine("code: " + code);
 			return assertLine;
 		}

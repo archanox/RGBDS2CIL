@@ -417,13 +417,15 @@ namespace RGBDS2CIL
 
 		public static string ReplaceDataTypesInString(string value)
 		{
+			if (value.StartsWith('"') && value.EndsWith('"')) return value;
 			//https://rgbds.gbdev.io/docs/v0.5.2/rgbasm.5#Operators
 			//pad out the +-*/%~
 			value = value
 				.Replace("+", " + ")
 				.Replace("*", " * ")
 				.Replace("-", " - ")
-				.Replace("/", " / ");
+				.Replace("/", " / ")
+				.Replace("  ", " ");
 
 			var newValues = new List<string>();
 			foreach (var splitValue in value.Split(' '))
@@ -432,7 +434,7 @@ namespace RGBDS2CIL
 					newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
 				else if (splitValue.StartsWith('%'))
 					newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
-				else if (splitValue.StartsWith('&'))
+				else if (splitValue.StartsWith('&') && splitValue != "&&")
 					newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
 				else
 					newValues.Add(splitValue);
