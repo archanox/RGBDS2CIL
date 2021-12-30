@@ -31,8 +31,11 @@ namespace RGBDS2CIL
 			foreach (var macroLineLine in Lines.OfType<CodeLine>())
 			{
 				argCount = ReplaceArgs(macroLineLine, argCount, linesToUpdate);
-				if (macroLineLine is not IfLine ifLine) continue;
-				argCount = ifLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
+				//TODO needs recursion
+				if (macroLineLine is IfLine ifLine) 
+					argCount = ifLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
+				if (macroLineLine is RepeatLine repeatLine)
+					argCount = repeatLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
 			}
 
 			if (!string.IsNullOrWhiteSpace(Comment))
@@ -52,13 +55,10 @@ namespace RGBDS2CIL
 			sb.AppendLine(argCount == 0 ? "()" : "(params object[] args)");
 
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
-			tabCount++;
 			foreach (var lineLine in Lines.Select(macroLineLine => macroLineLine.Reparse()))
 			{
-				lineLine.OutputLine(sb, tabCount);
+				lineLine.OutputLine(sb, tabCount + 1);
 			}
-
-			tabCount--;
 		}
 
 		private static int ReplaceArgs(IAsmLine macroLineLine, int argCount, ICollection<IAsmLine> linesToUpdate)

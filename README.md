@@ -65,7 +65,7 @@ namespace macros
 {
 	public class Gfx
 	{
-		void Assert_Valid_Rgb()
+		void Assert_Valid_Rgb(params object[] args)
 		{
 			for (int i = 0; i < args.Length; i++)
 			{
@@ -74,11 +74,11 @@ namespace macros
 			}
 		}
 
-		void RGB()
+		void RGB(params object[] args)
 		{
 			for (int i = 0; i < args.Length / 3; i++)
 			{
-				/* assert_valid_rgb \1, \2, \3 */
+				/* assert_valid_rgb args[0], args[1], args[2] */
 				Define(typeof(System.Int16), palred (args[0]) + palgreen (args[1]) + palblue (args[2]));
 				Shift();
 			}
