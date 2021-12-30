@@ -1,9 +1,16 @@
-﻿namespace RGBDS2CIL
+﻿using System.Text;
+
+namespace RGBDS2CIL
 {
-	public class ShiftLine : CodeLine
+	public class ShiftLine : CodeLine, IAsmLine
 	{
 		public ShiftLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
+		}
+
+		public new void OutputLine(StringBuilder sb, int tabCount)
+		{
+			sb.Append(new string('\t', tabCount)).Append("Shift();").AppendComment(Comment);
 		}
 	}
 }

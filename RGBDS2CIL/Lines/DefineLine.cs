@@ -22,7 +22,7 @@ namespace RGBDS2CIL
 
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
-			sb.Append(new string('\t', tabCount)).Append("Define(");
+			sb.Append(new string('\t', tabCount)).Append($"Define(typeof({DefineType}), ");
 
 			for (var i = 0; i < Parameters.Count; i++)
 			{

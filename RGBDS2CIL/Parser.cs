@@ -233,7 +233,9 @@ namespace RGBDS2CIL
 				else if (code.CommandName("PURGE"))
 					parsedLines.Add(new PurgeLine(codeLine));
 				else if (code.CommandName("REPT"))
-					parsedLines.Add(new RepeatLine(codeLine));
+					parsedLines.Add(new RepeatLine(codeLine, "REPT"));
+				else if (code.CommandName("FOR"))
+					parsedLines.Add(new RepeatLine(codeLine, "FOR"));
 				else if (code.CommandName("SHIFT"))
 					parsedLines.Add(new ShiftLine(codeLine));
 				else if (code.CommandName("POP"))
@@ -351,7 +353,7 @@ namespace RGBDS2CIL
 					//Console.WriteLine(codeLine.Code.Trim().Split()[0]);
 					//Console.WriteLine(codeLine.FileName);
 					//Debugger.Break();
-					//parsedLines.Add(codeLine);
+					parsedLines.Add(codeLine);
 					//throw new NotImplementedException($"Instruction {codeLine.Code.Split()[0]} not implemented.");
 				}
 			}
@@ -434,7 +436,7 @@ namespace RGBDS2CIL
 					newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
 				else if (splitValue.StartsWith('%'))
 					newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
-				else if (splitValue.StartsWith('&') && splitValue != "&&")
+				else if (splitValue.StartsWith('&') && splitValue != "&&" && splitValue.Length == 2)
 					newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
 				else
 					newValues.Add(splitValue);

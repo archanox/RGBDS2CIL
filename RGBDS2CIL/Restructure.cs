@@ -36,6 +36,7 @@ namespace RGBDS2CIL
 			{
 				var thisMacroLineIndex = parsedLines.FindIndex(x => x.LineId == macroLine.LineId);
 				RestructureIfs(macroLine.Lines);
+				RestructureRepeats(macroLine.Lines);
 				parsedLines[thisMacroLineIndex] = macroLine;
 			}
 		}
@@ -53,11 +54,34 @@ namespace RGBDS2CIL
 
 				if (ifContents.Any())
 				{
+					RestructureRepeats(ifContents);
 					lastIfLine.Lines = ifContents;
 					parsedLines.RemoveAll(x => ifContents.Any(y => y.LineId == x.LineId) && x.LineId != lastIfLine.LineId);
 				}
 
 				RestructureIfs(parsedLines);
+			}
+		}
+
+		public static void RestructureRepeats(List<IAsmLine> parsedLines)
+		{
+			var lastRepeatLine = parsedLines.OfType<RepeatLine>().LastOrDefault(x => !x.Lines.Any());
+			if (lastRepeatLine != null)
+			{
+				var repeatContents = parsedLines
+					.SkipWhile(x => x.LineId != lastRepeatLine.LineId)
+					.Skip(1)
+					.TakeUntilIncluding(x => x is EndRepeatLine)
+					.ToList();
+
+				if (repeatContents.Any())
+				{
+					RestructureIfs(repeatContents);
+					lastRepeatLine.Lines = repeatContents;
+					parsedLines.RemoveAll(x => repeatContents.Any(y => y.LineId == x.LineId) && x.LineId != lastRepeatLine.LineId);
+				}
+
+				RestructureRepeats(parsedLines);
 			}
 		}
 	}

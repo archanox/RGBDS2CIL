@@ -17,6 +17,8 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
+				@"DKGBDisasm\macros\gfx.asm",
+
 				@"tetris_disassembly\main.asm",
 				@"LADX-Disassembly\src\main.asm",
 
@@ -83,7 +85,7 @@ namespace RGBDS2CIL
 
 				Restructure.RestructureMacros(parsedLines);
 				Restructure.RestructureIfs(parsedLines);
-
+				Restructure.RestructureRepeats(parsedLines);
 
 				//var c = new Foo.C();
 				//c.M();
