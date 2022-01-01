@@ -18,6 +18,7 @@ namespace RGBDS2CIL
 		internal static string RootFolder { get; set; }
 		private static List<LabelLine> Labels { get; } = new();
 		private static List<ConstantLine> Constants { get; } = new();
+		private static List<MacroLine> Macros { get; } = new();
 
 		public static string ExportJson(List<IAsmLine> parsedLines)
 		{
@@ -108,7 +109,8 @@ namespace RGBDS2CIL
 					}
 					else
 					{
-						Console.WriteLine($"Could not include binary, {binary.IncludeFile}");
+						//TODO: requires preprocessing of images?
+						//Console.WriteLine($"Could not include binary, {binary.IncludeFile}");
 						//throw new FileNotFoundException("Could not include binary", binary.IncludeFile);
 					}
 
@@ -125,7 +127,9 @@ namespace RGBDS2CIL
 
 					if (string.Equals(split.Last(), "MACRO", StringComparison.OrdinalIgnoreCase))
 					{
-						parsedLines.Add(new MacroLine(codeLine, split[0]));
+						var macro = new MacroLine(codeLine, split[0]);
+						parsedLines.Add(macro);
+						Macros.Add(macro);
 					}
 					else
 					{
@@ -304,6 +308,14 @@ namespace RGBDS2CIL
 				//else if (code.CommandName("ENDU"))
 				//	parsedLines.Add(new EndUnionLine(codeLine));
 
+				//TODO:
+				//PUSHC
+				//POPC
+				//SETCHARMAP
+				//NEWCHARMAP
+				//RSRESET
+				//rsset
+
 				//https://rgbds.gbdev.io/docs/master/rgblink.5#ORG
 				//note: moves out the address
 				//else if (code.CommandName("ORG"))
@@ -333,9 +345,9 @@ namespace RGBDS2CIL
 					var label = labels.FirstOrDefault();
 					parsedLines.Add(new LabelCallLine(codeLine, label));
 				}
-				else if (Constants.Select(x => x.ConstantName.ToUpper()).Contains(codeLine.Code.Split()[0].Trim().ToUpper()))
+				else if (Constants.Select(x => x.ConstantName).Contains(codeLine.Code.Split()[0].Trim()))
 				{
-					var constantName = codeLine.Code.Split()[0].Trim().ToUpper();
+					var constantName = codeLine.Code.Split()[0].Trim();
 
 					var constants = Constants
 						.Where(x => string.Equals(x.ConstantName, constantName, StringComparison.OrdinalIgnoreCase))
@@ -347,6 +359,21 @@ namespace RGBDS2CIL
 
 					var constant = constants.FirstOrDefault();
 					parsedLines.Add(new ConstantAssignLine(codeLine, constant));
+				}
+				else if (Macros.Select(x => x.Name.Trim(':')).Contains(codeLine.Code.Split()[0].Trim()))
+				{
+					var macroName = codeLine.Code.Split()[0].Trim();
+
+					var macros = Macros
+						.Where(x => string.Equals(x.Name.Trim(':'), macroName, StringComparison.Ordinal))
+						.ToImmutableArray();
+					if (macros.Length > 1)
+					{
+						//Debugger.Break();
+					}
+
+					var macro = macros.FirstOrDefault();
+					parsedLines.Add(new MacroCallLine(codeLine, macro));
 				}
 				else
 				{
@@ -408,6 +435,7 @@ namespace RGBDS2CIL
 				var newParam = parameter;
 				for (var i = 1; i < 10; i++)
 				{
+					//TODO: take this out of here and call it on the "output csharp" side
 					newParam = newParam.Replace($"\\{i}", $"args[{i - 1}]");
 				}
 				matches.Add(ReplaceDataTypesInString(newParam));

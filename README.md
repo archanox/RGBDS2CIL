@@ -61,11 +61,11 @@ ENDM
 
 Sample [WIP] C# Output:
 ```csharp
-namespace macros
+namespace DKGBDisasm
 {
 	public class Gfx
 	{
-		void Assert_Valid_Rgb(params object[] args)
+		public void Assert_Valid_Rgb()
 		{
 			for (int i = 0; i < args.Length; i++)
 			{
@@ -74,11 +74,11 @@ namespace macros
 			}
 		}
 
-		void RGB(params object[] args)
+		public void RGB()
 		{
 			for (int i = 0; i < args.Length / 3; i++)
 			{
-				/* assert_valid_rgb args[0], args[1], args[2] */
+				Assert_Valid_Rgb(args[0], args[1], args[2]);
 				Define(typeof(System.Int16), palred (args[0]) + palgreen (args[1]) + palblue (args[2]));
 				Shift();
 			}
@@ -95,7 +95,7 @@ namespace macros
 		// 3:start vram address
 		// 4:type(0: uncompressed, 1: compressed w/ header, 2: compressed no header)
 		// 5:length (not needed if type is 1)
-		void Gfxheader(params object[] args)
+		public void Gfxheader()
 		{
 			Define(typeof(System.Byte), args[0]);
 			Define(typeof(System.Int16), args[1]);

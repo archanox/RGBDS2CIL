@@ -21,7 +21,6 @@ namespace RGBDS2CIL
 			IncludeFile = Parser.GetStrings(codeLine.Code).Single().TrimStart('"').TrimEnd('"');
 			IsBinary = isBinary;
 
-			
 			if (isBinary)
 			{
 				var parameters = Parser.GetParameters(codeLine.Code).Skip(1).ToArray();

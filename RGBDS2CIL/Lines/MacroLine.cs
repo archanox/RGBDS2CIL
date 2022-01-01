@@ -23,7 +23,7 @@ namespace RGBDS2CIL
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			//NOTE: Nested macros are prohibited
-			var privatePublic = "";//macroLine.IsLocal ? "private " : "public ";
+			var privatePublic = IsLocal ? "private " : "public ";
 			var methodName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name.Trim(':'));
 
 			var argCount = 0;
@@ -55,7 +55,7 @@ namespace RGBDS2CIL
 			sb.AppendLine(argCount == 0 ? "()" : "(params object[] args)");
 
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
-			foreach (var lineLine in Lines.Select(macroLineLine => macroLineLine.Reparse()))
+			foreach (var lineLine in Lines.Select(x => x.Reparse()))
 			{
 				lineLine.OutputLine(sb, tabCount + 1);
 			}
