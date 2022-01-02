@@ -93,12 +93,12 @@ namespace Tests
 			fileLines.AddRange(new[] {
 				(
 					"ASSERT !STRIN(\\1, \"@\"), STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)",
-					"!STRIN(args[0], \"@\")",
-					"STRCAT(\"String terminator \\\"@\\\" in list entry: \", args[0])"
+					"!STRIN(\\1, \"@\")",
+					"STRCAT(\"String terminator \\\"@\\\" in list entry: \", \\1)"
 				),
 				(
 					"assert 0 <= (\\1) && (\\1) <= 31, \"RGB channel must be 0-31\"",
-					"0 <= (args[0]) && (args[0]) <= 31",
+					"0 <= (\\1) && (\\1) <= 31",
 					"\"RGB channel must be 0-31\""
 				),
 				(
