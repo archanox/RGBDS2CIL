@@ -25,7 +25,7 @@ namespace RGBDS2CIL
 				sb.Append("using ").Append(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Path.GetFileNameWithoutExtension(include.Replace('\\', '.').Replace('/', '.')))).AppendLine(";");
 			}
 
-			if(usings.Any())
+			if (usings.Any())
 				sb.AppendLine();
 
 			foreach (var include in includes.Where(x => !x.IsBinary))
@@ -40,7 +40,7 @@ namespace RGBDS2CIL
 			var tabCount = 1;
 
 			sb.Append("namespace ")
-				.AppendLine(new DirectoryInfo(root).Name)
+				.AppendLine(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(new DirectoryInfo(root).Name))
 				.AppendLine("{")
 				.Append(new string('\t', tabCount))
 				.Append("public class ")
@@ -50,13 +50,43 @@ namespace RGBDS2CIL
 
 			foreach (var parsedLine in parsedLines)
 			{
-				parsedLine.OutputLine(sb, tabCount);
+				parsedLine.Reparse().OutputLine(sb, tabCount);
 			}
 
 			sb.Append(new string('\t', 1)).AppendLine("}");
 			sb.AppendLine("}");
 
 			return sb.ToString();
+		}
+
+		public static string ReplaceDataTypesInString(string value)
+		{
+			if (string.IsNullOrWhiteSpace(value)) return null;
+			if (value.StartsWith('"') && value.EndsWith('"')) return value;
+			//https://rgbds.gbdev.io/docs/v0.5.2/rgbasm.5#Operators
+			//pad out the +-*/%~
+			value = value
+				.Replace("+", " + ")
+				.Replace("*", " * ")
+				.Replace("-", " - ")
+				.Replace("/", " / ")
+				.Replace("  ", " ");
+
+			var newValues = new List<string>();
+			foreach (var splitValue in value.Split(' '))
+			{
+				if (splitValue.StartsWith('$'))
+					newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
+				else if (splitValue.StartsWith('%'))
+					newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
+				else if (splitValue.StartsWith('&') && splitValue != "&&" && splitValue.Length == 2)
+					newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
+				else
+					newValues.Add(splitValue);
+			}
+
+			value = string.Join(' ', newValues);
+			return value;
 		}
 	}
 }

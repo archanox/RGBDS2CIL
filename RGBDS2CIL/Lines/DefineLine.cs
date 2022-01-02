@@ -20,6 +20,21 @@ namespace RGBDS2CIL
 			Parameters = Parser.GetParameters(parameters);
 		}
 
+		public override IAsmLine Reparse()
+		{
+			for (var j = 0; j < Parameters.Count; j++)
+			{
+				Parameters[j] = CSharp.ReplaceDataTypesInString(Parameters[j]);
+
+				for (var i = 1; i < 10; i++)
+				{
+					Parameters[j] = Parameters[j].Replace($"\\{i}", $"args[{i - 1}]");
+				}
+			}
+
+			return base.Reparse();
+		}
+
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(new string('\t', tabCount)).Append($"Define(typeof({DefineType}), ");

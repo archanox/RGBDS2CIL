@@ -23,12 +23,16 @@ namespace RGBDS2CIL
 
 			if (isBinary)
 			{
+				return;
+
+				//ERROR: this is all broken
+
 				var parameters = Parser.GetParameters(codeLine.Code).Skip(1).ToArray();
 				//INCBIN "file",<start>[,<stop>]
 				//INCBIN "baserom.gb", $0, $40 - $0
 				if (parameters.Any())
 				{
-					var isHex = parameters[0].StartsWith("0x");
+					var isHex = parameters[0].StartsWith("$");
 					try
 					{
 						Start = Convert.ToUInt32(parameters[0], isHex ? 16 : 10);
@@ -58,6 +62,7 @@ namespace RGBDS2CIL
 
 		public void ReadBinaryFile(string path)
 		{
+			return;
 			if (Start is not null)
 			{
 				using (var reader = new BinaryReader(File.Open(path, FileMode.Open)))

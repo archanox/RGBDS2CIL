@@ -20,6 +20,8 @@ namespace RGBDS2CIL
 			//NOTE: will fail on nested strings
 			var constString = codeLine.Strings?.SingleOrDefault()?.TrimStart('"').TrimEnd('"');
 
+			//TODO: Support REDEF
+
 			if (!string.IsNullOrWhiteSpace(constString) && constType == "EQUS")
 				ConstantValue = $"\"{constString}\"";
 			else
@@ -49,7 +51,10 @@ namespace RGBDS2CIL
 				ConstantValue = ConstantValue.Replace($"\\{i}", $"args[{i - 1}]");
 			}
 
-			return this;
+			ConstantName = CSharp.ReplaceDataTypesInString(ConstantName);
+			ConstantValue = CSharp.ReplaceDataTypesInString(ConstantValue);
+
+			return base.Reparse();
 		}
 
 		public new void OutputLine(StringBuilder sb, int tabCount)
@@ -60,7 +65,7 @@ namespace RGBDS2CIL
 			//if it's a number
 			if (ConstType == "EQU")
 			{
-				value = Parser.ReplaceDataTypesInString(value);
+				value = CSharp.ReplaceDataTypesInString(value);
 			}
 
 			if (ConstantValueType == ConstantType.String)

@@ -61,22 +61,22 @@ ENDM
 
 Sample [WIP] C# Output:
 ```csharp
-namespace DKGBDisasm
+namespace Macros
 {
 	public class Gfx
 	{
-		public void Assert_Valid_Rgb()
+		public void Assert_Valid_Rgb(params object[] args)
 		{
-			for (int i = 0; i < args.Length; i++)
+			for (var i = 0; i < args.Length; i++)
 			{
 				Debug.Assert(0 <= (args[0]) && (args[0]) <= 31, "RGB channel must be 0-31");
 				Shift();
 			}
 		}
 
-		public void RGB()
+		public void RGB(params object[] args)
 		{
-			for (int i = 0; i < args.Length / 3; i++)
+			for (var i = 0; i < args.Length / 3; i++)
 			{
 				Assert_Valid_Rgb(args[0], args[1], args[2]);
 				Define(typeof(System.Int16), palred (args[0]) + palgreen (args[1]) + palblue (args[2]));
@@ -95,7 +95,7 @@ namespace DKGBDisasm
 		// 3:start vram address
 		// 4:type(0: uncompressed, 1: compressed w/ header, 2: compressed no header)
 		// 5:length (not needed if type is 1)
-		public void Gfxheader()
+		public void Gfxheader(params object[] args)
 		{
 			Define(typeof(System.Byte), args[0]);
 			Define(typeof(System.Int16), args[1]);
@@ -123,4 +123,5 @@ namespace DKGBDisasm
 		}
 	}
 }
+
 ```

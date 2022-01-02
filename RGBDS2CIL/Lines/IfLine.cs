@@ -23,16 +23,14 @@ namespace RGBDS2CIL
 				Condition = Condition.Replace($"\\{i}", $"args[{i - 1}]");
 			}
 
-			Code = Code.Replace("_NARG", "args.Length");
-			Condition = Condition.Replace("_NARG", "args.Length");
+			Code = CSharp.ReplaceDataTypesInString(Code.Replace("_NARG", "args.Length"));
+			Condition = CSharp.ReplaceDataTypesInString(Condition.Replace("_NARG", "args.Length"));
 
-			return this;
+			return base.Reparse();
 		}
 
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
-			_ = this.Reparse();
-
 			var ifElse = IsElseIf ? "else if" : "if";
 
 			if (IsElseIf)

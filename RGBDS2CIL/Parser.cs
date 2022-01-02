@@ -432,46 +432,11 @@ namespace RGBDS2CIL
 			while (code.Length > 0)
 			{
 				var parameter = GetParameter(code);
-				var newParam = parameter;
-				for (var i = 1; i < 10; i++)
-				{
-					//TODO: take this out of here and call it on the "output csharp" side
-					newParam = newParam.Replace($"\\{i}", $"args[{i - 1}]");
-				}
-				matches.Add(ReplaceDataTypesInString(newParam));
+				matches.Add(parameter);
 				code = code[parameter.Length..].TrimStart(',').Trim();
 			}
 
 			return matches.Count > 0 ? matches : null;
-		}
-
-		public static string ReplaceDataTypesInString(string value)
-		{
-			if (value.StartsWith('"') && value.EndsWith('"')) return value;
-			//https://rgbds.gbdev.io/docs/v0.5.2/rgbasm.5#Operators
-			//pad out the +-*/%~
-			value = value
-				.Replace("+", " + ")
-				.Replace("*", " * ")
-				.Replace("-", " - ")
-				.Replace("/", " / ")
-				.Replace("  ", " ");
-
-			var newValues = new List<string>();
-			foreach (var splitValue in value.Split(' '))
-			{
-				if (splitValue.StartsWith('$'))
-					newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
-				else if (splitValue.StartsWith('%'))
-					newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
-				else if (splitValue.StartsWith('&') && splitValue != "&&" && splitValue.Length == 2)
-					newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
-				else
-					newValues.Add(splitValue);
-			}
-
-			value = string.Join(' ', newValues);
-			return value;
 		}
 
 		private static string GetParameter(string code)

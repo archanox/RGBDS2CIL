@@ -18,7 +18,15 @@ namespace RGBDS2CIL
 		public virtual IAsmLine Reparse()
 		{
 			//throw new NotImplementedException();
-			Console.Error.WriteLine(this.GetType().FullName + " not re-parsed!");
+			//Console.Error.WriteLine(this.GetType().FullName + " not re-parsed!");
+
+			for (var i = 1; i < 10; i++)
+			{
+				Code = Code.Replace($"\\{i}", $"args[{i - 1}]");
+			}
+
+			Code = Code.Replace("_NARG", "args.Length");
+			Code = CSharp.ReplaceDataTypesInString(Code);
 			return this;
 		}
 

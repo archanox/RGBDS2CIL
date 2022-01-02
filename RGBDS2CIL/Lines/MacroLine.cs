@@ -32,9 +32,9 @@ namespace RGBDS2CIL
 			{
 				argCount = ReplaceArgs(macroLineLine, argCount, linesToUpdate);
 				//TODO needs recursion
-				if (macroLineLine is IfLine ifLine) 
+				if (macroLineLine is IfLine ifLine)
 					argCount = ifLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
-				if (macroLineLine is RepeatLine repeatLine)
+				else if (macroLineLine is RepeatLine repeatLine)
 					argCount = repeatLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
 			}
 
@@ -63,23 +63,16 @@ namespace RGBDS2CIL
 
 		private static int ReplaceArgs(IAsmLine macroLineLine, int argCount, ICollection<IAsmLine> linesToUpdate)
 		{
-			if (macroLineLine.Reparse() is not CodeLine lineLine) return 0;
+			if (macroLineLine is not CodeLine lineLine) return 0;
 
 			for (var i = 1; i < 10; i++)
 			{
 				if (!lineLine.Code.Contains($"\\{i}")) continue;
 				argCount = i;
-				lineLine.Code = lineLine.Code.Replace($"\\{i}", $"args[{i - 1}]");
-				if (macroLineLine is ConstantLine constantLine)
-				{
-					constantLine.ConstantValue = constantLine.ConstantValue.Replace($"\\{i}", $"args[{i - 1}]");
-					constantLine.ConstantName = constantLine.ConstantName.Replace($"\\{i}", $"args[{i - 1}]");
-					lineLine = constantLine;
-				}
-
 				linesToUpdate.Add(lineLine);
 			}
 
+			macroLineLine.Reparse();
 			return argCount;
 		}
 	}

@@ -23,6 +23,20 @@ namespace RGBDS2CIL
 			Debug.Assert(splitParameters?.Count <= 2, "More than 2 parameters for an ASSERT are unsupported.");
 		}
 
+		public override IAsmLine Reparse()
+		{
+			for (var i = 1; i < 10; i++)
+			{
+				Condition = Condition.Replace($"\\{i}", $"args[{i - 1}]");
+				Message = Message?.Replace($"\\{i}", $"args[{i - 1}]");
+			}
+
+			Condition = CSharp.ReplaceDataTypesInString(Condition);
+			Message = CSharp.ReplaceDataTypesInString(Message);
+
+			return base.Reparse();
+		}
+
 		public new void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(new string('\t', tabCount)).Append("Debug.Assert(").Append(Condition);
