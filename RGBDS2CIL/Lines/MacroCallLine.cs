@@ -22,7 +22,7 @@ namespace RGBDS2CIL
 
 				for (var i = 1; i < 10; i++)
 				{
-					Parameters[j] = Parameters[j].Replace($"\\{i}", $"args[{i - 1}]");
+					Parameters[j] = Parameters[j]?.Replace($"\\{i}", $"args[{i - 1}]");
 				}
 			}
 

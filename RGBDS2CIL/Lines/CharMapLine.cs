@@ -10,9 +10,12 @@ namespace RGBDS2CIL
 
 		public CharMapLine(CodeLine codeLine) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
-			var values = codeLine.Code.Trim()["CHARMAP".Length..];
-			Into = $"\"{codeLine.Strings.FirstOrDefault()}\"";
-			From = values.Split(',').Last().Trim();
+			var values = codeLine.Code.Trim()["CHARMAP".Length..].Trim();
+			var parameters = Parser.GetParameters(values);
+			//Into = $"\"{codeLine.Strings.FirstOrDefault()}\"";
+			Into = parameters[0].Trim();
+			//From = values.Split(',').Last().Trim();
+			From = parameters[1];
 		}
 
 		public new void OutputLine(StringBuilder sb, int tabCount)

@@ -45,8 +45,6 @@ namespace RGBDS2CIL
 				@"hello-world.asm",
 				@"mrdo.asm",
 
-				@"pokered\macros/const.asm",
-
 				@"hello.asm",
 				@"hello-world.asm",
 				@"score_bcd.asm",
@@ -60,10 +58,20 @@ namespace RGBDS2CIL
 				@"dmg_boot (2) orig.asm",
 				@"dmg_boot (2).asm",
 
+				@"pokered\macros/const.asm",
 				@"pokered\main.asm",
 				@"pokered\home.asm",
 				@"Pokemon Red (UE) [S][!].asm",
 
+				@"poketcg\src\main.asm",
+
+				@"shi-kong-xing-shou/main.asm",
+				@"shi-kong-xing-shou/home.asm",
+
+				@"telefang/telefang.inc",
+
+				@"robopon/home.asm",
+				@"robopon/main.asm",
 			};
 
 

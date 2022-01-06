@@ -27,15 +27,9 @@ namespace RGBDS2CIL
 			var methodName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name.Trim(':'));
 
 			var argCount = 0;
-			var linesToUpdate = new List<IAsmLine>();
 			foreach (var macroLineLine in Lines.OfType<CodeLine>())
 			{
-				argCount = ReplaceArgs(macroLineLine, argCount, linesToUpdate);
-				//TODO needs recursion
-				if (macroLineLine is IfLine ifLine)
-					argCount = ifLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
-				else if (macroLineLine is RepeatLine repeatLine)
-					argCount = repeatLine.Lines.Aggregate(argCount, (current, ifLineLine) => ReplaceArgs(ifLineLine, current, linesToUpdate));
+				argCount = GetArgCount(macroLineLine, argCount);				
 			}
 
 			if (!string.IsNullOrWhiteSpace(Comment))
@@ -61,18 +55,23 @@ namespace RGBDS2CIL
 			}
 		}
 
-		private static int ReplaceArgs(IAsmLine macroLineLine, int argCount, ICollection<IAsmLine> linesToUpdate)
+		private static int GetArgCount(IAsmLine macroLineLine, int argCount)
 		{
 			if (macroLineLine is not CodeLine lineLine) return 0;
 
-			for (var i = 1; i < 10; i++)
+			for (var i = argCount; i < 10; i++)
 			{
 				if (!lineLine.Code.Contains($"\\{i}")) continue;
 				argCount = i;
-				linesToUpdate.Add(lineLine);
 			}
 
 			macroLineLine.Reparse();
+
+			if (macroLineLine is IfLine ifLine)
+				argCount = ifLine.Lines.Aggregate(argCount, (current, ifLineLine) => GetArgCount(ifLineLine, current));
+			else if (macroLineLine is RepeatLine repeatLine)
+				argCount = repeatLine.Lines.Aggregate(argCount, (current, ifLineLine) => GetArgCount(ifLineLine, current));
+
 			return argCount;
 		}
 	}

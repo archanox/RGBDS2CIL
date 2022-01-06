@@ -426,7 +426,7 @@ namespace RGBDS2CIL
 		public static List<string> GetParameters(string code)
 		{
 			if (string.IsNullOrWhiteSpace(code)) return new List<string>();
-
+			code = code.Trim();
 			var matches = new List<string>();
 
 			while (code.Length > 0)

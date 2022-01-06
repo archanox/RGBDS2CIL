@@ -10,22 +10,33 @@ namespace RGBDS2CIL
 		public string ConstantName;
 		public string ConstantValue;
 		public string ConstType;
+		public bool IsRedefined = false;
 		public ConstantType ConstantValueType { get; set; }
 
 		public ConstantLine(CodeLine codeLine, string constType) : base(codeLine.Code, codeLine, codeLine.Strings)
 		{
 			ConstType = constType.ToUpper();
-			ConstantName = codeLine.Code.Trim().Split()[0];
+			
 
 			//NOTE: will fail on nested strings
 			var constString = codeLine.Strings?.SingleOrDefault()?.TrimStart('"').TrimEnd('"');
 
+			//DEF s EQUS "Hello, "
+			//REDEF s EQUS "{s}world!"
+
 			//TODO: Support REDEF
+			if (codeLine.Code.ToUpper().StartsWith("REDEF")) 
+			{
+				IsRedefined = true;
+				ConstantName = codeLine.Code[(codeLine.Code.ToUpper().IndexOf("REDEF") + 5)..].Trim().Split()[0];
+			}
+			else
+				ConstantName = codeLine.Code.Trim().Split()[0];
 
 			if (!string.IsNullOrWhiteSpace(constString) && constType == "EQUS")
 				ConstantValue = $"\"{constString}\"";
 			else
-				ConstantValue = codeLine.Code[(codeLine.Code.ToUpper().IndexOf($"{constType}") + constType.Length)..].Trim();
+				ConstantValue = codeLine.Code[(codeLine.Code.ToUpper().IndexOf(constType) + constType.Length)..].Trim();
 
 			if (ConstantValue.StartsWith('$'))
 				ConstantValueType = ConstantType.Hexadecimal;
@@ -77,16 +88,14 @@ namespace RGBDS2CIL
 			else if (ConstantValueType == ConstantType.Graphics)
 				System.Diagnostics.Debugger.Break();
 
-			sb
-				.Append(new string('\t', tabCount))
-				.Append("const ")
-				.Append(valueType)
-				.Append(' ')
-				.Append(ConstantName)
-				.Append(" = ")
-				.Append(value)
-				.Append(';')
-				.AppendComment(Comment);
+			sb.Append(new string('\t', tabCount));
+
+			if (!IsRedefined) 
+			{
+				sb.Append("const ").Append(valueType).Append(' ');
+			}
+
+			sb.Append(ConstantName).Append(" = ").Append(value).Append(';').AppendComment(Comment);
 		}
 	}
 }

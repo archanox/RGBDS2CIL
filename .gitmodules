@@ -25,3 +25,15 @@
 [submodule "Assembly/tetris_disassembly"]
 	path = Assembly/tetris_disassembly
 	url = https://github.com/alexsteb/tetris_disassembly.git
+[submodule "Assembly/shi-kong-xing-shou"]
+	path = Assembly/shi-kong-xing-shou
+	url = https://github.com/libjet/shi-kong-xing-shou.git
+[submodule "Assembly/telefang"]
+	path = Assembly/telefang
+	url = https://github.com/telefang/telefang.git
+[submodule "Assembly/poketcg"]
+	path = Assembly/poketcg
+	url = https://github.com/pret/poketcg.git
+[submodule "Assembly/robopon"]
+	path = Assembly/robopon
+	url = https://github.com/PikalaxALT/robopon.git

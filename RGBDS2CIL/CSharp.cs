@@ -19,7 +19,7 @@ namespace RGBDS2CIL
 
 			var includes = parsedLines.OfType<IncludeLine>().ToList();
 
-			var usings = includes.Where(x => !x.IsBinary).Select(x => x.IncludeFile).Distinct().OrderByDescending(x => x.Length).ThenBy(x => x);
+			var usings = includes.Where(x => !x.IsBinary).Select(x => x.IncludeFile).Distinct();
 			foreach (var include in usings)
 			{
 				sb.Append("using ").Append(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Path.GetFileNameWithoutExtension(include.Replace('\\', '.').Replace('/', '.')))).AppendLine(";");
@@ -77,7 +77,8 @@ namespace RGBDS2CIL
 			{
 				if (splitValue.StartsWith('$'))
 					newValues.Add(splitValue.TrimStart('$').Insert(0, "0x"));
-				else if (splitValue.StartsWith('%'))
+				else if (splitValue.StartsWith('%') && splitValue.Length > 1)
+					//TODO: check for numbers after the %
 					newValues.Add(splitValue.TrimStart('%').Insert(0, "0b"));
 				else if (splitValue.StartsWith('&') && splitValue != "&&" && splitValue.Length == 2)
 					newValues.Add($"Convert.ToInt32(\"{splitValue.TrimStart('%')}\", 8)");
