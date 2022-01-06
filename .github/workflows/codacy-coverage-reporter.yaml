@@ -14,7 +14,6 @@ jobs:
           testProject: 'Tests/Tests.csproj'
           output: 'opencover.xml'
           outputFormat: 'opencover'
-          excludes: '[program]*,[test]test.*'
       - name: coveralls
         uses: coverallsapp/github-action@v1.1.1
         with:
