@@ -15,11 +15,11 @@ jobs:
           output: 'opencover.xml'
           outputFormat: 'opencover'
           excludes: '[program]*,[test]test.*'
-        - name: coveralls
-          uses: coverallsapp/github-action@v1.1.1
-          with:
-            github-token: ${{secrets.GITHUB_TOKEN }}
-            path-to-lcov: ${{steps.coverlet.outputs.coverageFile}}
+      - name: coveralls
+        uses: coverallsapp/github-action@v1.1.1
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN }}
+          path-to-lcov: ${{steps.coverlet.outputs.coverageFile}}
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
