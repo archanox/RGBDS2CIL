@@ -9,6 +9,7 @@
 [![Codeac](https://static.codeac.io/badges/2-329877684.svg "Codeac")](https://app.codeac.io/github/archanox/RGBDS2CIL)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7e95c773297fee1d0fc5/maintainability)](https://codeclimate.com/github/archanox/RGBDS2CIL/maintainability)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/archanox/RGBDS2CIL.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/archanox/RGBDS2CIL/alerts/)
+[![CodeFactor](https://www.codefactor.io/repository/github/archanox/rgbds2cil/badge)](https://www.codefactor.io/repository/github/archanox/rgbds2cil)
 
 Conversion of RGBDS ASM to CIL/C#
 

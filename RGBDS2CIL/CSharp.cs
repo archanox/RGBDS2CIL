@@ -35,18 +35,11 @@ namespace RGBDS2CIL
 				File.WriteAllText(includeFileName + ".cs", includedCSharp);
 			}
 
-			//TODO include binary
-
 			var tabCount = 1;
 
-			sb.Append("namespace ")
-				.AppendLine(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(new DirectoryInfo(root).Name))
-				.AppendLine("{")
-				.Append(new string('\t', tabCount))
-				.Append("public class ")
-				.AppendLine(thisName)
-				.Append(new string('\t', tabCount++))
-				.AppendLine("{");
+			sb.Append("namespace ").AppendLine(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(new DirectoryInfo(root).Name)).AppendLine("{");
+			sb.Append(new string('\t', tabCount)).Append("public class ").AppendLine(thisName);
+			sb.Append(new string('\t', tabCount++)).AppendLine("{");
 
 			foreach (var parsedLine in parsedLines)
 			{
