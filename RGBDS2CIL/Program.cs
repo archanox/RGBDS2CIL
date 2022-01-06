@@ -14,6 +14,7 @@ namespace RGBDS2CIL
 			//http://gameboy.mongenel.com/dmg/mbc3.txt //Pokemon Red
 			//https://binji.github.io/posts/pokegb/ //emulating just pokemon red
 
+			//https://sneslab.net/wiki/Graphics_Format#2bpp
 
 			var files = new[]
 			{

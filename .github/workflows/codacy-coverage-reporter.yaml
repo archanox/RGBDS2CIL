@@ -8,8 +8,20 @@ jobs:
     name: codacy-coverage-reporter
     steps:
       - uses: actions/checkout@master
+      - name : coverlet
+        uses: b3b00/coverlet-action@1.1.7
+        with:
+          testProject: 'Tests/Tests.csproj'
+          output: 'opencover.xml'
+          outputFormat: 'opencover'
+          excludes: '[program]*,[test]test.*'
+        - name: coveralls
+          uses: coverallsapp/github-action@v1.1.1
+          with:
+            github-token: ${{secrets.GITHUB_TOKEN }}
+            path-to-lcov: ${{steps.coverlet.outputs.coverageFile}}
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: dotcover.xml
+          coverage-reports: ${{steps.coverlet.outputs.coverageFile}}
