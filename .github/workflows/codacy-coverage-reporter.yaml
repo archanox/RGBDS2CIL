@@ -14,13 +14,8 @@ jobs:
           testProject: 'Tests/Tests.csproj'
           output: 'opencover.xml'
           outputFormat: 'opencover'
-      - name: coveralls
-        uses: coverallsapp/github-action@v1.1.1
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN }}
-          path-to-lcov: ${{steps.coverlet.outputs.coverageFile}}
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          project-token: ${{secrets.CODACY_PROJECT_TOKEN}}
           coverage-reports: ${{steps.coverlet.outputs.coverageFile}}
