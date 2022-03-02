@@ -37,3 +37,18 @@
 [submodule "Assembly/robopon"]
 	path = Assembly/robopon
 	url = https://github.com/PikalaxALT/robopon.git
+[submodule "Assembly/wl"]
+	path = Assembly/wl
+	url = https://github.com/Kak2X/wl.git
+[submodule "Assembly/carrotcrazy"]
+	path = Assembly/carrotcrazy
+	url = https://github.com/huderlem/carrotcrazy.git
+[submodule "Assembly/pokegold"]
+	path = Assembly/pokegold
+	url = https://github.com/pret/pokegold.git
+[submodule "Assembly/pokecrystal"]
+	path = Assembly/pokecrystal
+	url = https://github.com/pret/pokecrystal
+[submodule "Assembly/pokepuzzle"]
+	path = Assembly/pokepuzzle
+	url = https://github.com/pret/pokepuzzle.git
