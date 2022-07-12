@@ -18,61 +18,61 @@ namespace RGBDS2CIL
 
 			var files = new[]
 			{
-				@"DKGBDisasm/macros/gfx.asm",
+				//@"DKGBDisasm/macros/gfx.asm",
 
-				@"tetris_disassembly/main.asm",
-				@"LADX-Disassembly/src/main.asm",
+				//@"tetris_disassembly/main.asm",
+				//@"LADX-Disassembly/src/main.asm",
 
-				@"DKGBDisasm/home.asm",
-				@"DKGBDisasm/main.asm",
+				//@"DKGBDisasm/home.asm",
+				//@"DKGBDisasm/main.asm",
 
-				@"kirbydreamland/main.asm",
+				//@"kirbydreamland/main.asm",
 
-				@"marioland2/home.asm",
-				@"marioland2/main.asm",
+				//@"marioland2/home.asm",
+				//@"marioland2/main.asm",
 
-				//@"mmania\main.asm", //INCBIN too slow...
+				////@"mmania\main.asm", //INCBIN too slow...
 
-				@"rgbds-template/src/hello-world.asm",
+				//@"rgbds-template/src/hello-world.asm",
 
-				@"supermarioland/bank0.asm",
-				@"supermarioland/bank1.asm",
-				@"supermarioland/bank2.asm",
-				@"supermarioland/bank3.asm",
-				@"supermarioland/music.asm",
+				//@"supermarioland/bank0.asm",
+				//@"supermarioland/bank1.asm",
+				//@"supermarioland/bank2.asm",
+				//@"supermarioland/bank3.asm",
+				//@"supermarioland/music.asm",
 
-				@"blankasm.asm",
-				@"hello.asm",
-				@"hello-world.asm",
-				@"mrdo.asm",
+				//@"blankasm.asm",
+				//@"hello.asm",
+				//@"hello-world.asm",
+				//@"mrdo.asm",
 
-				@"hello.asm",
-				@"hello-world.asm",
-				@"score_bcd.asm",
-				@"score_hex.asm",
+				//@"hello.asm",
+				//@"hello-world.asm",
+				//@"score_bcd.asm",
+				//@"score_hex.asm",
 
-				@"DMG_ROM.asm",
-				@"dmg_boot.asm",
-				@"dmg0_rom.asm",
-				@"fortune_rom.asm",
-				@"gamefighter_rom.asm",
-				@"dmg_boot (2) orig.asm",
-				@"dmg_boot (2).asm",
+				//@"DMG_ROM.asm",
+				//@"dmg_boot.asm",
+				//@"dmg0_rom.asm",
+				//@"fortune_rom.asm",
+				//@"gamefighter_rom.asm",
+				//@"dmg_boot (2) orig.asm",
+				//@"dmg_boot (2).asm",
 
-				@"pokered/macros/const.asm",
-				@"pokered/main.asm",
-				@"pokered/home.asm",
+				//@"pokered/macros/const.asm",
+				//@"pokered/main.asm",
+				//@"pokered/home.asm",
 				@"Pokemon Red (UE) [S][!].asm",
 
-				@"poketcg/src/main.asm",
+				//@"poketcg/src/main.asm",
 
-				@"shi-kong-xing-shou/main.asm",
-				@"shi-kong-xing-shou/home.asm",
+				//@"shi-kong-xing-shou/main.asm",
+				//@"shi-kong-xing-shou/home.asm",
 
-				@"telefang/telefang.inc",
+				//@"telefang/telefang.inc",
 
-				@"robopon/home.asm",
-				@"robopon/main.asm",
+				//@"robopon/home.asm",
+				//@"robopon/main.asm",
 			};
 
 

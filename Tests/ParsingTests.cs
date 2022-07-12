@@ -131,40 +131,40 @@ namespace Tests
 			return assertLine;
 		}
 
-		[Theory]
-		[InlineData(@"ld_long: MACRO
-	IF STRLWR(""\1"") == ""a"" 
-		; ld a, [$ff40]
-		db $FA
-		dw \2
-	ELSE 
-		IF STRLWR(""\2"") == ""a"" 
-			; ld [$ff40], a
-			db $EA
-			dw \1
-		ENDC
-	ENDC
-ENDM")]
-		[InlineData(@"IF(!DEF(VERSION))
-VERSION equs ""0""
-ENDC")]
-		public void NestedIf(string ifBlock)
-		{
-			_testOutputHelper.WriteLine(ifBlock);
+//		[Theory]
+//		[InlineData(@"ld_long: MACRO
+//	IF STRLWR(""\1"") == ""a"" 
+//		; ld a, [$ff40]
+//		db $FA
+//		dw \2
+//	ELSE 
+//		IF STRLWR(""\2"") == ""a"" 
+//			; ld [$ff40], a
+//			db $EA
+//			dw \1
+//		ENDC
+//	ENDC
+//ENDM")]
+//		[InlineData(@"IF(!DEF(VERSION))
+//VERSION equs ""0""
+//ENDC")]
+//		public void NestedIf(string ifBlock)
+//		{
+//			_testOutputHelper.WriteLine(ifBlock);
 
-			var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
+//			var parsedLines = Parser.GetLines(ifBlock.Split(Environment.NewLine), FileName);
 
 
-			Restructure.RestructureMacros(parsedLines);
-			Restructure.RestructureIfs(parsedLines);
+//			Restructure.RestructureMacros(parsedLines);
+//			Restructure.RestructureIfs(parsedLines);
 
-			var sb = CSharp.GenerateCsharp(FileName, parsedLines, Path.GetTempPath());
+//			var sb = CSharp.GenerateCsharp(FileName, parsedLines, Path.GetTempPath());
 
-			_testOutputHelper.WriteLine(sb);
+//			_testOutputHelper.WriteLine(sb);
 
-			var serializedJson = Parser.ExportJson(parsedLines);
-			_testOutputHelper.WriteLine(serializedJson);
-		}
+//			var serializedJson = Parser.ExportJson(parsedLines);
+//			_testOutputHelper.WriteLine(serializedJson);
+//		}
 
 		[Theory]
 		[InlineData("FALSE equ 0")]
