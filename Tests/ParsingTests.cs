@@ -184,5 +184,33 @@ namespace Tests
 			if (sb.ToString().EndsWith('"'))
 				Assert.DoesNotContain("equ", sb.ToString());
 		}
+
+		[Fact]
+		public void ParseUndefinedEntitiesTest()
+		{
+			var asmFilePath = Path.Combine("..", "..", "..", "..", "Assembly", "undefined_entities.asm"); // Adjust path as needed
+			var originalConsoleOut = Console.Out;
+			using var stringWriter = new StringWriter();
+			Console.SetOut(stringWriter);
+
+			try
+			{
+				var fileLines = File.ReadAllLines(asmFilePath);
+				var parsedLines = Parser.GetLines(fileLines, "undefined_entities.asm");
+
+				var consoleOutput = stringWriter.ToString();
+
+				_testOutputHelper.WriteLine("Captured Console Output:");
+				_testOutputHelper.WriteLine(consoleOutput);
+
+				Assert.Contains("Warning: Label 'NonExistentLabel' not found. Referenced in undefined_entities.asm at line 4.", consoleOutput);
+				Assert.Contains("Warning: Constant 'NonExistentConstant' not found. Referenced in undefined_entities.asm at line 7.", consoleOutput);
+				Assert.Contains("Warning: Macro 'NonExistentMacro' not found. Referenced in undefined_entities.asm at line 10.", consoleOutput);
+			}
+			finally
+			{
+				Console.SetOut(originalConsoleOut);
+			}
+		}
 	}
 }

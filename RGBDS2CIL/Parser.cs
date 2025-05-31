@@ -328,64 +328,126 @@ namespace RGBDS2CIL
 
 				else if (code.StartsWith('\\') && char.IsDigit(code.ToUpper()[1]))
 					parsedLines.Add(new MacroArgumentLine(codeLine));
-				else if (Labels.Select(x => x.LabelName.ToUpper()).Contains(codeLine.Code.Split()[0].ToUpper()))
-				{
-					var labelName = codeLine.Code.Split()[0].ToUpper();
-					var labels = Labels
-						.Where(x => string.Equals(x.LabelName, labelName, StringComparison.OrdinalIgnoreCase))
-						.ToImmutableArray();
-					if (labels.Length > 1)
-					{
-						//TODO: need to remove already declared shit, unless it's scoped differently?
-						//override methods?
-						//Debugger.Break();
-						//TODO: get proper name spaced label
-					}
-
-					var label = labels.FirstOrDefault();
-					parsedLines.Add(new LabelCallLine(codeLine, label));
-				}
-				else if (Constants.Select(x => x.ConstantName).Contains(codeLine.Code.Split()[0].Trim()))
-				{
-					var constantName = codeLine.Code.Split()[0].Trim();
-
-					var constants = Constants
-						.Where(x => string.Equals(x.ConstantName, constantName, StringComparison.OrdinalIgnoreCase))
-						.ToImmutableArray();
-					if (constants.Length > 1)
-					{
-						//Debugger.Break();
-					}
-
-					var constant = constants.FirstOrDefault();
-					parsedLines.Add(new ConstantAssignLine(codeLine, constant));
-				}
-				else if (Macros.Select(x => x.Name.Trim(':')).Contains(codeLine.Code.Split()[0].Trim()))
-				{
-					var macroName = codeLine.Code.Split()[0].Trim();
-
-					var macros = Macros
-						.Where(x => string.Equals(x.Name.Trim(':'), macroName, StringComparison.Ordinal))
-						.ToImmutableArray();
-					if (macros.Length > 1)
-					{
-						//Debugger.Break();
-					}
-
-					var macro = macros.FirstOrDefault();
-					parsedLines.Add(new MacroCallLine(codeLine, macro));
-				}
 				else
 				{
-					//Console.WriteLine(codeLine.Code.Trim().Split()[0]);
-					//Console.WriteLine(codeLine.FileName);
-					//Debugger.Break();
-					parsedLines.Add(codeLine);
-					//throw new NotImplementedException($"Instruction {codeLine.Code.Split()[0]} not implemented.");
+					var firstToken = codeLine.Code.Split()[0];
+					var firstTokenUpper = firstToken.ToUpper();
+
+					if (Labels.Select(x => x.LabelName.ToUpper()).Contains(firstTokenUpper))
+					{
+						var labelName = firstTokenUpper;
+						var labels = Labels
+							.Where(x => string.Equals(x.LabelName, labelName, StringComparison.OrdinalIgnoreCase))
+							.ToImmutableArray();
+						if (labels.Length > 1)
+						{
+							//TODO: get proper name spaced label
+						}
+						var label = labels.FirstOrDefault();
+						parsedLines.Add(new LabelCallLine(codeLine, label));
+					}
+					else if (Constants.Select(x => x.ConstantName).Contains(firstToken))
+					{
+						var constantName = firstToken;
+						var constants = Constants
+							.Where(x => string.Equals(x.ConstantName, constantName, StringComparison.OrdinalIgnoreCase))
+							.ToImmutableArray();
+						if (constants.Length > 1)
+						{
+							//Debugger.Break();
+						}
+						var constant = constants.FirstOrDefault();
+						parsedLines.Add(new ConstantAssignLine(codeLine, constant));
+					}
+					else if (Macros.Select(x => x.Name.Trim(':')).Contains(firstToken))
+					{
+						var macroName = firstToken;
+						var macros = Macros
+							.Where(x => string.Equals(x.Name.Trim(':'), macroName, StringComparison.Ordinal))
+							.ToImmutableArray();
+						if (macros.Length > 1)
+						{
+							//Debugger.Break();
+						}
+						var macro = macros.FirstOrDefault();
+						parsedLines.Add(new MacroCallLine(codeLine, macro));
+					}
+					// Warning logic starts here
+					else if (IsPotentialUnidentifiedToken(firstToken) && !IsKnownInstruction(firstToken))
+					{
+						// It's not a defined label, constant, macro, or known instruction.
+						// Now we try to guess what it might have been intended as, for a more specific warning.
+						// This order is important. If it's not any of the defined ones, it's "unknown".
+						// We're checking if it's *not* in Labels, then *not* in Constants, then *not* in Macros.
+						// The IsPotentialUnidentifiedToken helps filter out things that are clearly not identifiers.
+
+						// Check for potential Label call (already known not to be in Labels by this point)
+						// Heuristic: not ending with colon (label definition), not containing "EQU" or "=" (constant def)
+						bool isLabelDefinition = firstToken.EndsWith(":") || firstToken.EndsWith("::");
+						bool isConstantDefinition = codeLine.Code.ToUpper().Contains("EQU") || codeLine.Code.Contains("=");
+						bool isMacroDefinition = codeLine.Code.ToUpper().Contains("MACRO");
+
+						if (!isLabelDefinition && !isConstantDefinition && !isMacroDefinition && !Labels.Select(x => x.LabelName.ToUpper()).Contains(firstTokenUpper))
+						{
+							Console.WriteLine($"Warning: Label '{firstToken}' not found. Referenced in {fileName} at line {line + 1}.");
+							parsedLines.Add(codeLine);
+						}
+						// Check for potential Constant call
+						else if (!isConstantDefinition && !Constants.Select(x => x.ConstantName).Contains(firstToken))
+						{
+							Console.WriteLine($"Warning: Constant '{firstToken}' not found. Referenced in {fileName} at line {line + 1}.");
+							parsedLines.Add(codeLine);
+						}
+						// Check for potential Macro call
+						else if (!isMacroDefinition && !Macros.Select(x => x.Name.Trim(':')).Contains(firstToken))
+						{
+							Console.WriteLine($"Warning: Macro '{firstToken}' not found. Referenced in {fileName} at line {line + 1}.");
+							parsedLines.Add(codeLine);
+						}
+						else
+						{
+							// If it passed all specific checks and still wasn't identified, add it as a generic CodeLine.
+							// This could be an actual unknown instruction or a typo.
+							parsedLines.Add(codeLine);
+						}
+					}
+					else
+					{
+						// It's a known instruction, or something that IsPotentialUnidentifiedToken filtered out (e.g. starts with non-letter)
+						// or it was already handled by the specific type creation blocks above.
+						// So, just add the codeLine as is.
+						parsedLines.Add(codeLine);
+					}
 				}
 			}
 
 			return parsedLines.ToArray();
+		}
+
+		// Helper function to check for known instructions (a simplified stub)
+		// This should be expanded or integrated with a more robust instruction checking mechanism
+		private static bool IsKnownInstruction(string token)
+		{
+			// Add known RGBDS instructions here. This is a very basic list.
+			var knownInstructions = new HashSet<string>(StringComparer.OrdinalIgnoreCase) {
+				"INCLUDE", "INCBIN", "SECTION", "JP", "ENDM", "EQU", "EQUS", "SET", "NOP", "LD", "LDI", "LDD", "CALL", "RST", "CP",
+				"PUSHO", "POPO", "DI", "HALT", "JR", "XOR", "ADD", "ADC", "INC", "DEC", "SUB", "SBC", "DB", "DW", "DL", "ENDR",
+				"ENDC", "WARN", "FAIL", "CHARMAP", "IF", "ELIF", "ELSE", "RET", "RETI", "EI", "PURGE", "REPT", "FOR", "SHIFT",
+				"POP", "PUSH", "RL", "RLA", "BIT", "LDH", "AND", "CPL", "RRCA", "RLCA", "RES", "SCF", "CCF", "OPT", "OR", "DS",
+				"SWAP", "RR", "SRL", "SLA", "DAA", "RRA", "STOP", "ASSERT", "RRC", "RLC", "SRA", "LOAD", "ENDL"
+				// Add any other directives/ops that are not labels, constants, or macros
+			};
+			return knownInstructions.Contains(token);
+		}
+
+		// Helper function to identify potential tokens that could be labels, constants or macros
+		// but are not language keywords or directives.
+		private static bool IsPotentialUnidentifiedToken(string token)
+		{
+			if (string.IsNullOrWhiteSpace(token)) return false;
+			// Simple heuristic: starts with a letter, and is not a known instruction.
+			// This can be refined.
+			return char.IsLetter(token[0]) && !token.Contains(":") && !token.StartsWith(".");
 		}
 
 		public static string RemoveCommentFromCode(string fileLine)
