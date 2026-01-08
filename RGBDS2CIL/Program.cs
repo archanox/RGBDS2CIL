@@ -75,6 +75,37 @@ namespace RGBDS2CIL
 				//@"robopon/main.asm",
 			};
 
+			// Find the Assembly directory by looking for it in the current or parent directories
+			var currentDir = Environment.CurrentDirectory;
+			var assemblyDir = Path.Combine(currentDir, "..", "..", "..", "..", "Assembly");
+			
+			// Normalize the path
+			assemblyDir = Path.GetFullPath(assemblyDir);
+			
+			// If Assembly doesn't exist at that location, try relative to the solution directory
+			if (!Directory.Exists(assemblyDir))
+			{
+				// Try to find the solution root by looking for the .sln file
+				var searchDir = currentDir;
+				for (int i = 0; i < 10; i++)
+				{
+					if (Directory.GetFiles(searchDir, "*.sln").Length > 0)
+					{
+						assemblyDir = Path.Combine(searchDir, "Assembly");
+						break;
+					}
+					searchDir = Path.GetFullPath(Path.Combine(searchDir, ".."));
+				}
+
+				// After searching, ensure that the Assembly directory was actually found
+				if (!Directory.Exists(assemblyDir))
+				{
+					throw new DirectoryNotFoundException(
+						"Unable to locate the 'Assembly' directory. " +
+						"Starting from '" + currentDir + "', searched up to 10 parent directories " +
+						"for a solution (.sln) file and an 'Assembly' folder.");
+				}
+			}
 
 			foreach (var file in files)
 			{
@@ -82,29 +113,6 @@ namespace RGBDS2CIL
 				Console.WriteLine(file);
 				Console.WriteLine(new string('=', file.Length));
 				Console.WriteLine();
-
-				// Find the Assembly directory by looking for it in the current or parent directories
-				var currentDir = Environment.CurrentDirectory;
-				var assemblyDir = Path.Combine(currentDir, "..", "..", "..", "..", "Assembly");
-				
-				// Normalize the path
-				assemblyDir = Path.GetFullPath(assemblyDir);
-				
-				// If Assembly doesn't exist at that location, try relative to the solution directory
-				if (!Directory.Exists(assemblyDir))
-				{
-					// Try to find the solution root by looking for the .sln file
-					var searchDir = currentDir;
-					for (int i = 0; i < 10; i++)
-					{
-						if (Directory.GetFiles(searchDir, "*.sln").Length > 0)
-						{
-							assemblyDir = Path.Combine(searchDir, "Assembly");
-							break;
-						}
-						searchDir = Path.GetFullPath(Path.Combine(searchDir, ".."));
-					}
-				}
 				
 				var fileName = Path.Combine(assemblyDir, file);
 				var fileLines1 = File.ReadAllLines(fileName);
