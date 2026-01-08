@@ -20,7 +20,7 @@ namespace RGBDS2CIL
 				LabelName = base.Code.Trim().Split(':')[0];
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(LabelName).Append(':').AppendComment(Comment);
 		}

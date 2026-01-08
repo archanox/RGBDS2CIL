@@ -16,7 +16,7 @@ namespace RGBDS2CIL
 			Return = base.Code[(base.Code.IndexOf(opcode, StringComparison.OrdinalIgnoreCase) + opcode.Length)..].Trim();
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			
 

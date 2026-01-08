@@ -120,6 +120,15 @@ namespace RGBDS2CIL
 					parsedLines.Add(new SectionLine(codeLine));
 				else if (code.CommandName("JP"))
 					parsedLines.Add(new JumpLine(codeLine));
+				
+				else if (code.CommandName("MACRO"))
+				{
+					var split = code.Split();
+					var macroName = split.Length > 1 ? split[1] : "UnnamedMacro";
+					var macro = new MacroLine(codeLine, macroName);
+					parsedLines.Add(macro);
+					Macros.Add(macro);
+				}
 
 				else if (code.StartsWith('.') || code.EndsWith(':') || code.Split()[0].EndsWith("::") || code.Split()[0].EndsWith(":"))
 				{

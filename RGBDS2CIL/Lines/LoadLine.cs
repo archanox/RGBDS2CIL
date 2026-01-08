@@ -35,7 +35,7 @@ namespace RGBDS2CIL
 			return base.Reparse();
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(new string('\t', tabCount)).Append("Load(").Append(Into).Append(", ").Append(From).Append(");").AppendComment(Comment);
 		}

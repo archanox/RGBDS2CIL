@@ -20,7 +20,7 @@ namespace RGBDS2CIL
 		public string Name { get; set; }
 		public List<IAsmLine> Lines { get; set; } = new();
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			//NOTE: Nested macros are prohibited
 			var privatePublic = IsLocal ? "private " : "public ";
@@ -41,7 +41,7 @@ namespace RGBDS2CIL
 				{
 					sb.Append(new string('\t', tabCount)).Append("/// <param name=\"args[").Append(i).AppendLine("]\"></param>");
 				}
-				sb.Append(new string('\t', tabCount)).AppendLine("/// <returns></returns>");
+				sb.Append(new string('\t', tabCount)).AppendLine("/// </returns>");
 			}
 
 			sb.Append(new string('\t', tabCount)).Append(privatePublic).Append("void ").Append(methodName);
@@ -49,7 +49,7 @@ namespace RGBDS2CIL
 			sb.AppendLine(argCount == 0 ? "()" : "(params object[] args)");
 
 			sb.Append(new string('\t', tabCount)).AppendLine("{");
-			foreach (var lineLine in Lines.Select(x => x.Reparse()))
+			foreach (var lineLine in Lines.Where(x => x is not EndMacroLine).Select(x => x.Reparse()))
 			{
 				lineLine.OutputLine(sb, tabCount + 1);
 			}

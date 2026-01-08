@@ -29,7 +29,7 @@ namespace RGBDS2CIL
 			return base.Reparse();
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			var ifElse = IsElseIf ? "else if" : "if";
 

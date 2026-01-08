@@ -11,7 +11,7 @@ namespace RGBDS2CIL
 			Argument = (byte)(byte.Parse(codeLine.Code.TrimStart('\\')) - 1);
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(new string('\t', tabCount)).Append("args[").Append(Argument - 1).Append("]();").AppendComment(Comment);
 		}

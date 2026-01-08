@@ -23,7 +23,7 @@ namespace RGBDS2CIL
 				Value = split.Single().Trim();
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.AppendCode($"{From} ^= {Value};", tabCount, Comment);
 		}
