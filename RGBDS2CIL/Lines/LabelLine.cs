@@ -22,7 +22,9 @@ namespace RGBDS2CIL
 
 		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
-			sb.Append(LabelName).Append(':').AppendComment(Comment);
+			// Output label as a comment since labels are not valid standalone statements in C#
+			// TODO: Convert labels to actual methods when we have full context about their usage
+			sb.Append(new string('\t', tabCount)).Append("// Label: ").Append(LabelName).AppendComment(Comment);
 		}
 	}
 }
