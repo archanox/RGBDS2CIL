@@ -59,10 +59,10 @@ namespace RGBDS2CIL
 				//@"dmg_boot (2) orig.asm",
 				//@"dmg_boot (2).asm",
 
-				//@"pokered/macros/const.asm",
-				//@"pokered/main.asm",
-				//@"pokered/home.asm",
-				@"Pokemon Red (UE) [S][!].asm",
+				@"pokered/macros/const.asm",
+				@"pokered/main.asm",
+				@"pokered/home.asm",
+				//@"Pokemon Red (UE) [S][!].asm",
 
 				//@"poketcg/src/main.asm",
 
@@ -83,7 +83,30 @@ namespace RGBDS2CIL
 				Console.WriteLine(new string('=', file.Length));
 				Console.WriteLine();
 
-				var fileName = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "Assembly", file);
+				// Find the Assembly directory by looking for it in the current or parent directories
+				var currentDir = Environment.CurrentDirectory;
+				var assemblyDir = Path.Combine(currentDir, "..", "..", "..", "..", "Assembly");
+				
+				// Normalize the path
+				assemblyDir = Path.GetFullPath(assemblyDir);
+				
+				// If Assembly doesn't exist at that location, try relative to the solution directory
+				if (!Directory.Exists(assemblyDir))
+				{
+					// Try to find the solution root by looking for the .sln file
+					var searchDir = currentDir;
+					for (int i = 0; i < 10; i++)
+					{
+						if (Directory.GetFiles(searchDir, "*.sln").Length > 0)
+						{
+							assemblyDir = Path.Combine(searchDir, "Assembly");
+							break;
+						}
+						searchDir = Path.GetFullPath(Path.Combine(searchDir, ".."));
+					}
+				}
+				
+				var fileName = Path.Combine(assemblyDir, file);
 				var fileLines1 = File.ReadAllLines(fileName);
 				Parser.RootFolder = Path.GetDirectoryName(fileName);
 				fileLines1 = Parser.FlattenMultiLine(fileLines1);
