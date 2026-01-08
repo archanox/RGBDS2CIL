@@ -177,6 +177,8 @@ namespace RGBDS2CIL
 				}
 				else if (code.CommandName("SET"))
 					parsedLines.Add(new VariableLine(codeLine));
+				else if (code.CommandName("DEF"))
+					parsedLines.Add(new DefLine(codeLine));
 				else if (code.ToUpper().Trim() == "NOP")
 					parsedLines.Add(new NopLine(codeLine));
 				else if (code.CommandName("LD"))
