@@ -53,6 +53,7 @@ namespace RGBDS2CIL
 			{
 				lineLine.OutputLine(sb, tabCount + 1);
 			}
+			sb.Append(new string('\t', tabCount)).AppendLine("}");
 		}
 
 		private static int GetArgCount(IAsmLine macroLineLine, int argCount)
