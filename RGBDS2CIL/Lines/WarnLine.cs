@@ -12,7 +12,7 @@ namespace RGBDS2CIL
 			Warning = Parser.GetStrings(codeLine.Code).Single().TrimStart('"').TrimEnd('"');
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(new string('\t', tabCount)).Append("Trace.TraceWarning($\"").Append(Warning).Append("\");").AppendComment(Comment);
 		}

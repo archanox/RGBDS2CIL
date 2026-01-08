@@ -30,7 +30,7 @@ namespace RGBDS2CIL
 			return base.Reparse();
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			//TODO: support for loops
 			//FOR n, 1, NUM_SPRITESTATEDATA_STRUCTS

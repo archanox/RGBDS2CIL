@@ -32,7 +32,7 @@ namespace RGBDS2CIL
 		public string Name { get; set; }
 		public List<string> Parameters { get; set; } = new();
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			var methodName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Name.Trim(':'));
 

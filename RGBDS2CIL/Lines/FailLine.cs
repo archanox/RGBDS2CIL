@@ -12,7 +12,7 @@ namespace RGBDS2CIL
 			FailMessage = Parser.GetStrings(codeLine.Code).Single().TrimStart('"').TrimEnd('"');
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			for (var i = 1; i < 10; i++)
 			{

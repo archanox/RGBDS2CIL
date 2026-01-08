@@ -18,7 +18,7 @@ namespace RGBDS2CIL
 			From = parameters[1];
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			var normalised = From.TrimStart('$').Insert(0, "0x");
 

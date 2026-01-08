@@ -18,7 +18,7 @@ namespace RGBDS2CIL
 			Parameters = Parser.GetParameters(parameters);
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb
 				.Append(new string('\t', tabCount))

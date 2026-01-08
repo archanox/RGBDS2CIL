@@ -82,7 +82,7 @@ namespace RGBDS2CIL
 				Binary = File.ReadAllBytes(path);
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			//BUG: shouldn't need to check for null Binary here, should always be available before it gets here
 			if (IsBinary && Binary is not null)

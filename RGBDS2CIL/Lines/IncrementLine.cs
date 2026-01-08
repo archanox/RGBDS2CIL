@@ -13,7 +13,7 @@ namespace RGBDS2CIL
 				.Trim();
 		}
 
-		public new void OutputLine(StringBuilder sb, int tabCount)
+		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.AppendCode($"{Increment}++;", tabCount, Comment);
 		}

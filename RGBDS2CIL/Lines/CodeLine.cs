@@ -30,7 +30,7 @@ namespace RGBDS2CIL
 			return this;
 		}
 
-		public void OutputLine(StringBuilder sb, int tabCount)
+		public virtual void OutputLine(StringBuilder sb, int tabCount)
 		{
 			sb.Append(new string('\t', tabCount)).Append("/* ").Append(Code).Append(" */").AppendComment(Comment);
 			//throw new NotImplementedException($"Cannot output unimplemented {this.GetType().FullName}.");
