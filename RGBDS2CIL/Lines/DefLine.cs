@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 
 namespace RGBDS2CIL
@@ -19,12 +20,12 @@ namespace RGBDS2CIL
 			// Format: DEF variable_name = expression
 			// or: DEF variable_name += expression
 			var defCode = codeLine.Code.Trim();
-			if (defCode.ToUpper().StartsWith("DEF "))
+			if (defCode.StartsWith("DEF ", StringComparison.OrdinalIgnoreCase))
 			{
-				defCode = defCode.Substring(4).Trim(); // Remove "DEF "
+				defCode = defCode.Substring("DEF ".Length).Trim();
 			}
 
-			// Find the operator
+			// Find the operator - check in order from longest to shortest to avoid matching substrings
 			var operatorIndex = -1;
 			string[] operators = { "+=", "-=", "*=", "/=", "=" };
 			foreach (var op in operators)
@@ -69,7 +70,7 @@ namespace RGBDS2CIL
 		public override void OutputLine(StringBuilder sb, int tabCount)
 		{
 			// Output as a C# variable assignment
-			sb.Append(new string('\t', tabCount)).Append(VariableName).Append(" ").Append(Operator).Append(" ").Append(Expression).Append(";").AppendComment(Comment);
+			sb.Append(new string('\t', tabCount)).Append($"{VariableName} {Operator} {Expression};").AppendComment(Comment);
 		}
 	}
 }
