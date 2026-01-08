@@ -41,7 +41,6 @@ namespace RGBDS2CIL
 				{
 					sb.Append(new string('\t', tabCount)).Append("/// <param name=\"args[").Append(i).AppendLine("]\"></param>");
 				}
-				sb.Append(new string('\t', tabCount)).AppendLine("/// </returns>");
 			}
 
 			sb.Append(new string('\t', tabCount)).Append(privatePublic).Append("void ").Append(methodName);
